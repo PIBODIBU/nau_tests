@@ -1,6 +1,7 @@
 package ua.edu.nau.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users_roles")
@@ -8,6 +9,7 @@ public class UserRole {
     private Integer roleId;
     private Integer roleCode;
     private String description;
+    private Set<User> users;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,5 +38,14 @@ public class UserRole {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userRole")
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

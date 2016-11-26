@@ -13,5 +13,6 @@
         <property name="show_sql">true</property>
 
         <mapping class="ua.edu.nau.model.UserRole"/>
+        <mapping class="ua.edu.nau.model.User"/>
     </session-factory>
 </hibernate-configuration>
