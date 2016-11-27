@@ -59,7 +59,7 @@ public class User {
         this.email = email;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_role")
     public UserRole getUserRole() {
         return userRole;

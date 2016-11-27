@@ -14,5 +14,6 @@
 
         <mapping class="ua.edu.nau.model.UserRole"/>
         <mapping class="ua.edu.nau.model.User"/>
+        <mapping class="ua.edu.nau.model.Session"/>
     </session-factory>
 </hibernate-configuration>

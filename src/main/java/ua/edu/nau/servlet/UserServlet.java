@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = {"/users"})
-public class UserListServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
@@ -24,11 +25,17 @@ public class UserListServlet extends HttpServlet {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        User newUser = new User();
+        ArrayList<User> users = ((ArrayList<User>) session.createCriteria(User.class).list());
+
+        request.setAttribute("users", users);
+
+        /*User newUser = new User();
+
         UserRole userRole = ((UserRole) session.get(UserRole.class, 1));
 
         newUser.setName("name2");
@@ -41,7 +48,7 @@ public class UserListServlet extends HttpServlet {
         session.getTransaction().commit();
 
         User user = (User) session.get(User.class, newUserPosition);
-        request.setAttribute("user", user);
+        request.setAttribute("user", user);*/
 
         getServletContext().getRequestDispatcher("/users.jsp").forward(request, response);
     }
