@@ -22,7 +22,8 @@ public class LoginServlet extends HttpServlet {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
         if (sessionUtils.isUserLoggedIn()) {
-            response.sendRedirect("sessions");
+            response.sendRedirect("/me");
+            return;
         }
 
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
