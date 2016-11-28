@@ -66,7 +66,7 @@
                     for (Session session1 : sessions) {
                 %>
                 <tr>
-                    <td class="mdl-data-table__cell--non-numeric"><%=session1.getSessionId()%>
+                    <td class="mdl-data-table__cell--non-numeric"><%=session1.getToken()%>
                     <td class="mdl-data-table__cell--non-numeric"><%=session1.getUser().getId()%>
                     </td>
                 </tr>

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "sessions")
 public class Session {
     private Integer id;
-    private String sessionId;
+    private String token;
     private User user;
 
     @Id
@@ -20,13 +20,13 @@ public class Session {
         this.id = id;
     }
 
-    @Column(name = "session_id")
-    public String getSessionId() {
-        return sessionId;
+    @Column(name = "token")
+    public String getToken() {
+        return token;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @OneToOne

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface BasicDAO<T> {
     ArrayList<T> getAll();
 
-    T get();
+    T get(Integer id);
 
     T getById(Integer id);
 

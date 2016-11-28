@@ -5,8 +5,6 @@ import org.hibernate.StatelessSession;
 import org.hibernate.criterion.Restrictions;
 import ua.edu.nau.dao.SessionDAO;
 import ua.edu.nau.dao.impl.SessionDAOImpl;
-import ua.edu.nau.helper.auth.AuthUtils;
-import ua.edu.nau.helper.auth.impl.AuthUtilsImpl;
 import ua.edu.nau.helper.session.SessionUtils;
 import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.Session;
@@ -22,24 +20,9 @@ import java.io.IOException;
 public class SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-        AuthUtils authUtils = new AuthUtilsImpl();
-        Session session = authUtils.checkHttpSession(request.getSession());
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
-        if (!SessionUtils.isSessionTokenExists(request.getSession())) {
-            SessionUtils.createSessionToken(request.getSession());
-        }
-
-        String sessionId = request.getSession().getId();
-        System.out.println(sessionId);
-        StatelessSession hS = HibernateUtil.getSessionFactory().openStatelessSession();
-        Criteria criteria = hS.createCriteria(Session.class);
-        criteria.add(
-                Restrictions.eq("sessionId", SessionUtils.getSessionToken(request.getSession())));
-        Session ss = ((Session) criteria.list().get(0));
-
-        System.out.println(ss.getId());
-
-        if (session == null) {
+        if (true) {
             getServletContext().getRequestDispatcher("/bad_session.jsp").forward(request, resp);
             return;
         }

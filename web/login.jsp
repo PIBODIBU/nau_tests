@@ -1,3 +1,4 @@
+<%@ page import="ua.edu.nau.helper.constant.Parameter" %>
 <!DOCTYPE HTML>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -48,13 +49,14 @@
 
     <main class="mdl-layout__content">
         <div class="page-content">
-            <form action="#">
+            <form action="${pageContext.request.contextPath}/login" method="post">
                 <table>
                     <tr>
                         <td>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
                                  style="float: left">
-                                <input class="mdl-textfield__input" type="text" name="username" id="username">
+                                <input class="mdl-textfield__input" type="text" name="<%=Parameter.PARAM_USERNAME%>"
+                                       id="username">
                                 <label class="mdl-textfield__label" for="username">Логін</label>
                             </div>
                         </td>
@@ -63,9 +65,19 @@
                     <tr>
                         <td>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="password" name="password" id="password">
+                                <input class="mdl-textfield__input" type="password" name="<%=Parameter.PARAM_PASSWORD%>"
+                                       id="password">
                                 <label class="mdl-textfield__label" for="password">Пароль</label>
                             </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button type="submit"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                                Увійти
+                            </button>
                         </td>
                     </tr>
                 </table>

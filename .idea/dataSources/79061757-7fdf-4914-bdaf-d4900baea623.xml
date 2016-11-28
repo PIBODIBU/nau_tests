@@ -222,7 +222,7 @@
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="60" parent="12" name="session_id">
+    <column id="60" parent="12" name="token">
       <mandatory>1</mandatory>
       <data-type>varchar(100)|0</data-type>
     </column>

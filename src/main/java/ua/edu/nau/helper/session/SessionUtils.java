@@ -1,21 +1,67 @@
 package ua.edu.nau.helper.session;
 
+import org.hibernate.Session;
+import ua.edu.nau.hibernate.HibernateUtil;
+import ua.edu.nau.model.User;
+
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 public class SessionUtils {
-    public static boolean isSessionTokenExists(HttpSession session) {
-        Object sessionId = session.getAttribute("session_id");
+    private final String ATTR_SESSION_TOKEN = "token";
+    private final String ATTR_USER = "user";
+
+    private HttpSession httpSession;
+
+    public SessionUtils(HttpSession httpSession) {
+        this.httpSession = httpSession;
+
+        if (!isSessionTokenExists()) {
+            createSessionToken();
+        }
+    }
+
+    private boolean isSessionTokenExists() {
+        Object sessionId = httpSession.getAttribute(ATTR_SESSION_TOKEN);
         return sessionId != null;
     }
 
-    public static String getSessionToken(HttpSession session) {
-        return ((String) session.getAttribute("session_id"));
+    public String getSessionToken() {
+        return ((String) httpSession.getAttribute(ATTR_SESSION_TOKEN));
     }
 
-    public static String createSessionToken(HttpSession session) {
+    private String createSessionToken() {
         String uuid = UUID.randomUUID().toString();
-        session.setAttribute("session_id", uuid);
+        httpSession.setAttribute(ATTR_SESSION_TOKEN, uuid);
         return uuid;
+    }
+
+    public ua.edu.nau.model.Session getUserSession(HttpSession httpSession, String sessionId) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        if (httpSession == null) {
+            System.out.println("httpSession is null");
+            return null;
+        }
+
+        try {
+            return (ua.edu.nau.model.Session)
+                    session.get(ua.edu.nau.model.Session.class, sessionId);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
+
+    public Boolean isUserLoggedIn() {
+        return getUser() != null;
+    }
+
+    public void setUser(User user) {
+        httpSession.setAttribute(ATTR_USER, user);
+    }
+
+    public User getUser() {
+        return ((User) httpSession.getAttribute(ATTR_USER));
     }
 }
