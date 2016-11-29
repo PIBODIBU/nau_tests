@@ -21,11 +21,12 @@
     body {
         width: 100%;
         max-width: 100%;
+        background-color: #f9f9f9;
     }
 
     .page-content {
         width: 80%;
-        margin: 24px auto auto;
+        margin: auto;
     }
 
     .card-square {
@@ -35,16 +36,20 @@
     }
 
     .mdl-card__title {
-        padding-left: 24px;
+        padding-left: 16px;
         padding-bottom: 8px;
         color: #ffffff;
         background-color: #2196F3;
+    }
+
+    .mdl-card__supporting-text {
     }
 
     .mdl-button--fab {
         position: fixed;
         right: 36px;
         bottom: 36px;
+        z-index: 999;
     }
 </style>
 
@@ -62,8 +67,14 @@
     </header>
 
     <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Тести</span>
+        <span class="mdl-layout-title">NAUTests</span>
         <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+            </div>
         </nav>
     </div>
 

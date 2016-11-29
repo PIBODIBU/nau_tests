@@ -28,31 +28,40 @@
     }
 
     .page-content {
-        width: 80%;
+        width: 95%;
         margin: 24px auto auto;
         padding-bottom: 24px;
     }
 
     .card-square {
-        padding: 8px;
         width: 100%;
         max-width: 100%;
-        margin-top: 16px;
+        margin: auto;
     }
 
     .mdl-card__title {
-        display: inline-block;
-    }
-
-    .mdl-card__title > p {
-        display: block;
-        margin-top: 16px;
+        background-color: #2196F3;
+        color: #ffffff;
+        min-height: 150px;
     }
 
     .mdl-button--fab {
         position: fixed;
         right: 36px;
         bottom: 36px;
+        z-index: 999;
+    }
+
+    .mdl-grid {
+        padding: 0;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        margin: 8px;
+    }
+
+    .mdl-card__actions {
+        padding: 0;
     }
 </style>
 
@@ -67,53 +76,106 @@
     </header>
 
     <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Тести</span>
+        <span class="mdl-layout-title">NAUTests</span>
         <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+            </div>
         </nav>
     </div>
 
     <main class="mdl-layout__content">
         <div class="page-content">
-            <div class="card-square mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title mdl-card--expand">
-                    <h2 class="mdl-card__title-text"><%=test.getName()%>
-                    </h2>
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--6-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand">
+                            <h2 class="mdl-card__title-text">Опис
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <p class="mdl-typography--subhead"><%=test.getDescription()%>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mdl-card__supporting-text">
-                    <p class="mdl-typography--subhead"><%=test.getDescription()%>
-                    </p>
-                    <p class="mdl-typography--subhead">Час виконання: <%=test.getTime().toString()%>
-                    </p>
+                <div class="mdl-cell mdl-cell--2-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand">
+                            <h2 class="mdl-card__title-text">Час виконання
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <p class="mdl-typography--subhead"><%=test.getTime().toString()
+                            %>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <ul class="list-icon mdl-list" style="display: inline-block">
-                    <%
-                        for (Question question : test.getQuestions()) {
-                    %>
-                    <li class="mdl-list__item" style="display: block">
+                <div class="mdl-cell mdl-cell--4-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand">
+                            <h2 class="mdl-card__title-text">Власник
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <p class="mdl-typography--subhead"><%=test.getOwner().getName()%>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand">
+                            <h2 class="mdl-card__title-text">Питання
+                            </h2>
+                        </div>
+
+                        <ul class="list-icon mdl-list" style="display: inline-block">
+                            <%
+                                int questionCounter = 1;
+                                int answerCounter = 0;
+                                char[] alphabet = "абвгґдеєжзиіїйклмнопрстуфхцчшщьюя".toCharArray();
+
+                                for (Question question : test.getQuestions()) {
+                            %>
+                            <li class="mdl-list__item" style="display: block">
                                 <span class="mdl-list__item-primary-content" style="display: block">
-                                    <%=question.getText()%>
+                                    <%=questionCounter%>. <%=question.getText()%>
                                 </span>
 
-                        <ul class="list-icon mdl-list" style="display: block">
-                            <%
-                                for (Answer answer : question.getAnswers()) {
-                            %>
-                            <li class="mdl-list__item">
-                                <i class="material-icons mdl-list__item-icon"><%=answer.getCorrect() ? "done" : ""%>
-                                </i>
-                                <%=answer.getText()%>
+                                <ul class="list-icon mdl-list" style="display: block">
+                                    <%
+                                        for (Answer answer : question.getAnswers()) {
+                                    %>
+                                    <li class="mdl-list__item">
+                                        <i class="material-icons mdl-list__item-icon"><%=answer.getCorrect() ? "star" : ""%>
+                                        </i>
+                                        <%=alphabet[answerCounter]%>) <%=answer.getText()%>
+                                    </li>
+                                    <%
+                                            answerCounter++;
+                                        }
+                                    %>
+                                </ul>
                             </li>
                             <%
+                                    answerCounter = 0;
+                                    questionCounter++;
                                 }
                             %>
                         </ul>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
