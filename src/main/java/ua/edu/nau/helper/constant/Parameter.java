@@ -5,4 +5,5 @@ public class Parameter {
     public static final String PARAM_PASSWORD = "password";
     public static final String PARAM_NAME = "name";
     public static final String PARAM_EMAIL = "email";
+    public static final String PARAM_TEST_ID = "test_id";
 }

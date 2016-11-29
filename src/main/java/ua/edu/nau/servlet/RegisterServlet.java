@@ -23,6 +23,13 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+
+        if (sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/me");
+            return;
+        }
+
         getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
     }
 
@@ -30,6 +37,11 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
+
+        if (sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/me");
+            return;
+        }
 
         String name = request.getParameter(Parameter.PARAM_NAME);
         String email = request.getParameter(Parameter.PARAM_EMAIL);
