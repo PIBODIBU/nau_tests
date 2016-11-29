@@ -9,6 +9,8 @@ public interface BasicDAO<T> {
 
     T getById(Integer id);
 
+    void insert(T model);
+
     void update(T newModel);
 
     void delete(T model);

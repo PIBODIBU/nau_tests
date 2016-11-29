@@ -47,6 +47,15 @@ public class UserDAOImpl<User> implements UserDAO<User> {
         }
     }
 
+    @Override
+    public void insert(User model) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        session.beginTransaction();
+        session.save(model);
+        session.getTransaction().commit();
+    }
+
     public User getById(Integer id) {
         return null;
     }
