@@ -9,7 +9,7 @@ public interface BasicDAO<T> {
 
     T getById(Integer id);
 
-    void insert(T model);
+    Integer insert(T model);
 
     void update(T newModel);
 

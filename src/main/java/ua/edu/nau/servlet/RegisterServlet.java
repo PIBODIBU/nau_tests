@@ -7,6 +7,7 @@ import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.constant.RoleCode;
+import ua.edu.nau.helper.session.SessionUtils;
 import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.User;
 import ua.edu.nau.model.UserRole;
@@ -28,6 +29,8 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+
         String name = request.getParameter(Parameter.PARAM_NAME);
         String email = request.getParameter(Parameter.PARAM_EMAIL);
         String username = request.getParameter(Parameter.PARAM_USERNAME);
@@ -47,7 +50,9 @@ public class RegisterServlet extends HttpServlet {
         user.setPassword(password);
         user.setUserRole(userRole);
 
-        userDAO.insert(user);
+        Integer insertedId = userDAO.insert(user);
+
+        sessionUtils.setUser(userDAO.getById(insertedId));
 
         response.sendRedirect("/me");
     }

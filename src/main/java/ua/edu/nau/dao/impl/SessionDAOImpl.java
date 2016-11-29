@@ -47,8 +47,8 @@ public class SessionDAOImpl<T> implements SessionDAO<T> {
     }
 
     @Override
-    public void insert(T model) {
-
+    public Integer insert(T model) {
+        return 0;
     }
 
     public void update(T newModel) {
