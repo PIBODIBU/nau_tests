@@ -2,13 +2,13 @@
 
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <%@ page import="ua.edu.nau.helper.constant.Parameter" %>
-<%@ page import="ua.edu.nau.model.Test" %>
+<%@ page import="ua.edu.nau.model.TestSession" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
-    <title>Тести</title>
+    <title>Мої тести</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
@@ -35,13 +35,6 @@
         margin-top: 16px;
     }
 
-    .mdl-card__title {
-        padding-left: 16px;
-        padding-bottom: 8px;
-        color: #ffffff;
-        background-color: #2196F3;
-    }
-
     .mdl-card__supporting-text {
     }
 
@@ -53,7 +46,7 @@
     }
 </style>
 
-<%ArrayList<Test> tests = ((ArrayList<Test>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST));%>
+<%ArrayList<TestSession> testSessions = ((ArrayList<TestSession>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION));%>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
@@ -71,6 +64,7 @@
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/test/sessions">Мої тести</a>
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
@@ -82,33 +76,30 @@
         <div class="page-content">
             <div class="mdl-grid">
                 <%
-                    for (Test test : tests) {
+                    for (TestSession testSession : testSessions) {
                 %>
                 <div class="mdl-cell mdl-cell--6-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand">
-                            <h2 class="mdl-card__title-text"><%=test.getName()%>
+                        <div class="mdl-card__title mdl-card--expand" style="
+                                padding-bottom: 8px;
+                                padding-left: 16px;
+                                color: #ffffff;
+                                background-color: <%=testSession.getDone()?"#F44336":"#2196F3"%>;">
+                            <h2 class="mdl-card__title-text"><%=testSession.getTest().getName()%>
                             </h2>
                         </div>
 
                         <div class="mdl-card__supporting-text">
-                            <%=test.getDescription()%>
+                            <%=testSession.getTest().getDescription()%>
                         </div>
 
                         <div class="mdl-card__actions mdl-card--border">
                             <form action="${pageContext.request.contextPath}/test/info" method="post">
-                                <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>">
+                                <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>"
+                                       value="<%=testSession.getId()%>">
                                 <button class="mdl-button mdl-js-button mdl-button--primary"
                                         type="submit">
                                     Детальніше
-                                </button>
-                            </form>
-
-                            <form action="${pageContext.request.contextPath}/test/sessions" method="post">
-                                <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>">
-                                <button class="mdl-button mdl-js-button mdl-button--primary"
-                                        type="submit">
-                                    Розпочати
                                 </button>
                             </form>
                         </div>

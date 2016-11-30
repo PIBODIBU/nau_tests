@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        UserDAO<User> userDAO = new UserDAOImpl<User>();
+        UserDAO userDAO = new UserDAOImpl();
         User user = userDAO.getByCredentials(username, password);
 
         if (user == null) {

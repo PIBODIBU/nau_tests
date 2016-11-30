@@ -2,6 +2,7 @@ package ua.edu.nau.dao.impl;
 
 import com.sun.istack.internal.Nullable;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.hibernate.type.StringType;
@@ -12,18 +13,18 @@ import ua.edu.nau.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl<T> implements UserDAO<T> {
-    public ArrayList<T> getAll() {
+public class UserDAOImpl implements UserDAO {
+    public ArrayList<User> getAll() {
         return null;
     }
 
-    public T get(Integer id) {
+    public User get(Integer id) {
         return null;
     }
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public T getByCredentials(String username, String password) {
+    public User getByCredentials(String username, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Criteria criteria = session.createCriteria(ua.edu.nau.model.User.class)
@@ -37,7 +38,7 @@ public class UserDAOImpl<T> implements UserDAO<T> {
         }
 
         try {
-            return ((T) criteria.list().get(0));
+            return ((User) criteria.list().get(0));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;
@@ -45,8 +46,15 @@ public class UserDAOImpl<T> implements UserDAO<T> {
     }
 
     @Override
-    public Integer insert(T model) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public Integer insert(User model) {
+        Session session;
+
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+        } catch (HibernateException ex) {
+            session = HibernateUtil.getSessionFactory().openSession();
+        }
+
         Integer id = -1;
 
         session.beginTransaction();
@@ -57,17 +65,20 @@ public class UserDAOImpl<T> implements UserDAO<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public T getById(Integer id) {
+    public User getById(Integer id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        User user = ((User) session.get(User.class, id));
 
-        return ((T) session.get(User.class, id));
+        HibernateUtil.shutdown();
+
+        return user;
     }
 
-    public void update(T newModel) {
+    public void update(User newModel) {
 
     }
 
-    public void delete(T model) {
+    public void delete(User model) {
 
     }
 }

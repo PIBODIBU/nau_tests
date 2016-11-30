@@ -1,6 +1,6 @@
 package ua.edu.nau.servlet;
 
-import ua.edu.nau.dao.impl.TestDAO;
+import ua.edu.nau.dao.TestDAO;
 import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
@@ -19,7 +19,7 @@ public class TestInfoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
-        TestDAO<Test> testDAO = new TestDAOImpl();
+        TestDAO testDAO = new TestDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");

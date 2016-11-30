@@ -1,10 +1,9 @@
 package ua.edu.nau.servlet;
 
-import ua.edu.nau.dao.impl.TestDAO;
+import ua.edu.nau.dao.TestDAO;
 import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.session.SessionUtils;
-import ua.edu.nau.model.Question;
 import ua.edu.nau.model.Test;
 
 import javax.servlet.ServletException;
@@ -20,7 +19,7 @@ public class TestListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
-        TestDAO<Test> testDAO = new TestDAOImpl();
+        TestDAO testDAO = new TestDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");

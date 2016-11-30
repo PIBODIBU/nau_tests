@@ -1,6 +1,7 @@
 package ua.edu.nau.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,6 +12,7 @@ public class User {
     private String password;
     private String email;
     private UserRole userRole;
+    private Set<TestSession> testSessions;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,5 +69,14 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public Set<TestSession> getTestSessions() {
+        return testSessions;
+    }
+
+    public void setTestSessions(Set<TestSession> testSessions) {
+        this.testSessions = testSessions;
     }
 }

@@ -1,8 +1,9 @@
 package ua.edu.nau.dao;
 
 import com.sun.istack.internal.Nullable;
+import ua.edu.nau.model.User;
 
-public interface UserDAO<T> extends BasicDAO<T> {
+public interface UserDAO extends BasicDAO<User> {
     @Nullable
-    T getByCredentials(String username, String password);
+    User getByCredentials(String username, String password);
 }

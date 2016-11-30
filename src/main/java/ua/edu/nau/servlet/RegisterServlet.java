@@ -48,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter(Parameter.PARAM_USERNAME);
         String password = request.getParameter(Parameter.PARAM_PASSWORD);
 
-        UserDAO<User> userDAO = new UserDAOImpl<>();
+        UserDAO userDAO = new UserDAOImpl();
         User user = new User();
         UserRole userRole;
 

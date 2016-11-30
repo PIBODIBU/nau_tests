@@ -67,7 +67,7 @@ public class Test {
         this.time = startTime;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "test")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "test")
     @OrderBy("id")
     public Set<Question> getQuestions() {
         return questions;

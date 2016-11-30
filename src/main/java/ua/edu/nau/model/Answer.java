@@ -21,7 +21,7 @@ public class Answer {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     public Question getQuestion() {
         return question;

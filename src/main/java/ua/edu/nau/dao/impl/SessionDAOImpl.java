@@ -10,19 +10,19 @@ import ua.edu.nau.hibernate.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionDAOImpl<T> implements SessionDAO<T> {
-    public ArrayList<T> getAll() {
+public class SessionDAOImpl implements SessionDAO {
+    public ArrayList<ua.edu.nau.model.Session> getAll() {
         org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession();
-        return new ArrayList<T>(session.createCriteria(ua.edu.nau.model.Session.class).list());
+        return new ArrayList<ua.edu.nau.model.Session>(session.createCriteria(ua.edu.nau.model.Session.class).list());
     }
 
-    public T get(Integer id) {
+    public ua.edu.nau.model.Session get(Integer id) {
         return null;
     }
 
     @Override
     @SuppressWarnings("unckecked")
-    public T getByToken(String token) {
+    public ua.edu.nau.model.Session getByToken(String token) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Criteria criteria = session.createCriteria(ua.edu.nau.model.User.class)
@@ -35,27 +35,29 @@ public class SessionDAOImpl<T> implements SessionDAO<T> {
         }
 
         try {
-            return ((T) criteria.list().get(0));
+            return ((ua.edu.nau.model.Session) criteria.list().get(0));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;
         }
     }
 
-    public T getById(Integer id) {
+    public ua.edu.nau.model.Session getById(Integer id) {
         return null;
     }
 
     @Override
-    public Integer insert(T model) {
-        return 0;
+    public Integer insert(ua.edu.nau.model.Session model) {
+        return null;
     }
 
-    public void update(T newModel) {
+    @Override
+    public void update(ua.edu.nau.model.Session newModel) {
 
     }
 
-    public void delete(T model) {
+    @Override
+    public void delete(ua.edu.nau.model.Session model) {
 
     }
 }

@@ -23,7 +23,7 @@ public class Question {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "test_id")
     public Test getTest() {
         return test;
@@ -51,7 +51,7 @@ public class Question {
         this.imgUrl = imgUrl;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
     @OrderBy("id")
     public Set<Answer> getAnswers() {
         return answers;
