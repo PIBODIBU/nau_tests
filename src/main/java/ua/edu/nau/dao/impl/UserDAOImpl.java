@@ -25,7 +25,10 @@ public class UserDAOImpl implements UserDAO {
     @SuppressWarnings("unchecked")
     @Nullable
     public User getByCredentials(String username, String password) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSession();
+        User user = null;
+
+        session.beginTransaction();
 
         Criteria criteria = session.createCriteria(ua.edu.nau.model.User.class)
                 .add(Expression.sql("BINARY username=?", username, new StringType()))
@@ -38,22 +41,19 @@ public class UserDAOImpl implements UserDAO {
         }
 
         try {
-            return ((User) criteria.list().get(0));
+            user = ((User) criteria.list().get(0));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return null;
         }
+
+        session.getTransaction().commit();
+
+        return user;
     }
 
     @Override
     public Integer insert(User model) {
-        Session session;
-
-        try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-        } catch (HibernateException ex) {
-            session = HibernateUtil.getSessionFactory().openSession();
-        }
+        Session session = HibernateUtil.getSession();
 
         Integer id = -1;
 
@@ -66,10 +66,12 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     public User getById(Integer id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        User user = ((User) session.get(User.class, id));
+        Session session = HibernateUtil.getSession();
 
-        HibernateUtil.shutdown();
+        session.beginTransaction();
+        User user = ((User) session.get(User.class, id));
+        session.refresh(user);
+        session.getTransaction().commit();
 
         return user;
     }

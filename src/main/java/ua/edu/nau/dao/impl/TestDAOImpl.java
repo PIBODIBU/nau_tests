@@ -16,7 +16,8 @@ public class TestDAOImpl implements TestDAO {
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Test> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSession();
+
         return new ArrayList<Test>(
                 session.createCriteria(Test.class)
                         .addOrder(Order.asc("name"))
@@ -26,7 +27,9 @@ public class TestDAOImpl implements TestDAO {
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Test> getUserTests(User owner) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSession();
+
+        session.beginTransaction();
 
         ArrayList<Test> tests = new ArrayList<Test>(session.createCriteria(Test.class)
                 .add(Restrictions.eq("owner", owner))
@@ -34,6 +37,8 @@ public class TestDAOImpl implements TestDAO {
                 .list());
 
         tests.forEach(session::refresh);
+
+        session.getTransaction().commit();
 
         return tests;
     }
@@ -45,13 +50,7 @@ public class TestDAOImpl implements TestDAO {
 
     @Override
     public Test getById(Integer id) {
-        Session session;
-
-        try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-        } catch (HibernateException ex) {
-            session = HibernateUtil.getSessionFactory().openSession();
-        }
+        Session session = HibernateUtil.getSession();
 
         session.beginTransaction();
         Test test = ((Test) session.get(Test.class, id));

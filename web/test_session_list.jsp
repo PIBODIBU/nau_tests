@@ -14,37 +14,10 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+    <link href="${pageContext.request.contextPath}/css/my_page_style.css" rel="stylesheet">
 </head>
 <body>
-
-<style>
-    body {
-        width: 100%;
-        max-width: 100%;
-        background-color: #f9f9f9;
-    }
-
-    .page-content {
-        width: 80%;
-        margin: auto;
-    }
-
-    .card-square {
-        width: 100%;
-        max-width: 100%;
-        margin-top: 16px;
-    }
-
-    .mdl-card__supporting-text {
-    }
-
-    .mdl-button--fab {
-        position: fixed;
-        right: 36px;
-        bottom: 36px;
-        z-index: 999;
-    }
-</style>
 
 <%ArrayList<TestSession> testSessions = ((ArrayList<TestSession>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION));%>
 
@@ -96,10 +69,20 @@
                         <div class="mdl-card__actions mdl-card--border">
                             <form action="${pageContext.request.contextPath}/test/info" method="post">
                                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>"
+                                       value="<%=testSession.getTest().getId()%>">
+                                <button class="mdl-button mdl-js-button mdl-button--primary"
+                                        style="float: left"
+                                        type="submit">
+                                    Детальніше
+                                </button>
+                            </form>
+
+                            <form action="${pageContext.request.contextPath}/test/info" method="post">
+                                <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>"
                                        value="<%=testSession.getId()%>">
                                 <button class="mdl-button mdl-js-button mdl-button--primary"
                                         type="submit">
-                                    Детальніше
+                                    Продовжити
                                 </button>
                             </form>
                         </div>

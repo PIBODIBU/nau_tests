@@ -99,6 +99,7 @@
                             <form action="${pageContext.request.contextPath}/test/info" method="post">
                                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>">
                                 <button class="mdl-button mdl-js-button mdl-button--primary"
+                                        style="float: left;"
                                         type="submit">
                                     Детальніше
                                 </button>

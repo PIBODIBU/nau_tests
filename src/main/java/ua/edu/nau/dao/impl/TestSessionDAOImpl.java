@@ -1,6 +1,5 @@
 package ua.edu.nau.dao.impl;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import ua.edu.nau.dao.TestSessionDAO;
@@ -27,13 +26,7 @@ public class TestSessionDAOImpl implements TestSessionDAO {
 
     @Override
     public Integer insert(TestSession model) {
-        Session session;
-
-        try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-        } catch (HibernateException ex) {
-            session = HibernateUtil.getSessionFactory().openSession();
-        }
+        Session session = HibernateUtil.getSession();
 
         Integer id;
 
@@ -47,13 +40,17 @@ public class TestSessionDAOImpl implements TestSessionDAO {
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<TestSession> getUserSessions(Integer userId) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSession();
+
+        session.beginTransaction();
 
         ArrayList<TestSession> testSessions = new ArrayList<TestSession>(session.createCriteria(TestSession.class)
                 .add(Restrictions.eqProperty("user_id", String.valueOf(userId)))
                 .list());
 
         testSessions.forEach(session::refresh);
+
+        session.getTransaction().commit();
 
         return testSessions;
     }
