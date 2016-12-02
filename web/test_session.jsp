@@ -1,14 +1,9 @@
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
+<%@ page import="ua.edu.nau.helper.constant.Parameter" %>
 <%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
 <%@ page import="ua.edu.nau.model.*" %>
-<%@ page import="java.text.ParseException" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="java.util.Locale" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="org.omg.CORBA.DynAnyPackage.InvalidValue" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Date" %>
 
 <!DOCTYPE HTML>
 
@@ -31,6 +26,7 @@
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/body_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/timer.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">
 </head>
 
 <body onload="timer()">
@@ -101,6 +97,15 @@
     //-->
 </script>
 
+<script type="text/javascript">
+    function onCheckboxChangeState(questionId, answerId, checkboxId) {
+        alert("Answer id" + answerId + "\nState:" + document.getElementById(checkboxId).checked);
+
+        if (document.getElementById(checkboxId).checked) {
+        }
+    }
+</script>
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
@@ -156,37 +161,49 @@
 
     <main class="mdl-layout__content">
         <div class="page-content">
-            <%
-                int questionCounter = 1;
-                for (Question question : test.getQuestions()) {
-            %>
-            <div class="card-square mdl-card mdl-shadow--8dp">
-                <p class="mdl-typography--subhead">
-                    <%=questionCounter%>. <%=question.getText()%>
-                </p>
+            <form method="post" action="${pageContext.request.contextPath}/tests/validator">
+                <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>"/>
 
-                <ul class="list-icon mdl-list" style="display: block">
-                    <%
-                        for (Answer answer : question.getAnswers()) {
-                    %>
-                    <li class="mdl-list__item">
-                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
-                               for="option-<%=answer.getId()%>">
-                            <input type="radio" id="option-<%=answer.getId()%>" class="mdl-radio__button"
-                                   name="<%=question.getId()%>"
-                                   value="2">
-                            <span class="mdl-radio__label"><%=answer.getText()%></span>
-                        </label>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
-            <%
-                    questionCounter++;
-                }
-            %>
+                <%
+                    int questionCounter = 1;
+                    for (Question question : test.getQuestions()) {
+                %>
+                <div class="card-square mdl-card mdl-shadow--8dp">
+                    <p class="mdl-typography--subhead">
+                        <%=questionCounter%>. <%=question.getText()%>
+                    </p>
+
+                    <ul class="list-icon mdl-list" style="display: block">
+                        <%
+                            for (Answer answer : question.getAnswers()) {
+                        %>
+                        <li class="mdl-list__item">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
+                                   for="option-<%=answer.getId()%>">
+                                <input type="radio" id="option-<%=answer.getId()%>" class="mdl-radio__button"
+                                       name="<%=question.getId()%>"
+                                <%--onclick="onCheckboxChangeState(
+                                        '<%=question.getId()%>',
+                                        '<%=answer.getId()%>',
+                                        'option-<%=answer.getId()%>')"--%>
+                                       value="<%=answer.getId()%>">
+                                <span class="mdl-radio__label"><%=answer.getText()%></span>
+                            </label>
+                        </li>
+                        <%
+                            }
+                        %>
+                    </ul>
+                </div>
+                <%
+                        questionCounter++;
+                    }
+                %>
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
+                        type="submit">
+                    <i class="material-icons">done_all</i>
+                </button>
+            </form>
         </div>
     </main>
 </div>

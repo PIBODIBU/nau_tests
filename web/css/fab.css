@@ -1,0 +1,6 @@
+.mdl-button--fab {
+    position: fixed;
+    right: 36px;
+    bottom: 36px;
+    z-index: 999;
+}

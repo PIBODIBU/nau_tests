@@ -9,6 +9,7 @@ import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.Answer;
 import ua.edu.nau.model.TestSession;
 
 import javax.servlet.ServletException;
