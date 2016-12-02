@@ -43,7 +43,7 @@ public class TestSession {
         this.user = user;
     }
 
-    @Column(name = "start_time", columnDefinition = "TIMESTAMP")
+    @Column(name = "start_time", columnDefinition = "TIMESTAMP", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getStartTime() {
         return startTime;

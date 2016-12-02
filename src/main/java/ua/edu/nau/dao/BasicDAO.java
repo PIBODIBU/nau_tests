@@ -11,7 +11,7 @@ public interface BasicDAO<T> {
 
     Integer insert(T model);
 
-    void update(T newModel);
+    void update(T model);
 
     void delete(T model);
 }

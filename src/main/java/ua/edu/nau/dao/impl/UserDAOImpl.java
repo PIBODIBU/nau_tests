@@ -93,7 +93,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public void update(User newModel) {
+    public void update(User model) {
 
     }
 

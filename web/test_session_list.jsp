@@ -86,6 +86,9 @@
                                 </button>
                             </form>
 
+                            <%
+                                if (!testSession.getDone()) {
+                            %>
                             <form action="${pageContext.request.contextPath}/tests/sessions/start" method="post">
                                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>"
                                        value="<%=testSession.getTest().getId()%>">
@@ -96,6 +99,9 @@
                                     Продовжити
                                 </button>
                             </form>
+                            <%
+                                }
+                            %>
                         </div>
                     </div>
                 </div>

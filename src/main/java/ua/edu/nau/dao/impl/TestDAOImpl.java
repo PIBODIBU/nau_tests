@@ -72,7 +72,7 @@ public class TestDAOImpl implements TestDAO {
     }
 
     @Override
-    public void update(Test newModel) {
+    public void update(Test model) {
 
     }
 

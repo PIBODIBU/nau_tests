@@ -8,6 +8,7 @@
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="org.omg.CORBA.DynAnyPackage.InvalidValue" %>
+<%@ page import="java.util.Calendar" %>
 
 <!DOCTYPE HTML>
 
@@ -57,19 +58,20 @@
 </style>
 
 <%
-    //    testSession.getStartTime().getHours()
+    Date dateDeadLine = new Date(testSession.getStartTime().getTime() + test.getTime().getTime());
+    Date now = new Date();
+    Date remainTime = new Date(dateDeadLine.getTime() - now.getTime());
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(remainTime);
 
-    String mins = "20";
-    if (mins == null) mins = "30";
-
-    String secs = "10";
-    if (secs == null) secs = "1";
+    String minutes = String.valueOf(calendar.get(Calendar.MINUTE));
+    String seconds = String.valueOf(calendar.get(Calendar.SECOND));
 %>
 
 <script type="text/javascript">
     <!--
-    var mins = <%=mins%>; // write mins to javascript
-    var secs = <%=secs%>; // write secs to javascript
+    var mins = <%=minutes%>; // write minutes to javascript
+    var secs = <%=seconds%>; // write seconds to javascript
     function timer() {
 // tic tac
         if (--secs == -1) {
@@ -82,9 +84,6 @@
         if (mins < 10) mins = "0" + parseInt(mins, 10);
 
 // display
-        /*document.forma.mins.value = mins;
-         document.forma.secs.value = secs;*/
-
         document.getElementById("div-minutes").innerHTML = mins;
         document.getElementById("div-seconds").innerHTML = secs;
 
@@ -157,25 +156,6 @@
 
     <main class="mdl-layout__content">
         <div class="page-content">
-
-            Test was started: <%=testSession.getStartTime().toString()%>
-            <br/>
-            Test time: <%=test.getTime()%>
-            <br/>
-            <%
-                Date dateDeadLine = new Date(testSession.getStartTime().getTime() + test.getTime().getTime());
-                Date now = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss:S");
-                String deadLine = dateFormat.format(dateDeadLine);
-
-                Boolean hasDeadLineCome = dateDeadLine.before(now);
-            %>
-            Now: <%=now.toString()%>
-            <br/>
-            Deadline: <%=deadLine%>
-            <br/>
-            Has Deadline come: <%=hasDeadLineCome%>
-
             <%
                 int questionCounter = 1;
                 for (Question question : test.getQuestions()) {

@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @WebServlet(urlPatterns = {"/tests/sessions/start"})
 public class TestSessionServlet extends HttpServlet {
@@ -43,10 +45,24 @@ public class TestSessionServlet extends HttpServlet {
         test = testDAO.getById(testId);
         testSession = testSessionDAO.getById(testSessionId);
 
+        if (isDeadlineHasCome(testSession, test)) {
+            response.sendRedirect("/tests/sessions");
+            testSession.setDone(true);
+            testSessionDAO.update(testSession);
+            return;
+        }
+
         request.setAttribute(Attribute.ATTR_USER_MODEL, user);
         request.setAttribute(Attribute.ATTR_TEST_MODEL, test);
         request.setAttribute(Attribute.ATTR_TEST_SESSION_MODEL, testSession);
 
         getServletContext().getRequestDispatcher("/test_session.jsp").forward(request, response);
+    }
+
+    private Boolean isDeadlineHasCome(TestSession testSession, Test test) {
+        Date dateDeadLine = new Date(testSession.getStartTime().getTime() + test.getTime().getTime());
+        Date now = new Date();
+
+        return dateDeadLine.before(now);
     }
 }

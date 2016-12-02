@@ -63,8 +63,12 @@ public class TestSessionDAOImpl implements TestSessionDAO {
     }
 
     @Override
-    public void update(TestSession newModel) {
+    public void update(TestSession model) {
+        Session session = HibernateUtil.getSession();
 
+        session.beginTransaction();
+        session.update(model);
+        session.getTransaction().commit();
     }
 
     @Override

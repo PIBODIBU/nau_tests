@@ -70,7 +70,7 @@ public class SessionDAOImpl implements SessionDAO {
     }
 
     @Override
-    public void update(ua.edu.nau.model.Session newModel) {
+    public void update(ua.edu.nau.model.Session model) {
 
     }
 
