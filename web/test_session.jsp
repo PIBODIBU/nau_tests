@@ -199,7 +199,7 @@
                         questionCounter++;
                     }
                 %>
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
                         type="submit">
                     <i class="material-icons">done_all</i>
                 </button>
