@@ -1,6 +1,5 @@
 package ua.edu.nau.dao.impl;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
@@ -17,11 +16,19 @@ public class TestDAOImpl implements TestDAO {
     @SuppressWarnings("unchecked")
     public ArrayList<Test> getAll() {
         Session session = HibernateUtil.getSession();
+        ArrayList<Test> tests;
 
-        return new ArrayList<Test>(
+        session.beginTransaction();
+
+        tests = new ArrayList<Test>(
                 session.createCriteria(Test.class)
                         .addOrder(Order.asc("name"))
+                        .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                         .list());
+
+        session.getTransaction().commit();
+
+        return tests;
     }
 
     @Override

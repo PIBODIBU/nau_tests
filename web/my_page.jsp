@@ -15,6 +15,7 @@
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 
     <link href="${pageContext.request.contextPath}/css/my_page_style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -42,9 +43,13 @@
         <span class="mdl-layout-title">NAUTests</span>
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/test/sessions">Мої тести</a>
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+            <a class="mdl-navigation__link navigation__sub-link" href="${pageContext.request.contextPath}/me/tests">Мої
+                тести</a>
+            <a class="mdl-navigation__link navigation__sub-link"
+               href="${pageContext.request.contextPath}/tests/sessions">Активні
+                тести</a>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
             </div>
@@ -58,9 +63,9 @@
                     <p class="mdl-typography--display-1-color-contrast">Основна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand card-info-main">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Ім'я користувача
                             </h2>
                         </div>
@@ -71,9 +76,9 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand card-info-main">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Логін
                             </h2>
                         </div>
@@ -84,9 +89,9 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand card-info-main">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Email
                             </h2>
                         </div>
@@ -101,9 +106,9 @@
                     <p class="mdl-typography--display-1-color-contrast">Системна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand card-info-system">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Ідентифікатор користувача
                             </h2>
                         </div>
@@ -114,9 +119,9 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand card-info-system">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Рівень доступу
                             </h2>
                         </div>
@@ -127,13 +132,39 @@
                     </div>
                 </div>
 
+                <div class="mdl-cell mdl-cell--3-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-system">
+                            <h2 class="mdl-card__title-text">Ідентифікатор рівня доступу
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <%=user.getUserRole().getRoleId()%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--3-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-system">
+                            <h2 class="mdl-card__title-text">Код рівня доступу
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <%=user.getUserRole().getRoleCode()%>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mdl-cell mdl-cell--12-col">
                     <p class="mdl-typography--display-1-color-contrast">Інформація про тести</p>
                 </div>
 
                 <div class="mdl-cell mdl-cell--12-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title mdl-card--expand">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-tests-done">
                             <h2 class="mdl-card__title-text">Завершені тести
                             </h2>
                         </div>

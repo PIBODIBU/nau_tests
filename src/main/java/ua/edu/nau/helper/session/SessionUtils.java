@@ -57,6 +57,10 @@ public class SessionUtils {
         return getUser() != null;
     }
 
+    public Integer getUserAccesLevel() {
+        return getUser().getUserRole().getRoleCode();
+    }
+
     public void setUser(User user) {
         httpSession.setAttribute(ATTR_USER, user);
     }

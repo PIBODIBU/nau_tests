@@ -21,6 +21,15 @@
 
 <%ArrayList<TestSession> testSessions = ((ArrayList<TestSession>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION));%>
 
+<style>
+    .mdl-button--fab {
+        position: fixed;
+        right: 36px;
+        bottom: 36px;
+        z-index: 999;
+    }
+</style>
+
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
@@ -37,7 +46,7 @@
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/test/sessions">Мої тести</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests/sessions">Мої тести</a>
             <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
@@ -77,8 +86,10 @@
                                 </button>
                             </form>
 
-                            <form action="${pageContext.request.contextPath}/test/info" method="post">
+                            <form action="${pageContext.request.contextPath}/tests/sessions/start" method="post">
                                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>"
+                                       value="<%=testSession.getTest().getId()%>">
+                                <input type="hidden" name="<%=Parameter.PARAM_TEST_SESSION_ID%>"
                                        value="<%=testSession.getId()%>">
                                 <button class="mdl-button mdl-js-button mdl-button--primary"
                                         type="submit">

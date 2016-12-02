@@ -4,7 +4,9 @@ import com.sun.istack.internal.Nullable;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.hibernate.type.StringType;
 import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.hibernate.HibernateUtil;
@@ -14,8 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+    @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<User> getAll() {
-        return null;
+        Session session = HibernateUtil.getSession();
+        ArrayList<User> users;
+
+        session.beginTransaction();
+
+        users = new ArrayList<User>(
+                session.createCriteria(User.class)
+                        .addOrder(Order.asc("name"))
+                        .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+                        .list());
+
+        session.getTransaction().commit();
+
+        return users;
     }
 
     public User get(Integer id) {

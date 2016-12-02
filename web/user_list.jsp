@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 
+<%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <%@ page import="ua.edu.nau.model.User" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,6 +13,8 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+    <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -19,19 +22,23 @@
     body {
         width: 100%;
         max-width: 100%;
+        background-color: #f9f9f9;
     }
 
     .page-content {
         width: 80%;
-        margin: 24px auto auto;
+        margin: auto;
     }
 
-    table {
+    .mdl-data-table {
         width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        margin: 24px auto auto;
     }
 </style>
 
-<%ArrayList<User> users = ((ArrayList<User>) request.getAttribute("users"));%>
+<%ArrayList<User> users = ((ArrayList<User>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_USER));%>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
@@ -39,72 +46,55 @@
             <span class="mdl-layout-title">Користувачі</span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="">Link</a>
             </nav>
         </div>
     </header>
+
     <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Користувачі</span>
+        <span class="mdl-layout-title">NAUTests</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
+            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+            <a class="mdl-navigation__link navigation__sub-link" href="${pageContext.request.contextPath}/me/tests">Мої
+                тести</a>
+            <a class="mdl-navigation__link navigation__sub-link"
+               href="${pageContext.request.contextPath}/tests/sessions">Активні
+                тести</a>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+            </div>
         </nav>
     </div>
+
     <main class="mdl-layout__content">
         <div class="page-content">
-            <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <thead>
                 <tr>
-                    <th class=" mdl-data-table__cell--non-numeric">Id</th>
-                    <th class=" mdl-data-table__cell--non-numeric">Name</th>
-                    <th class=" mdl-data-table__cell--non-numeric">Username</th>
-                    <th class=" mdl-data-table__cell--non-numeric">Password</th>
-                    <th class=" mdl-data-table__cell--non-numeric">Email</th>
+                    <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
+                    <th class="mdl-data-table__cell--non-numeric">Email</th>
+                    <th class="mdl-data-table__cell--non-numeric">Рівень доступу</th>
                 </tr>
                 </thead>
-                <tbody>
 
                 <%
                     for (User user : users) {
                 %>
                 <tr>
-                    <td class="mdl-data-table__cell--non-numeric"><%=user.getId()%>
                     <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
-                    <td class="mdl-data-table__cell--non-numeric"><%=user.getUsername()%>
-                    <td class="mdl-data-table__cell--non-numeric"><%=user.getPassword()%>
+                    </td>
                     <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
+                    </td>
+                    <td class="mdl-data-table__cell--non-numeric"><%=user.getUserRole().getDescription()%>
                     </td>
                 </tr>
                 <%
                     }
                 %>
-                </tbody>
             </table>
         </div>
     </main>
 </div>
-
-<%--<h2>User roles</h2>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Code</th>
-        <th>Description</th>
-    </tr>
-
-    <%
-        for (User user : users) {
-    %>
-    <tr>
-        <td><%=user.getUserRole().getRoleId()%>
-        </td>
-        <td><%=user.getUserRole().getRoleCode()%>
-        </td>
-        <td><%=user.getUserRole().getDescription()%>
-        </td>
-    </tr>
-    <%
-        }
-    %>
-</table>--%>
 </body>
 </html>

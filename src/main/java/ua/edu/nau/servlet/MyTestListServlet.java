@@ -3,6 +3,7 @@ package ua.edu.nau.servlet;
 import ua.edu.nau.dao.TestDAO;
 import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
+import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
 import ua.edu.nau.model.Test;
 
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/tests"})
-public class TestListServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/me/tests"})
+public class MyTestListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
@@ -26,10 +27,25 @@ public class TestListServlet extends HttpServlet {
             return;
         }
 
-        ArrayList<Test> tests = testDAO.getAll();
+        if (sessionUtils.getUserAccesLevel().equals(RoleCode.STUDENT)) {
+            response.sendRedirect("/me");
+            return;
+        }
+
+        ArrayList<Test> tests = testDAO.getUserTests(sessionUtils.getUser());
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST, tests);
 
         getServletContext().getRequestDispatcher("/test_list.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+
+        if (!sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/login");
+            return;
+        }
     }
 }

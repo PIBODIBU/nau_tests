@@ -1,6 +1,7 @@
 package ua.edu.nau.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "test_sessions")
@@ -8,6 +9,7 @@ public class TestSession {
     private Integer id;
     private Test test;
     private User user;
+    private Date startTime;
     private Boolean isDone;
 
     @Id
@@ -39,6 +41,16 @@ public class TestSession {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Column(name = "start_time", columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     @Column(name = "is_done")

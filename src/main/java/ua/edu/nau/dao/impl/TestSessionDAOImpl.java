@@ -21,7 +21,14 @@ public class TestSessionDAOImpl implements TestSessionDAO {
 
     @Override
     public TestSession getById(Integer id) {
-        return null;
+        Session session = HibernateUtil.getSession();
+
+        session.beginTransaction();
+        TestSession testSession = ((TestSession) session.get(TestSession.class, id));
+        session.refresh(testSession);
+        session.getTransaction().commit();
+
+        return testSession;
     }
 
     @Override
