@@ -5,9 +5,12 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%User user = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
+
 <html>
 <head>
-    <title>Вхід</title>
+    <title><%=user.getName()%>
+    </title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
@@ -18,12 +21,6 @@
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 <body>
-
-<%User user = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
-
-<style>
-
-</style>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">

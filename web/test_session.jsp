@@ -163,6 +163,7 @@
         <div class="page-content">
             <form method="post" action="${pageContext.request.contextPath}/tests/validator">
                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>"/>
+                <input type="hidden" name="<%=Parameter.PARAM_TEST_SESSION_ID%>" value="<%=testSession.getId()%>"/>
 
                 <%
                     int questionCounter = 1;

@@ -1,3 +1,4 @@
+<%@ page import="ua.edu.nau.helper.TimeFormatter" %>
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <%@ page import="ua.edu.nau.model.TestSession" %>
 <%@ page import="ua.edu.nau.model.User" %>
@@ -5,9 +6,12 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%User user = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
+
 <html>
 <head>
-    <title>Вхід</title>
+    <title><%=user.getName()%>
+    </title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
@@ -19,10 +23,18 @@
 </head>
 <body>
 
-<%User user = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
-
 <style>
+    .mdl-card {
+        padding: 0;
+    }
 
+    .mdl-data-table {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        margin: 0;
+        border-width: 0;
+    }
 </style>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -169,26 +181,42 @@
                             </h2>
                         </div>
 
-                        <div class="mdl-card__supporting-text">
-                            <ul class="list-item mdl-list">
-                                <%
-                                    int counter = 1;
+                        <table class="mdl-data-table mdl-js-data-table">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th class="mdl-data-table__cell--non-numeric">Назва</th>
+                                <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
+                                <th>Правильних відповідей</th>
+                                <th>К-ть питань</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                int counter = 1;
 
-                                    for (TestSession testSession : user.getTestSessions()) {
-                                        if (testSession.getDone()) {
-                                %>
-                                <li class="mdl-list__item">
-                                    <span class="mdl-list__item-primary-content">
-                                        <%=counter%>. <%=testSession.getTest().getName()%>
-                                    </span>
-                                </li>
-                                <%
-                                            counter++;
-                                        }
+                                for (TestSession testSession : user.getTestSessions()) {
+                                    if (testSession.getDone()) {
+                            %>
+                            <tr>
+                                <td><%=counter%>
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
+                                </td>
+                                <td><%=testSession.getCorrectAnswers()%>
+                                </td>
+                                <td><%=testSession.getTest().getQuestions().size()%>
+                                </td>
+                            </tr>
+                            <%
+                                        counter++;
                                     }
-                                %>
-                            </ul>
-                        </div>
+                                }
+                            %>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

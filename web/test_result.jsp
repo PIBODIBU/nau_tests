@@ -42,13 +42,9 @@
         padding-bottom: 24px;
     }
 
-    .mdl-card > p {
-        padding: 24px 24px 0;
-        margin-bottom: 0;
-    }
-
-    .mdl-card > ul {
-        padding: 0;
+    .mdl-card__title {
+        background: #2196F3;
+        color: #ffffff;
     }
 </style>
 
@@ -103,8 +99,18 @@
 
     <main class="mdl-layout__content">
         <div class="page-content">
-            <%=correctAnswersCount%> / <%=answersCount%>
-        </div>
+            <div class="card-square mdl-card mdl-shadow--8dp">
+                <div class="mdl-card__title mdl-card--expand card-info-title-main">
+                    <h2 class="mdl-card__title-text">Результат
+                    </h2>
+                </div>
+
+                <div class="mdl-card__supporting-text">
+                    <h6><%=correctAnswersCount%> <%=correctAnswersCount == 1 ? "правильна відповідь" : "правильних відповідей"%>
+                        з <%=answersCount%>
+                    </h6>
+                </div>
+            </div>
     </main>
 </div>
 </body>

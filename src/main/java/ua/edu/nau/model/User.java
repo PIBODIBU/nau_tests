@@ -72,6 +72,7 @@ public class User {
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OrderBy("id DESC")
     public Set<TestSession> getTestSessions() {
         return testSessions;
     }

@@ -6,6 +6,7 @@ import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.dao.impl.TestSessionDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
+import ua.edu.nau.helper.TestSessionValidator;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.session.SessionUtils;
@@ -26,6 +27,7 @@ public class TestSessionListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         UserDAO userDAO = new UserDAOImpl();
+        TestSessionDAO testSessionDAO = new TestSessionDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
@@ -34,6 +36,12 @@ public class TestSessionListServlet extends HttpServlet {
 
         ArrayList<TestSession> testSessions =
                 new ArrayList<TestSession>(userDAO.getById(sessionUtils.getUser().getId()).getTestSessions());
+
+        testSessions.stream().filter(testSession ->
+                TestSessionValidator.isTimeUp(testSession, testSession.getTest())).forEach(testSession -> {
+            testSession.setDone(true);
+            testSessionDAO.update(testSession);
+        });
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION, testSessions);
 

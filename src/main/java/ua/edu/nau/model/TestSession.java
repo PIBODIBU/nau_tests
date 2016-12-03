@@ -11,6 +11,7 @@ public class TestSession {
     private User user;
     private Date startTime;
     private Boolean isDone;
+    private Integer correctAnswers = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,5 +61,14 @@ public class TestSession {
 
     public void setDone(Boolean done) {
         isDone = done;
+    }
+
+    @Column(name = "correct_answers")
+    public Integer getCorrectAnswers() {
+        return correctAnswers;
+    }
+
+    public void setCorrectAnswers(Integer correctAnswers) {
+        this.correctAnswers = correctAnswers;
     }
 }

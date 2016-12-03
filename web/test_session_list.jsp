@@ -28,6 +28,17 @@
         bottom: 36px;
         z-index: 999;
     }
+
+    .mdl-card__actions {
+        display: table;
+    }
+
+    .text-result {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+        margin-right: 16px;
+    }
 </style>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -62,14 +73,31 @@
                 %>
                 <div class="mdl-cell mdl-cell--6-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
+                        <%
+                            if (testSession.getDone()) {
+                        %>
                         <div class="mdl-card__title mdl-card--expand" style="
                                 padding-bottom: 8px;
                                 padding-left: 16px;
                                 color: #ffffff;
-                                background-color: <%=testSession.getDone()?"#F44336":"#2196F3"%>;">
+                                background-color: #F44336;">
                             <h2 class="mdl-card__title-text"><%=testSession.getTest().getName()%>
                             </h2>
                         </div>
+                        <%
+                        } else {
+                        %>
+                        <div class="mdl-card__title mdl-card--expand" style="
+                                padding-bottom: 8px;
+                                padding-left: 16px;
+                                color: #ffffff;
+                                background-color: #2196F3;">
+                            <h2 class="mdl-card__title-text"><%=testSession.getTest().getName()%>
+                            </h2>
+                        </div>
+                        <%
+                            }
+                        %>
 
                         <div class="mdl-card__supporting-text">
                             <%=testSession.getTest().getDescription()%>
@@ -99,6 +127,13 @@
                                     Продовжити
                                 </button>
                             </form>
+                            <%
+                            } else {
+                            %>
+                            <p class="mdl-typography--subhead-color-contrast text-result">
+                                Результат
+                                <%=testSession.getCorrectAnswers()%> / <%=testSession.getTest().getQuestions().size()%>
+                            </p>
                             <%
                                 }
                             %>

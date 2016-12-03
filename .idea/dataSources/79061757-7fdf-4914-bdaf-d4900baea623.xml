@@ -234,25 +234,30 @@
       <data-type>tinyint(1)|0</data-type>
       <default-expression>&apos;0&apos;</default-expression>
     </column>
-    <index id="64" parent="13" name="test_id">
+    <column id="64" parent="13" name="correct_answers">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <index id="65" parent="13" name="test_id">
       <columns>test_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="65" parent="13" name="user_id">
+    <index id="66" parent="13" name="user_id">
       <columns>user_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="66" parent="13" name="PRIMARY">
+    <key id="67" parent="13" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="67" parent="13" name="test_sessions_ibfk_2">
+    <foreign-key id="68" parent="13" name="test_sessions_ibfk_2">
       <columns>test_id</columns>
       <ref-key>~.tests.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="68" parent="13" name="test_sessions_ibfk_1">
+    <foreign-key id="69" parent="13" name="test_sessions_ibfk_1">
       <columns>user_id</columns>
       <ref-key>~.users.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
