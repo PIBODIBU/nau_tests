@@ -113,62 +113,62 @@
     }
 </script>
 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title"><%=test.getName()%></span>
-            <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <h6>Залишилося часу:&nbsp;</h6>
-                <h6 id="div-minutes"></h6>
-                <h6>:</h6>
-                <h6 id="div-seconds"></h6>
+<form method="post" action="${pageContext.request.contextPath}/tests/validator">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title"><%=test.getName()%></span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <h6>Залишилося часу:&nbsp;</h6>
+                    <h6 id="div-minutes"></h6>
+                    <h6>:</h6>
+                    <h6 id="div-seconds"></h6>
+                </nav>
+            </div>
+        </header>
+
+        <%
+            if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+        %>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">NAUTests</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+                <a class="mdl-navigation__link navigation__sub-link"
+                   href="${pageContext.request.contextPath}/tests/sessions">Активні
+                    тести</a>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+                </div>
             </nav>
         </div>
-    </header>
+        <%
+        } else {
+        %>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">NAUTests</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+                <a class="mdl-navigation__link navigation__sub-link" href="${pageContext.request.contextPath}/me/tests">Мої
+                    тести</a>
+                <a class="mdl-navigation__link navigation__sub-link"
+                   href="${pageContext.request.contextPath}/tests/sessions">Активні
+                    тести</a>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+                </div>
+            </nav>
+        </div>
+        <%
+            }
+        %>
 
-    <%
-        if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
-    %>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link navigation__sub-link"
-               href="${pageContext.request.contextPath}/tests/sessions">Активні
-                тести</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
-    <%
-    } else {
-    %>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link navigation__sub-link" href="${pageContext.request.contextPath}/me/tests">Мої
-                тести</a>
-            <a class="mdl-navigation__link navigation__sub-link"
-               href="${pageContext.request.contextPath}/tests/sessions">Активні
-                тести</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
-    <%
-        }
-    %>
-
-    <main class="mdl-layout__content">
-        <div class="page-content">
-            <form method="post" action="${pageContext.request.contextPath}/tests/validator">
+        <main class="mdl-layout__content">
+            <div class="page-content">
                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>"/>
                 <input type="hidden" name="<%=Parameter.PARAM_TEST_SESSION_ID%>" value="<%=testSession.getId()%>"/>
 
@@ -204,13 +204,14 @@
                         questionCounter++;
                     }
                 %>
-            </form>
-        </div>
-    </main>
+            </div>
+        </main>
 
-    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-        <i class="material-icons">done_all</i>
-    </button>
-</div>
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">done_all</i>
+        </button>
+    </div>
+</form>
+
 </body>
 </html>
