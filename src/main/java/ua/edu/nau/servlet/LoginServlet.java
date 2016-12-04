@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute(Attribute.BAD_LOGIN_OR_PASSWORD, false);
+        request.setAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD, false);
 
         String username = request.getParameter(Parameter.PARAM_USERNAME);
         String password = request.getParameter(Parameter.PARAM_PASSWORD);
@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 
     private void onBadCredentials(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Bad username or password");
-        request.setAttribute(Attribute.BAD_LOGIN_OR_PASSWORD, true);
+        request.setAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD, true);
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
     }
 }

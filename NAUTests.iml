@@ -85,5 +85,7 @@
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.22.0-CR1" level="project" />
     <orderEntry type="library" name="Maven: javax.transaction:jta:1.1" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.5" level="project" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="jquery.scrollTo" level="application" />
   </component>
 </module>

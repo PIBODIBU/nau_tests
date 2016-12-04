@@ -1,7 +1,7 @@
 package ua.edu.nau.helper.constant;
 
 public class Attribute {
-    public static final String BAD_LOGIN_OR_PASSWORD = "bad_login_or_password";
+    public static final String ATTR_BAD_LOGIN_OR_PASSWORD = "bad_login_or_password";
     public static final String ATTR_USER_MODEL = "user_model";
     public static final String ATTR_TEST_MODEL = "test_model";
     public static final String ATTR_TEST_SESSION_MODEL = "test_session_model";

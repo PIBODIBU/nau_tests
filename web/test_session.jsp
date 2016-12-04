@@ -26,7 +26,7 @@
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/body_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/timer.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">
+    <%--<link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">--%>
 </head>
 
 <body onload="timer()">
@@ -50,6 +50,13 @@
 
     .mdl-card > ul {
         padding: 0;
+    }
+
+    .mdl-button--fab {
+        position: fixed;
+        right: 36px;
+        bottom: 36px;
+        z-index: 999;
     }
 </style>
 
@@ -172,6 +179,7 @@
                 <div class="card-square mdl-card mdl-shadow--8dp">
                     <p class="mdl-typography--subhead">
                         <%=questionCounter%>. <%=question.getText()%>
+                        <img src="<%=question.getImgUrl() == null ? "" :question.getImgUrl()%>"/>
                     </p>
 
                     <ul class="list-icon mdl-list" style="display: block">
@@ -183,10 +191,6 @@
                                    for="option-<%=answer.getId()%>">
                                 <input type="radio" id="option-<%=answer.getId()%>" class="mdl-radio__button"
                                        name="<%=question.getId()%>"
-                                <%--onclick="onCheckboxChangeState(
-                                        '<%=question.getId()%>',
-                                        '<%=answer.getId()%>',
-                                        'option-<%=answer.getId()%>')"--%>
                                        value="<%=answer.getId()%>">
                                 <span class="mdl-radio__label"><%=answer.getText()%></span>
                             </label>
@@ -200,13 +204,13 @@
                         questionCounter++;
                     }
                 %>
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-                        type="submit">
-                    <i class="material-icons">done_all</i>
-                </button>
             </form>
         </div>
     </main>
+
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+        <i class="material-icons">done_all</i>
+    </button>
 </div>
 </body>
 </html>

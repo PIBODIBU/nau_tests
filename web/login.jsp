@@ -1,7 +1,16 @@
 <%@ page import="ua.edu.nau.helper.constant.Parameter" %>
+<%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <!DOCTYPE HTML>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    Boolean isCredentialsBad = false;
+
+    if (request.getAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD) != null) {
+        isCredentialsBad = ((Boolean) request.getAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD));
+    }
+%>
 
 <html>
 <head>
@@ -112,15 +121,17 @@
                     <form action="${pageContext.request.contextPath}/login" method="post">
                         <div class="mdl-card__supporting-text">
                             <div class="text-fields-wrapper">
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text"
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  <%=isCredentialsBad?"is-invalid":""%>">
+                                    <input class="mdl-textfield__input"
+                                           type="text"
                                            name="<%=Parameter.PARAM_USERNAME%>"
                                            id="username">
                                     <label class="mdl-textfield__label" for="username">Логін</label>
                                 </div>
 
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="password"
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%=isCredentialsBad?"is-invalid":""%>">
+                                    <input class="mdl-textfield__input"
+                                           type="password"
                                            name="<%=Parameter.PARAM_PASSWORD%>"
                                            id="password">
                                     <label class="mdl-textfield__label" for="password">Пароль</label>
