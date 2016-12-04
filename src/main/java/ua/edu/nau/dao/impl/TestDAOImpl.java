@@ -11,7 +11,7 @@ import ua.edu.nau.model.User;
 
 import java.util.ArrayList;
 
-public class TestDAOImpl implements TestDAO {
+public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Test> getAll() {
@@ -64,11 +64,6 @@ public class TestDAOImpl implements TestDAO {
         session.getTransaction().commit();
 
         return test;
-    }
-
-    @Override
-    public Integer insert(Test model) {
-        return null;
     }
 
     @Override

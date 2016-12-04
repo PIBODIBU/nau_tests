@@ -8,7 +8,7 @@ import ua.edu.nau.model.TestSession;
 
 import java.util.ArrayList;
 
-public class TestSessionDAOImpl implements TestSessionDAO {
+public class TestSessionDAOImpl extends BasicDAOImpl<TestSession> implements TestSessionDAO {
     @Override
     public ArrayList<TestSession> getAll() {
         return null;
@@ -31,7 +31,7 @@ public class TestSessionDAOImpl implements TestSessionDAO {
         return testSession;
     }
 
-    @Override
+   /* @Override
     public Integer insert(TestSession model) {
         Session session = HibernateUtil.getSession();
 
@@ -42,7 +42,7 @@ public class TestSessionDAOImpl implements TestSessionDAO {
         session.getTransaction().commit();
 
         return id;
-    }
+    }*/
 
     @Override
     @SuppressWarnings("unchecked")

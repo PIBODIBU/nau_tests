@@ -12,6 +12,15 @@ public class Question {
     private String imgUrl;
     private Set<Answer> answers;
 
+    public Question() {
+    }
+
+    public Question(Test test, String text, String imgUrl) {
+        this.test = test;
+        this.text = text;
+        this.imgUrl = imgUrl;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -4,6 +4,7 @@
 <%@ page import="ua.edu.nau.helper.constant.Parameter" %>
 <%@ page import="ua.edu.nau.model.Test" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="ua.edu.nau.helper.TimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -93,6 +94,9 @@
 
                         <div class="mdl-card__supporting-text">
                             <%=test.getDescription()%>
+                            <br/>
+                            Час виконання
+                            <%=TimeFormatter.dateToHumanMinutes(test.getTime())%>
                         </div>
 
                         <div class="mdl-card__actions mdl-card--border">
