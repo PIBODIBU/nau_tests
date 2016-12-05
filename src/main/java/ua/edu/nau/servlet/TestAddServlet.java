@@ -7,6 +7,7 @@ import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.Answer;
 import ua.edu.nau.model.Question;
 import ua.edu.nau.model.Test;
 import ua.edu.nau.model.User;
@@ -35,45 +36,44 @@ public class TestAddServlet extends HttpServlet {
         String testName, testDescription, testTime;
         TestDAO testDAO = new TestDAOImpl();
         UserDAO userDAO = new UserDAOImpl();
-        ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<Answer> answersList = new ArrayList<>();
         Test test;
         User user;
         Integer questionsCount = Integer.valueOf(request.getParameter(Parameter.PARAM_ANSWER_COUNT));
 
-        String a = request.getParameter("answer_radio-1");
-        System.out.println(a);
-
-        for (int i = 1; i <= questionsCount; i++) {
+        for (int qCounter = 1; qCounter <= questionsCount; qCounter++) {
             // Question text
-            String[] questionsText = request.getParameterValues(Parameter.PARAM_QUESTION_TEXT + String.valueOf(i));
+            String[] questionsText = request.getParameterValues(Parameter.PARAM_QUESTION_TEXT + String.valueOf(qCounter));
             if (questionsText != null)
                 for (String question : questionsText) {
                     System.out.println("Question: " + question);
                 }
 
+            // Correct answer
+            String correctAnswer =
+                    request.getParameter(Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(qCounter));
+
             // Answers
-            String[] answers = request.getParameterValues(Parameter.PARAM_ANSWER_TEXT + String.valueOf(i));
+            String[] answers = request.getParameterValues(Parameter.PARAM_ANSWER_TEXT + String.valueOf(qCounter));
             if (answers != null)
-                for (int j = 0; j < answers.length; j++) {
-                    System.out.println("    Answer text: " + answers[j]);
+                for (int i = 0; i < answers.length; i++) {
+                    Answer answerModel = new Answer();
 
-                    // Check if answer is correct
-                    String[] correctAnswers = request.getParameterValues(Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(i));
+                    answerModel.setText(answers[i]);
 
-                    if (correctAnswers != null) {
-                        for (String correctAnswer : correctAnswers) {
-                            if (correctAnswer.equals("on"))
-                                System.out.println("    Correct answer [" +
-                                        Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(i)
-                                        + "] [" + correctAnswer + "]: " + answers[j]);
-                        }
-
-                        /*System.out.println("    Correct answer [" +
-                                Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(j)
-                                + "] [" + correctAnswers + "]: " + answers[j]);*/
+                    if (i == Integer.valueOf(correctAnswer) - 1) {
+                        // Answer is correct
+                        answerModel.setCorrect(true);
+                    } else {
+                        // Common answer
+                        answerModel.setCorrect(false);
                     }
+
+                    answersList.add(answerModel);
                 }
         }
+
+        System.out.println(answersList);
 
        /* if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
