@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
 
-    <link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/fab-menu.css" rel="stylesheet">
 </head>
 
 <body onload="addNewQuestion()">
@@ -64,7 +65,6 @@
     const PREFIX_ID_QUESTION_TEXT = "question-text-";
     const PREFIX_ID_QUESTION_IMG_URL = "question-img-url-";
     const PREFIX_ID_ANSWERS_LIST = "answers-list-";
-    const PREFIX_ID_ANSWERS_RADIO_GROUP = "radio-group-";
 
     var counter = 1;
     var answersCounter = 1;
@@ -72,8 +72,12 @@
     function createGrid(id) {
         var previousGrid;
 
-        previousGrid = document.querySelectorAll(".mdl-grid");
-        previousGrid = previousGrid[previousGrid.length - 1];
+        if (counter == 1) {
+            previousGrid = document.getElementById("title-questions");
+        } else {
+            previousGrid = document.querySelectorAll(".mdl-grid");
+            previousGrid = previousGrid[previousGrid.length - 1];
+        }
 
         var grid = document.createElement("div");
 
@@ -189,11 +193,40 @@
         return ul;
     }
 
-    function createAnswer(list, radioButtonId, radioGroupName) {
+    var radioFields = [];
+
+    class RadioField {
+        /*counter;
+         radioButton;
+         textField;*/
+
+        constructor(counter, radioButton, textField) {
+            this.counter = counter;
+            this.radioButton = radioButton;
+            this.textField = textField;
+        }
+
+        getCounter() {
+            return this.counter;
+        }
+
+        getRadioButton() {
+            return this.radioButton;
+        }
+
+        getTextField() {
+            return this.textField;
+        }
+    }
+
+    function createAnswer(list, questionCounter, radioButtonId, radioGroupName) {
+        if (radioFields[questionCounter] == undefined)
+            radioFields[questionCounter] = [];
+
         var li = document.createElement("li");
         var label = document.createElement("label");
         var radioButton = document.createElement("input");
-        var input = createInput("text", "", "<%=Parameter.PARAM_ANSWER_TEXT%>");
+        var input = createInput("text", "", "<%=Parameter.PARAM_ANSWER_TEXT%>" + questionCounter);
         var inputLabel = createInputLabel(input, "Відповідь");
         var inputWrapper = createInputWrapper("");
         var span = document.createElement("span");
@@ -222,6 +255,15 @@
 
         answersCounter++;
 
+        radioFields[questionCounter].push(new RadioField(
+                radioFields[questionCounter].length == 0 ?
+                        1 : radioFields[questionCounter][radioFields[questionCounter].length - 1].getCounter() + 1,
+                radioButton,
+                input
+        ));
+
+        radioButton.setAttribute("value", radioFields[questionCounter].slice(-1)[0].getCounter());
+
         return li;
     }
 
@@ -229,11 +271,16 @@
         var grid, cell, inputWrapper, input, inputLabel, title,
                 answerList;
 
+        var currC = counter;
+
+        var inputQCounter = document.getElementById("input-question-counter");
+        inputQCounter.setAttribute("value", String(counter));
+
         // Question main info
         grid = createGrid(PREFIX_ID_GRID + counter);
         cell = createCell(PREFIX_ID_CELL + "main-" + counter, 12);
         inputWrapper = createInputWrapper(PREFIX_ID_INPUT_WRAPPER + counter);
-        input = createInput("text", PREFIX_ID_QUESTION_TEXT + counter, "<%=Parameter.PARAM_QUESTION_TEXT%>");
+        input = createInput("text", PREFIX_ID_QUESTION_TEXT + counter, "<%=Parameter.PARAM_QUESTION_TEXT%>" + counter);
         inputLabel = createInputLabel(input, "Текст питання");
 
         // Add main info
@@ -244,7 +291,7 @@
 
         // Question main info
         inputWrapper = createInputWrapper();
-        input = createInput("url", PREFIX_ID_QUESTION_IMG_URL + counter, "<%=Parameter.PARAM_QUESTION_IMAGE_URL%>");
+        input = createInput("url", PREFIX_ID_QUESTION_IMG_URL + counter, "<%=Parameter.PARAM_QUESTION_IMAGE_URL%>" + counter);
         inputLabel = createInputLabel(input, "Посилання на фото");
 
         // Add main info
@@ -259,14 +306,20 @@
         answerList = createList(PREFIX_ID_ANSWERS_LIST);
         grid.appendChild(cell);
         cell.appendChild(title);
-        var currC = counter;
         cell.appendChild(createButton("add", "blue-500", function () {
             createAnswer(
                     answerList,
+                    currC,
                     PREFIX_ID_INPUT_ANSWERS_CHECKBOX + String("is-correct-" + answersCounter),
-                    PREFIX_ID_ANSWERS_RADIO_GROUP + currC);
+                    "<%=Parameter.PARAM_ANSWER_IS_CORRECT%>" + currC);
             componentHandler.upgradeDom();
         }));
+
+        createAnswer(
+                answerList,
+                currC,
+                PREFIX_ID_INPUT_ANSWERS_CHECKBOX + String("is-correct-" + answersCounter),
+                "<%=Parameter.PARAM_ANSWER_IS_CORRECT%>" + currC);
 
         // Answers list
         cell = createCell(PREFIX_ID_CELL + "answers-" + counter, 12);
@@ -288,31 +341,33 @@
     }
 </script>
 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Новий тест</span>
-            <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
+<form action="${pageContext.request.contextPath}/tests/add" method="post">
+    <input id="input-question-counter" type="hidden" name="<%=Parameter.PARAM_ANSWER_COUNT%>">
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Новий тест</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                </nav>
+            </div>
+        </header>
+
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">NAUTests</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+                </div>
             </nav>
         </div>
-    </header>
 
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
-
-    <main class="mdl-layout__content">
-        <div class="page-content" id="top">
-            <form action="${pageContext.request.contextPath}/tests/add" method="post">
+        <main class="mdl-layout__content">
+            <div class="page-content" id="top">
                 <p class="mdl-typography--display-1-color-contrast p-title">Основна інформація</p>
 
                 <div class="mdl-grid mdl-shadow--8dp">
@@ -342,24 +397,34 @@
                 </div>
 
                 <p id="title-questions" class="mdl-typography--display-1-color-contrast p-title">Питання</p>
+            </div>
+        </main>
 
-                <button class="mdl-button mdl-js-button mdl-button--primary"
-                        type="submit">
-                    Готово
-                </button>
-            </form>
+        <div class="mdl-button--fab-menu" style="display: inline-block">
+            <button id="fab-add-question"
+                    style="display: block"
+                    type="button"
+                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
+                    onclick="addNewQuestion()">
+                <i class="material-icons">add</i>
+            </button>
+
+            <button id="fab-done"
+                    style="display: block"
+                    class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--fab-menu-item"
+                    type="submit">
+                <i class="material-icons">done_all</i>
+            </button>
         </div>
-    </main>
 
-    <button id="fab-add-question"
-            class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
-            onclick="addNewQuestion()">
-        <i class="material-icons">add</i>
-    </button>
+        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="fab-add-question">
+            Додати питання
+        </div>
 
-    <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="fab-add-question">
-        Додати питання
+        <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="fab-done">
+            Готово
+        </div>
     </div>
-</div>
+</form>
 </body>
 </html>

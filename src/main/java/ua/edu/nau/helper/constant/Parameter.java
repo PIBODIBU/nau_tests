@@ -13,7 +13,8 @@ public class Parameter {
     public static final String PARAM_TEST_TIME = "test_time";
 
     public static final String PARAM_ANSWER_TEXT = "answer_text";
-    public static final String PARAM_ANSWER_IS_CORRECT = "answer_is_correct";
+    public static final String PARAM_ANSWER_IS_CORRECT = "answer_radio-";
+    public static final String PARAM_ANSWER_COUNT = "answer_count";
 
     public static final String PARAM_QUESTION_TEXT = "question_text";
     public static final String PARAM_QUESTION_IMAGE_URL = "question_image_url";

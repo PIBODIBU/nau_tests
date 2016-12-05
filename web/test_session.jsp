@@ -104,22 +104,13 @@
     //-->
 </script>
 
-<script type="text/javascript">
-    function onCheckboxChangeState(questionId, answerId, checkboxId) {
-        alert("Answer id" + answerId + "\nState:" + document.getElementById(checkboxId).checked);
-
-        if (document.getElementById(checkboxId).checked) {
-        }
-    }
-</script>
-
 <form method="post" action="${pageContext.request.contextPath}/tests/validator">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title"><%=test.getName()%></span>
                 <div class="mdl-layout-spacer"></div>
-                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <nav class="mdl-navigation">
                     <h6>Залишилося часу:&nbsp;</h6>
                     <h6 id="div-minutes"></h6>
                     <h6>:</h6>

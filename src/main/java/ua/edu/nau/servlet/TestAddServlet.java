@@ -38,8 +38,44 @@ public class TestAddServlet extends HttpServlet {
         ArrayList<Question> questions = new ArrayList<>();
         Test test;
         User user;
+        Integer questionsCount = Integer.valueOf(request.getParameter(Parameter.PARAM_ANSWER_COUNT));
 
-        if (!sessionUtils.isUserLoggedIn()) {
+        String a = request.getParameter("answer_radio-1");
+        System.out.println(a);
+
+        for (int i = 1; i <= questionsCount; i++) {
+            // Question text
+            String[] questionsText = request.getParameterValues(Parameter.PARAM_QUESTION_TEXT + String.valueOf(i));
+            if (questionsText != null)
+                for (String question : questionsText) {
+                    System.out.println("Question: " + question);
+                }
+
+            // Answers
+            String[] answers = request.getParameterValues(Parameter.PARAM_ANSWER_TEXT + String.valueOf(i));
+            if (answers != null)
+                for (int j = 0; j < answers.length; j++) {
+                    System.out.println("    Answer text: " + answers[j]);
+
+                    // Check if answer is correct
+                    String[] correctAnswers = request.getParameterValues(Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(i));
+
+                    if (correctAnswers != null) {
+                        for (String correctAnswer : correctAnswers) {
+                            if (correctAnswer.equals("on"))
+                                System.out.println("    Correct answer [" +
+                                        Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(i)
+                                        + "] [" + correctAnswer + "]: " + answers[j]);
+                        }
+
+                        /*System.out.println("    Correct answer [" +
+                                Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(j)
+                                + "] [" + correctAnswers + "]: " + answers[j]);*/
+                    }
+                }
+        }
+
+       /* if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
             return;
         }
@@ -47,8 +83,7 @@ public class TestAddServlet extends HttpServlet {
         if (sessionUtils.getUserAccesLevel().equals(RoleCode.STUDENT)) {
             response.sendRedirect("/me");
             return;
-        }
-
+        }*/
 
         testName = request.getParameter(Parameter.PARAM_TEST_NAME);
         testDescription = request.getParameter(Parameter.PARAM_TEST_DESCRIPTION);
@@ -62,7 +97,7 @@ public class TestAddServlet extends HttpServlet {
         test.setTime(createDateFromString(testTime));
         test.setOwner(user);
 
-        testDAO.insert(test);
+//        testDAO.insert(test);
     }
 
     private Date createDateFromString(String timeString) {
