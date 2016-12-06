@@ -235,7 +235,6 @@
       <default-expression>&apos;0&apos;</default-expression>
     </column>
     <column id="64" parent="13" name="correct_answers">
-      <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;0&apos;</default-expression>
     </column>

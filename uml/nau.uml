@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ua.edu.nau</OriginalElement>
+  <nodes>
+    <node x="547.0" y="1008.0">ua.edu.nau.model.TestSession</node>
+    <node x="0.0" y="1008.0">ua.edu.nau.model.Question</node>
+    <node x="1516.5" y="420.0">ua.edu.nau.dao.impl.SessionDAOImpl</node>
+    <node x="627.0" y="441.0">ua.edu.nau.dao.impl.QuestionDAOImpl</node>
+    <node x="0.0" y="1229.0">ua.edu.nau.model.Answer</node>
+    <node x="932.0" y="641.0">ua.edu.nau.helper.constant.Attribute</node>
+    <node x="772.9375" y="278.5">ua.edu.nau.dao.QuestionDAO</node>
+    <node x="655.0" y="1408.0">ua.edu.nau.servlet.UserListServlet</node>
+    <node x="0.0" y="1408.0">ua.edu.nau.filter.TimeZoneFilter</node>
+    <node x="1057.0" y="1544.0">ua.edu.nau.servlet.TestValidatorServlet</node>
+    <node x="0.0" y="1753.0">ua.edu.nau.helper.TestSessionValidator</node>
+    <node x="1071.0" y="1008.0">ua.edu.nau.hibernate.HibernateUtil</node>
+    <node x="459.0" y="1408.0">ua.edu.nau.model.Session</node>
+    <node x="1223.0" y="1408.0">ua.edu.nau.servlet.TestSessionListServlet</node>
+    <node x="370.5625" y="278.5">ua.edu.nau.dao.AnswerDAO</node>
+    <node x="709.0" y="1229.0">ua.edu.nau.servlet.LoginServlet</node>
+    <node x="837.0" y="1408.0">ua.edu.nau.servlet.TestSessionServlet</node>
+    <node x="1112.0" y="1229.0">ua.edu.nau.servlet.TestAddServlet</node>
+    <node x="0.0" y="1659.0">ua.edu.nau.servlet.TestInfoServlet</node>
+    <node x="0.0" y="641.0">ua.edu.nau.helper.constant.Parameter</node>
+    <node x="0.0" y="1544.0">ua.edu.nau.servlet.MyTestListServlet</node>
+    <node x="383.0" y="1544.0">ua.edu.nau.servlet.RegisterServlet</node>
+    <node x="487.0" y="641.0">ua.edu.nau.helper.session.SessionUtils</node>
+    <node x="238.0" y="1408.0">ua.edu.nau.model.UserRole</node>
+    <node x="885.0" y="430.5">ua.edu.nau.dao.impl.TestSessionDAOImpl</node>
+    <node x="375.0" y="441.0">ua.edu.nau.dao.impl.AnswerDAOImpl</node>
+    <node x="1559.5" y="268.0">ua.edu.nau.dao.SessionDAO</node>
+    <node x="480.0" y="1229.0">ua.edu.nau.helper.cookie.CookieUtils</node>
+    <node x="0.0" y="268.0">ua.edu.nau.dao.TestDAO</node>
+    <node x="1239.5" y="420.0">ua.edu.nau.dao.impl.UserDAOImpl</node>
+    <node x="366.0" y="1659.0">ua.edu.nau.servlet.MyPageServlet</node>
+    <node x="766.0" y="1544.0">ua.edu.nau.helper.TimeFormatter</node>
+    <node x="31.0" y="430.5">ua.edu.nau.dao.impl.TestDAOImpl</node>
+    <node x="729.0" y="1659.0">ua.edu.nau.servlet.TestListServlet</node>
+    <node x="711.4375" y="0.0">ua.edu.nau.dao.BasicDAO</node>
+    <node x="1253.0" y="268.0">ua.edu.nau.dao.UserDAO</node>
+    <node x="816.0" y="1008.0">ua.edu.nau.model.Test</node>
+    <node x="255.0" y="1229.0">ua.edu.nau.helper.constant.RoleCode</node>
+    <node x="507.25" y="215.0">ua.edu.nau.dao.impl.BasicDAOImpl</node>
+    <node x="1092.0" y="1659.0">ua.edu.nau.servlet.LogoutServlet</node>
+    <node x="272.0" y="1008.0">ua.edu.nau.model.User</node>
+    <node x="945.0" y="268.0">ua.edu.nau.dao.TestSessionDAO</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ua.edu.nau.dao.impl.TestSessionDAOImpl" target="ua.edu.nau.dao.impl.BasicDAOImpl">
+      <point x="-68.0" y="-77.5" />
+      <point x="953.0" y="390.0" />
+      <point x="700.625" y="390.0" />
+      <point x="82.875" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.TestDAOImpl" target="ua.edu.nau.dao.impl.BasicDAOImpl">
+      <point x="81.0" y="-77.5" />
+      <point x="274.0" y="400.0" />
+      <point x="534.875" y="400.0" />
+      <point x="-82.875" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.UserDAOImpl" target="ua.edu.nau.dao.UserDAO">
+      <point x="0.0" y="-88.0" />
+      <point x="0.0" y="24.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.TestDAO" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-24.5" />
+      <point x="112.0" y="175.0" />
+      <point x="727.2232142857142" y="175.0" />
+      <point x="-94.71428571428578" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.AnswerDAOImpl" target="ua.edu.nau.dao.AnswerDAO">
+      <point x="-58.0" y="-67.0" />
+      <point x="433.0" y="390.0" />
+      <point x="416.5625" y="390.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.BasicDAOImpl" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-77.5" />
+      <point x="617.75" y="195.0" />
+      <point x="790.3660714285714" y="195.0" />
+      <point x="-31.571428571428555" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.SessionDAOImpl" target="ua.edu.nau.dao.SessionDAO">
+      <point x="0.0" y="-88.0" />
+      <point x="0.0" y="24.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.AnswerDAOImpl" target="ua.edu.nau.dao.impl.BasicDAOImpl">
+      <point x="58.0" y="-67.0" />
+      <point x="549.0" y="400.0" />
+      <point x="590.125" y="400.0" />
+      <point x="-27.625" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.SessionDAO" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-24.5" />
+      <point x="1652.0" y="175.0" />
+      <point x="916.6517857142858" y="175.0" />
+      <point x="94.71428571428578" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.TestDAOImpl" target="ua.edu.nau.dao.TestDAO">
+      <point x="-81.0" y="-77.5" />
+      <point x="0.0" y="24.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.TestSessionDAOImpl" target="ua.edu.nau.dao.TestSessionDAO">
+      <point x="68.0" y="-77.5" />
+      <point x="0.0" y="24.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.QuestionDAOImpl" target="ua.edu.nau.dao.QuestionDAO">
+      <point x="59.5" y="-67.0" />
+      <point x="805.5" y="400.0" />
+      <point x="821.9375" y="400.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="ua.edu.nau.dao.AnswerDAO" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-14.0" />
+      <point x="416.5625" y="185.0" />
+      <point x="758.7946428571429" y="185.0" />
+      <point x="-63.14285714285711" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.QuestionDAO" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.TestSessionDAO" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-24.5" />
+      <point x="1089.0" y="195.0" />
+      <point x="853.5089285714286" y="195.0" />
+      <point x="31.571428571428555" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.UserDAO" target="ua.edu.nau.dao.BasicDAO">
+      <point x="0.0" y="-24.5" />
+      <point x="1368.0" y="185.0" />
+      <point x="885.0803571428571" y="185.0" />
+      <point x="63.14285714285711" y="77.5" />
+    </edge>
+    <edge source="ua.edu.nau.dao.impl.QuestionDAOImpl" target="ua.edu.nau.dao.impl.BasicDAOImpl">
+      <point x="-59.5" y="-67.0" />
+      <point x="686.5" y="400.0" />
+      <point x="645.375" y="400.0" />
+      <point x="27.625" y="77.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5000000000000001" x="372.9999999999998" y="1063.0" />
+  <SelectedNodes>
+    <node>ua.edu.nau.model.TestSession</node>
+    <node>ua.edu.nau.model.Question</node>
+    <node>ua.edu.nau.dao.impl.SessionDAOImpl</node>
+    <node>ua.edu.nau.dao.impl.QuestionDAOImpl</node>
+    <node>ua.edu.nau.model.Answer</node>
+    <node>ua.edu.nau.helper.constant.Attribute</node>
+    <node>ua.edu.nau.dao.QuestionDAO</node>
+    <node>ua.edu.nau.servlet.UserListServlet</node>
+    <node>ua.edu.nau.filter.TimeZoneFilter</node>
+    <node>ua.edu.nau.servlet.TestValidatorServlet</node>
+    <node>ua.edu.nau.helper.TestSessionValidator</node>
+    <node>ua.edu.nau.hibernate.HibernateUtil</node>
+    <node>ua.edu.nau.model.Session</node>
+    <node>ua.edu.nau.servlet.TestSessionListServlet</node>
+    <node>ua.edu.nau.dao.AnswerDAO</node>
+    <node>ua.edu.nau.servlet.LoginServlet</node>
+    <node>ua.edu.nau.servlet.TestSessionServlet</node>
+    <node>ua.edu.nau.servlet.TestAddServlet</node>
+    <node>ua.edu.nau.servlet.TestInfoServlet</node>
+    <node>ua.edu.nau.helper.constant.Parameter</node>
+    <node>ua.edu.nau.servlet.MyTestListServlet</node>
+    <node>ua.edu.nau.servlet.RegisterServlet</node>
+    <node>ua.edu.nau.helper.session.SessionUtils</node>
+    <node>ua.edu.nau.model.UserRole</node>
+    <node>ua.edu.nau.dao.impl.TestSessionDAOImpl</node>
+    <node>ua.edu.nau.dao.impl.AnswerDAOImpl</node>
+    <node>ua.edu.nau.dao.SessionDAO</node>
+    <node>ua.edu.nau.helper.cookie.CookieUtils</node>
+    <node>ua.edu.nau.dao.TestDAO</node>
+    <node>ua.edu.nau.dao.impl.UserDAOImpl</node>
+    <node>ua.edu.nau.servlet.MyPageServlet</node>
+    <node>ua.edu.nau.helper.TimeFormatter</node>
+    <node>ua.edu.nau.dao.impl.TestDAOImpl</node>
+    <node>ua.edu.nau.servlet.TestListServlet</node>
+    <node>ua.edu.nau.dao.BasicDAO</node>
+    <node>ua.edu.nau.dao.UserDAO</node>
+    <node>ua.edu.nau.model.Test</node>
+    <node>ua.edu.nau.helper.constant.RoleCode</node>
+    <node>ua.edu.nau.dao.impl.BasicDAOImpl</node>
+    <node>ua.edu.nau.servlet.LogoutServlet</node>
+    <node>ua.edu.nau.model.User</node>
+    <node>ua.edu.nau.dao.TestSessionDAO</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Constructors</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
