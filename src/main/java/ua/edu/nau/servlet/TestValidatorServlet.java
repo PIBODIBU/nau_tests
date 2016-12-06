@@ -7,6 +7,7 @@ import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.dao.impl.TestSessionDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.TestSessionValidator;
+import ua.edu.nau.helper.TimeFormatter;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.session.SessionUtils;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet(urlPatterns = {"/tests/validator"})
 public class TestValidatorServlet extends HttpServlet {
@@ -58,8 +60,8 @@ public class TestValidatorServlet extends HttpServlet {
         user = userDAO.getById(sessionUtils.getUser().getId());
 
         testSession.setDone(true);
+        testSession.setEndTime(new Date());
         testSessionDAO.update(testSession);
-
 
         for (Question question : test.getQuestions()) {
             String[] answers = request.getParameterValues(String.valueOf(question.getId()));

@@ -40,7 +40,7 @@ public class MyTestListServlet extends HttpServlet {
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST, tests);
         request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
 
-        getServletContext().getRequestDispatcher("/test_list.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/my_test_list.jsp").forward(request, response);
     }
 
     @Override

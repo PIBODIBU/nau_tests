@@ -11,6 +11,7 @@ import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.session.SessionUtils;
 import ua.edu.nau.model.Answer;
+import ua.edu.nau.model.Test;
 import ua.edu.nau.model.TestSession;
 import ua.edu.nau.model.User;
 
@@ -48,6 +49,7 @@ public class TestSessionListServlet extends HttpServlet {
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION, testSessions);
         request.setAttribute(Attribute.ATTR_USER_MODEL, user);
+        request.setAttribute(Attribute.ATTR_SESSION_REDIRECT_TO_PAGE, false);
 
         getServletContext().getRequestDispatcher("/test_session_list.jsp").forward(request, response);
     }
@@ -59,6 +61,7 @@ public class TestSessionListServlet extends HttpServlet {
         UserDAO userDAO = new UserDAOImpl();
         TestDAO testDAO = new TestDAOImpl();
         Integer testId = Integer.valueOf(request.getParameter(Parameter.PARAM_TEST_ID));
+        Integer testSessionId;
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
@@ -66,17 +69,21 @@ public class TestSessionListServlet extends HttpServlet {
         }
 
         TestSession testSession = new TestSession();
+        Test test = testDAO.getById(testId);
 
-        testSession.setTest(testDAO.getById(testId));
+        testSession.setTest(test);
         testSession.setUser(userDAO.getById(sessionUtils.getUser().getId()));
         testSession.setDone(false);
-        testSessionDAO.insert(testSession);
+        testSessionId = testSessionDAO.insert(testSession);
 
         ArrayList<TestSession> testSessions =
                 new ArrayList<TestSession>(userDAO.getById(sessionUtils.getUser().getId()).getTestSessions());
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION, testSessions);
         request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
+        request.setAttribute(Attribute.ATTR_SESSION_REDIRECT_TO_PAGE, true);
+        request.setAttribute(Attribute.ATTR_SESSION_REDIRECT_ID, testSessionId);
+        request.setAttribute(Attribute.ATTR_TEST_ID, testId);
 
         getServletContext().getRequestDispatcher("/test_session_list.jsp").forward(request, response);
     }

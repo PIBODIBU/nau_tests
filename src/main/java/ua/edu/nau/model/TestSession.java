@@ -10,6 +10,7 @@ public class TestSession {
     private Test test;
     private User user;
     private Date startTime;
+    private Date endTime;
     private Boolean isDone;
     private Integer correctAnswers = 0;
 
@@ -52,6 +53,16 @@ public class TestSession {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    @Column(name = "end_time", columnDefinition = "TIMESTAMP", nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Column(name = "is_done")

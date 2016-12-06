@@ -56,3 +56,23 @@ body {
     margin-top: 24px;
     margin-bottom: 0;
 }
+
+.mdl-data-table {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    margin: 0;
+    border-width: 0;
+}
+
+.mdl-card {
+    padding: 0;
+}
+
+.mdl-data-table_full-width {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    margin: 0;
+    border-width: 0;
+}

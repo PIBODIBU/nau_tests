@@ -26,20 +26,6 @@
 </head>
 <body>
 
-<style>
-    .mdl-card {
-        padding: 0;
-    }
-
-    .mdl-data-table {
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        margin: 0;
-        border-width: 0;
-    }
-</style>
-
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">

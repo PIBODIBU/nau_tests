@@ -28,7 +28,7 @@ public class TestListServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
-
+        
         ArrayList<Test> tests = testDAO.getAll();
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST, tests);
