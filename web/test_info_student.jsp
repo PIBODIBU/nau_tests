@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
-<%@ page import="ua.edu.nau.model.Answer" %>
-<%@ page import="ua.edu.nau.model.Question" %>
 <%@ page import="ua.edu.nau.model.Test" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -17,6 +15,8 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+    <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 <body>
 

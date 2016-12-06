@@ -1,12 +1,19 @@
-<%@ page import="ua.edu.nau.helper.constant.Parameter" %>
 <!DOCTYPE HTML>
 
+<%@ page import="ua.edu.nau.helper.constant.Parameter" %>
+<%@ page import="ua.edu.nau.model.User" %>
+<%@ page import="ua.edu.nau.helper.constant.Attribute" %>
+<%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%User user = (User) request.getAttribute(Attribute.ATTR_USER_MODEL);%>
 
 <html>
 <head>
     <title>Новий тест
     </title>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
@@ -17,6 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
 
     <link href="${pageContext.request.contextPath}/css/fab-menu.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 
 <body onload="addNewQuestion()">
@@ -341,7 +349,7 @@
     }
 </script>
 
-<form action="${pageContext.request.contextPath}/tests/add" method="post">
+<form action="${pageContext.request.contextPath}/tests/add" method="post" accept-charset="UTF-8">
     <input id="input-question-counter" type="hidden" name="<%=Parameter.PARAM_ANSWER_COUNT%>">
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -354,17 +362,17 @@
             </div>
         </header>
 
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">NAUTests</span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
-                <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-                </div>
-            </nav>
-        </div>
+        <%
+            if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+        %>
+        <jsp:include page="/jsp/drawer_student.jsp"/>
+        <%
+        } else if (user.getUserRole().getRoleCode().equals(RoleCode.ROOT)) {
+        %>
+        <jsp:include page="/jsp/drawer_root.jsp"/>
+        <%
+            }
+        %>
 
         <main class="mdl-layout__content">
             <div class="page-content" id="top">

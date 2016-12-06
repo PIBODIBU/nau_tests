@@ -4,9 +4,12 @@
 <%@ page import="ua.edu.nau.model.Answer" %>
 <%@ page import="ua.edu.nau.model.Question" %>
 <%@ page import="ua.edu.nau.model.Test" %>
+<%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
+<%@ page import="ua.edu.nau.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%Test test = (Test) request.getAttribute(Attribute.ATTR_TEST_MODEL);%>
+<%User user = (User) request.getAttribute(Attribute.ATTR_USER_MODEL);%>
 
 <html>
 <head>
@@ -17,6 +20,8 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+    <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -75,17 +80,17 @@
         </div>
     </header>
 
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
+    <%
+        if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+    %>
+    <jsp:include page="/jsp/drawer_student.jsp"/>
+    <%
+    } else if (user.getUserRole().getRoleCode().equals(RoleCode.ROOT)) {
+    %>
+    <jsp:include page="/jsp/drawer_root.jsp"/>
+    <%
+        }
+    %>
 
     <main class="mdl-layout__content">
         <div class="page-content">

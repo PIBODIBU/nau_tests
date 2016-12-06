@@ -38,6 +38,7 @@ public class UserListServlet extends HttpServlet {
         }
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, userDAO.getAll());
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
 
         getServletContext().getRequestDispatcher("/user_list.jsp").forward(request, response);
     }

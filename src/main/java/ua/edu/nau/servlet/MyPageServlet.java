@@ -46,6 +46,8 @@ public class MyPageServlet extends HttpServlet {
             return;
         }
 
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userModel);
+
         getServletContext().getRequestDispatcher(jspName).forward(request, response);
     }
 }

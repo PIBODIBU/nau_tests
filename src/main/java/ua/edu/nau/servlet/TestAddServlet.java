@@ -8,6 +8,7 @@ import ua.edu.nau.dao.impl.AnswerDAOImpl;
 import ua.edu.nau.dao.impl.QuestionDAOImpl;
 import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
+import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
@@ -24,13 +25,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 @WebServlet(urlPatterns = {"/tests/add"})
 public class TestAddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+        UserDAO userDAO = new UserDAOImpl();
+
+        if (!sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/login");
+            return;
+        }
+
+        if (sessionUtils.getUserAccesLevel().equals(RoleCode.STUDENT)) {
+            response.sendRedirect("/me");
+            return;
+        }
+
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
+
         getServletContext().getRequestDispatcher("/test_add.jsp").forward(request, response);
     }
 
@@ -113,6 +128,8 @@ public class TestAddServlet extends HttpServlet {
                     answerDAO.insert(answerModel);
                 }
         }
+
+        response.sendRedirect("/me/tests");
     }
 
     private Date createDateFromString(String timeString) {

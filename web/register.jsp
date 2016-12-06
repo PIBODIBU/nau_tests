@@ -150,13 +150,6 @@
         </div>
     </header>
 
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Link</a>
-        </nav>
-    </div>
-
     <main class="mdl-layout__content">
     </main>
 </div>

@@ -56,6 +56,7 @@ public class TestInfoServlet extends HttpServlet {
         Test test = testDAO.getById(testId);
 
         request.setAttribute(Attribute.ATTR_TEST_MODEL, test);
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userModel);
 
         getServletContext().getRequestDispatcher(jspName).forward(request, response);
     }

@@ -12,6 +12,7 @@ import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.session.SessionUtils;
 import ua.edu.nau.model.Answer;
 import ua.edu.nau.model.TestSession;
+import ua.edu.nau.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,8 @@ public class TestSessionListServlet extends HttpServlet {
             return;
         }
 
+        User user = userDAO.getById(sessionUtils.getUser().getId());
+
         ArrayList<TestSession> testSessions =
                 new ArrayList<TestSession>(userDAO.getById(sessionUtils.getUser().getId()).getTestSessions());
 
@@ -44,6 +47,7 @@ public class TestSessionListServlet extends HttpServlet {
         });
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION, testSessions);
+        request.setAttribute(Attribute.ATTR_USER_MODEL, user);
 
         getServletContext().getRequestDispatcher("/test_session_list.jsp").forward(request, response);
     }
@@ -72,6 +76,7 @@ public class TestSessionListServlet extends HttpServlet {
                 new ArrayList<TestSession>(userDAO.getById(sessionUtils.getUser().getId()).getTestSessions());
 
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION, testSessions);
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
 
         getServletContext().getRequestDispatcher("/test_session_list.jsp").forward(request, response);
     }

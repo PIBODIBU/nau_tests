@@ -61,38 +61,11 @@
     <%
         if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
     %>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link navigation__sub-link"
-               href="${pageContext.request.contextPath}/tests/sessions">Активні
-                тести</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
+    <jsp:include page="/jsp/drawer_student.jsp"/>
     <%
-    } else {
+    } else if (user.getUserRole().getRoleCode().equals(RoleCode.ROOT)) {
     %>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link navigation__sub-link" href="${pageContext.request.contextPath}/me/tests">Мої
-                тести</a>
-            <a class="mdl-navigation__link navigation__sub-link"
-               href="${pageContext.request.contextPath}/tests/sessions">Активні
-                тести</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
+    <jsp:include page="/jsp/drawer_root.jsp"/>
     <%
         }
     %>
