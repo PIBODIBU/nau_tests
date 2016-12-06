@@ -9,6 +9,7 @@ import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.Question;
 import ua.edu.nau.model.Test;
 import ua.edu.nau.model.TestSession;
 import ua.edu.nau.model.User;
@@ -19,7 +20,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Set;
 
 @WebServlet(urlPatterns = {"/tests/sessions/start"})
 public class TestSessionServlet extends HttpServlet {
@@ -50,6 +54,12 @@ public class TestSessionServlet extends HttpServlet {
             testSessionDAO.update(testSession);
             return;
         }
+
+        // Randomization
+        /*Collections.shuffle(test.getQuestions(), new SecureRandom());
+        for (Question question : test.getQuestions()) {
+            Collections.shuffle(question.getAnswers(), new SecureRandom());
+        }*/
 
         request.setAttribute(Attribute.ATTR_USER_MODEL, user);
         request.setAttribute(Attribute.ATTR_TEST_MODEL, test);

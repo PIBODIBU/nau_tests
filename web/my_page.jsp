@@ -165,12 +165,13 @@
                             </h2>
                         </div>
 
-                        <table class="mdl-data-table mdl-js-data-table">
+                        <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
                             <thead>
                             <tr>
                                 <th>№</th>
                                 <th class="mdl-data-table__cell--non-numeric">Назва</th>
                                 <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
+                                <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
                                 <th>Правильних відповідей</th>
                                 <th>К-ть питань</th>
                             </tr>
@@ -188,6 +189,9 @@
                                 <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
                                 <td class="mdl-data-table__cell--non-numeric">
                                     <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <%=TimeFormatter.dateToHumanReadable(testSession.getEndTime())%>
                                 </td>
                                 <td><%=testSession.getCorrectAnswers()%>
                                 </td>
