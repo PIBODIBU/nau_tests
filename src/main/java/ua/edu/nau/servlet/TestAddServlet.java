@@ -1,7 +1,11 @@
 package ua.edu.nau.servlet;
 
+import ua.edu.nau.dao.AnswerDAO;
+import ua.edu.nau.dao.QuestionDAO;
 import ua.edu.nau.dao.TestDAO;
 import ua.edu.nau.dao.UserDAO;
+import ua.edu.nau.dao.impl.AnswerDAOImpl;
+import ua.edu.nau.dao.impl.QuestionDAOImpl;
 import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Parameter;
@@ -33,49 +37,20 @@ public class TestAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
+
         String testName, testDescription, testTime;
+
         TestDAO testDAO = new TestDAOImpl();
+        QuestionDAO questionDAO = new QuestionDAOImpl();
+        AnswerDAO answerDAO = new AnswerDAOImpl();
         UserDAO userDAO = new UserDAOImpl();
-        ArrayList<Answer> answersList = new ArrayList<>();
+
         Test test;
         User user;
-        Integer questionsCount = Integer.valueOf(request.getParameter(Parameter.PARAM_ANSWER_COUNT));
+        Question questionModel;
+        Answer answerModel;
 
-        for (int qCounter = 1; qCounter <= questionsCount; qCounter++) {
-            // Question text
-            String[] questionsText = request.getParameterValues(Parameter.PARAM_QUESTION_TEXT + String.valueOf(qCounter));
-            if (questionsText != null)
-                for (String question : questionsText) {
-                    System.out.println("Question: " + question);
-                }
-
-            // Correct answer
-            String correctAnswer =
-                    request.getParameter(Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(qCounter));
-
-            // Answers
-            String[] answers = request.getParameterValues(Parameter.PARAM_ANSWER_TEXT + String.valueOf(qCounter));
-            if (answers != null)
-                for (int i = 0; i < answers.length; i++) {
-                    Answer answerModel = new Answer();
-
-                    answerModel.setText(answers[i]);
-
-                    if (i == Integer.valueOf(correctAnswer) - 1) {
-                        // Answer is correct
-                        answerModel.setCorrect(true);
-                    } else {
-                        // Common answer
-                        answerModel.setCorrect(false);
-                    }
-
-                    answersList.add(answerModel);
-                }
-        }
-
-        System.out.println(answersList);
-
-       /* if (!sessionUtils.isUserLoggedIn()) {
+        if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
             return;
         }
@@ -83,8 +58,9 @@ public class TestAddServlet extends HttpServlet {
         if (sessionUtils.getUserAccesLevel().equals(RoleCode.STUDENT)) {
             response.sendRedirect("/me");
             return;
-        }*/
+        }
 
+        Integer questionsCount = Integer.valueOf(request.getParameter(Parameter.PARAM_ANSWER_COUNT));
         testName = request.getParameter(Parameter.PARAM_TEST_NAME);
         testDescription = request.getParameter(Parameter.PARAM_TEST_DESCRIPTION);
         testTime = request.getParameter(Parameter.PARAM_TEST_TIME);
@@ -97,7 +73,46 @@ public class TestAddServlet extends HttpServlet {
         test.setTime(createDateFromString(testTime));
         test.setOwner(user);
 
-//        testDAO.insert(test);
+        testDAO.insert(test);
+
+        for (int qCounter = 1; qCounter <= questionsCount; qCounter++) {
+            questionModel = new Question();
+
+            // Question text
+            String questionText = request.getParameter(Parameter.PARAM_QUESTION_TEXT + String.valueOf(qCounter));
+            String questionImgUrl = request.getParameter(Parameter.PARAM_QUESTION_IMAGE_URL + String.valueOf(qCounter));
+            if (questionText != null && questionImgUrl != null) {
+                questionModel.setText(questionText);
+                questionModel.setImgUrl(questionImgUrl);
+                questionModel.setTest(test);
+
+                questionDAO.insert(questionModel);
+            }
+
+            // Correct answer
+            String correctAnswer =
+                    request.getParameter(Parameter.PARAM_ANSWER_IS_CORRECT + String.valueOf(qCounter));
+
+            // Answers
+            String[] answers = request.getParameterValues(Parameter.PARAM_ANSWER_TEXT + String.valueOf(qCounter));
+            if (answers != null)
+                for (int i = 0; i < answers.length; i++) {
+                    answerModel = new Answer();
+
+                    answerModel.setText(answers[i]);
+                    answerModel.setQuestion(questionModel);
+
+                    if (i == Integer.valueOf(correctAnswer) - 1) {
+                        // Answer is correct
+                        answerModel.setCorrect(true);
+                    } else {
+                        // Common answer
+                        answerModel.setCorrect(false);
+                    }
+
+                    answerDAO.insert(answerModel);
+                }
+        }
     }
 
     private Date createDateFromString(String timeString) {

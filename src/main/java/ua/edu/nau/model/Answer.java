@@ -52,6 +52,7 @@ public class Answer {
     @Override
     public String toString() {
         return "text: [ " + getText() + " ]" +
-                "is correct? [ " + getCorrect() + "]";
+                " | " +
+                "is correct? [ " + getCorrect() + " ]";
     }
 }
