@@ -19,7 +19,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+        /*SessionUtils sessionUtils = new SessionUtils(request.getSession());
         HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
 
         if (sessionUtils.getHttpSessionId() != null)
@@ -28,7 +28,7 @@ public class LogoutServlet extends HttpServlet {
         if (sessionUtils.getUser().getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
             UserDAO userDAO = new UserDAOImpl();
             userDAO.randomizePassword(sessionUtils.getUser().getId());
-        }
+        }*/
 
         request.getSession().invalidate();
         response.sendRedirect("/login");

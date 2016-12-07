@@ -71,9 +71,6 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setMaxInactiveInterval(
                     TimeFormatter.millisToMinutes(TimeFormatter.minutesToMillisLong(settingSessionTime.getValue())));
 
-            System.out.println("Max interval: " +
-                    TimeFormatter.millisToMinutes(TimeFormatter.minutesToMillisLong(settingSessionTime.getValue())));
-            
             if (session != null) {
                 /*if (SessionHelper.isSessionTimedOut(session)) {
                     userDAO.randomizePassword(user.getId());
