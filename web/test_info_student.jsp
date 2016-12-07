@@ -25,8 +25,9 @@
     }
 
     .page-content {
-        width: 95%;
-        margin: 24px auto auto;
+        width: 90%;
+        /*margin: 24px auto auto;*/
+        margin: auto;
         padding-bottom: 24px;
     }
 
@@ -54,7 +55,7 @@
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-        margin: 8px;
+        margin: auto;
     }
 
     .mdl-card__actions {

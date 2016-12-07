@@ -57,6 +57,11 @@
         bottom: 36px;
         z-index: 999;
     }
+
+    img {
+        width: 100%;
+        max-width: 100%;
+    }
 </style>
 
 <%

@@ -30,8 +30,9 @@
     }
 
     .page-content {
-        width: 95%;
-        margin: 24px auto auto;
+        width: 90%;
+        /*margin: 24px auto auto;*/
+        margin: auto;
         padding-bottom: 24px;
     }
 
@@ -59,7 +60,7 @@
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-        margin: 8px;
+        margin: auto;
     }
 
     .mdl-card__actions {
@@ -92,7 +93,7 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Опис
@@ -106,7 +107,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Час виконання
@@ -120,7 +121,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Власник
@@ -133,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="mdl-cell mdl-cell--12-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">

@@ -39,6 +39,28 @@
         margin: -100px auto auto;
         width: 60%;
         min-width: 60%;
+        padding-bottom: 24px;
+    }
+
+    @media screen
+    and (max-device-width: 500px)
+    and (max-device-height: 800px) {
+        .page-content {
+            margin: -100px auto auto;
+            width: 90%;
+            min-width: 90%;
+            padding-bottom: 24px;
+        }
+
+        .toolbar_row-2 {
+            padding: 0;
+        }
+
+        .toolbar_row-1 {
+            height: 200px;
+            text-align: center;
+            padding: 0;
+        }
     }
 
     table {

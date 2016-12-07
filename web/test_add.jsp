@@ -31,8 +31,8 @@
     }
 
     .page-content {
-        width: 60%;
-        margin: 24px auto auto;
+        width: 100%;
+        margin: auto;
         padding-bottom: 24px;
     }
 
@@ -45,6 +45,8 @@
     }
 
     .mdl-grid {
+        width: 100%;
+        padding: 0;
         margin-top: 24px;
     }
 
@@ -55,6 +57,32 @@
 
     .p-title {
         margin-top: 24px;
+    }
+
+    .question-title-cell {
+        display: inline-block;
+        margin: 24px;
+        width: 80%;
+    }
+
+    .question-button-delete {
+        display: inline-block;
+        margin: auto;
+    }
+
+    @media screen
+    and (max-device-width: 500px)
+    and (max-device-height: 800px) {
+        .question-title-cell {
+            display: inline-block;
+            margin: 24px;
+            width: 60%;
+        }
+
+        .question-button-delete {
+            display: inline-block;
+            margin: 16px 8px auto auto;
+        }
     }
 </style>
 
@@ -128,10 +156,10 @@
         var cellButtonDelete = createCell(PREFIX_ID_CELL + "button-delete-" + counter, 1);
         var title = createTitle("Питання №" + counter);
 
-        title.style = "margin-top: 16px";
+        cellTitle.className = "question-title-cell";
         title.id = PREFIX_ID_TITLE_MAIN_INFO + counter;
 
-        cellButtonDelete.style = "margin: auto";
+        cellButtonDelete.className = "question-button-delete";
 
         cellButtonDelete.appendChild(createButton("delete", "red-500", function () {
             grid.parentNode.removeChild(grid);
