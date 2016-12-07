@@ -1,6 +1,7 @@
 package ua.edu.nau.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,7 +11,7 @@ public class Question {
     private Test test;
     private String text;
     private String imgUrl;
-    private Set<Answer> answers;
+    private List<Answer> answers;
 
     public Question() {
     }
@@ -62,11 +63,11 @@ public class Question {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
     @OrderBy("id")
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 }

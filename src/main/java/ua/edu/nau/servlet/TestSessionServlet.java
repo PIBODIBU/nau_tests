@@ -21,9 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.SecureRandom;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet(urlPatterns = {"/tests/sessions/start"})
 public class TestSessionServlet extends HttpServlet {
@@ -56,13 +54,15 @@ public class TestSessionServlet extends HttpServlet {
         }
 
         // Randomization
-        /*Collections.shuffle(test.getQuestions(), new SecureRandom());
-        for (Question question : test.getQuestions()) {
+        ArrayList<Question> questions = new ArrayList<>(test.getQuestions());
+        Collections.shuffle(questions, new SecureRandom());
+        for (Question question : questions) {
             Collections.shuffle(question.getAnswers(), new SecureRandom());
-        }*/
+        }
 
         request.setAttribute(Attribute.ATTR_USER_MODEL, user);
         request.setAttribute(Attribute.ATTR_TEST_MODEL, test);
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_QUESTION, questions);
         request.setAttribute(Attribute.ATTR_TEST_SESSION_MODEL, testSession);
 
         getServletContext().getRequestDispatcher("/test_session.jsp").forward(request, response);

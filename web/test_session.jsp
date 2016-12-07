@@ -4,6 +4,7 @@
 <%@ page import="ua.edu.nau.model.*" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE HTML>
 
@@ -12,6 +13,7 @@
 <%User user = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
 <%Test test = ((Test) request.getAttribute(Attribute.ATTR_TEST_MODEL));%>
 <%TestSession testSession = ((TestSession) request.getAttribute(Attribute.ATTR_TEST_SESSION_MODEL));%>
+<%ArrayList<Question> questions = ((ArrayList<Question>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_QUESTION));%>
 
 <html>
 <head>
@@ -138,7 +140,7 @@
 
                 <%
                     int questionCounter = 1;
-                    for (Question question : test.getQuestions()) {
+                    for (Question question : questions) {
                 %>
                 <div class="card-square mdl-card mdl-shadow--8dp">
                     <p class="mdl-typography--subhead">
