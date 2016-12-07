@@ -32,7 +32,7 @@ public class UserListServlet extends HttpServlet {
             return;
         }
 
-        if (sessionUtils.getUserAccesLevel().equals(RoleCode.STUDENT)) {
+        if (sessionUtils.getUserAccessLevel().equals(RoleCode.STUDENT)) {
             response.sendRedirect("/me");
             return;
         }

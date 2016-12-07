@@ -35,7 +35,7 @@ public class TestSession {
         this.test = test;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     public User getUser() {
         return user;

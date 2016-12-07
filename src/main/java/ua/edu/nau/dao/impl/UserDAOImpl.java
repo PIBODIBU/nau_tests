@@ -2,16 +2,19 @@ package ua.edu.nau.dao.impl;
 
 import com.sun.istack.internal.Nullable;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.type.StringType;
 import ua.edu.nau.dao.UserDAO;
+import ua.edu.nau.helper.PasswordGenerator;
 import ua.edu.nau.hibernate.HibernateUtil;
+import ua.edu.nau.model.HttpSession;
 import ua.edu.nau.model.User;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,5 +102,41 @@ public class UserDAOImpl implements UserDAO {
 
     public void delete(User model) {
 
+    }
+
+    @Override
+    public void randomizePassword(int userId) {
+        Session session = HibernateUtil.getSession();
+        User user;
+        String newPassword = PasswordGenerator.generate(5);
+
+        session.beginTransaction();
+
+        user = ((User) session.get(User.class, userId));
+        session.refresh(user);
+        user.setPassword(newPassword);
+        session.update(user);
+
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public HttpSession getLastSession(Integer userId) {
+        Session session = HibernateUtil.getSession();
+        HttpSession httpSession = null;
+
+        session.beginTransaction();
+
+        User user = ((User) session.get(User.class, userId));
+        session.refresh(user);
+        try {
+            httpSession = user.getHttpSessions().iterator().next();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        session.getTransaction().commit();
+
+        return httpSession;
     }
 }

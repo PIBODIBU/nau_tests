@@ -10,6 +10,7 @@ import java.util.UUID;
 public class SessionUtils {
     private final String ATTR_SESSION_TOKEN = "token";
     private final String ATTR_USER = "user";
+    private final String ATTR_HTTP_SESSION_ID = "http_session_id";
 
     private HttpSession httpSession;
 
@@ -57,8 +58,16 @@ public class SessionUtils {
         return getUser() != null;
     }
 
-    public Integer getUserAccesLevel() {
+    public Integer getUserAccessLevel() {
         return getUser().getUserRole().getRoleCode();
+    }
+
+    public void setHttpSessionId(Integer httpSessionId) {
+        httpSession.setAttribute(ATTR_HTTP_SESSION_ID, httpSessionId);
+    }
+
+    public Integer getHttpSessionId() {
+        return ((Integer) httpSession.getAttribute(ATTR_HTTP_SESSION_ID));
     }
 
     public void setUser(User user) {

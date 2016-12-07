@@ -23,5 +23,7 @@
         <mapping class="ua.edu.nau.model.Question"/>
         <mapping class="ua.edu.nau.model.Answer"/>
         <mapping class="ua.edu.nau.model.TestSession"/>
+        <mapping class="ua.edu.nau.model.HttpSession"/>
+        <mapping class="ua.edu.nau.model.Setting"/>
     </session-factory>
 </hibernate-configuration>

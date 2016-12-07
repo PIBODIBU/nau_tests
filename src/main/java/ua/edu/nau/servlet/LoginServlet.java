@@ -1,11 +1,19 @@
 package ua.edu.nau.servlet;
 
 import org.springframework.util.StringUtils;
+import ua.edu.nau.dao.HttpSessionDAO;
+import ua.edu.nau.dao.SettingDAO;
 import ua.edu.nau.dao.UserDAO;
+import ua.edu.nau.dao.impl.HttpSessionDAOImpl;
+import ua.edu.nau.dao.impl.SettingDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
+import ua.edu.nau.helper.TimeFormatter;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
+import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.HttpSession;
+import ua.edu.nau.model.Setting;
 import ua.edu.nau.model.User;
 
 import javax.servlet.ServletException;
@@ -14,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
@@ -31,10 +40,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
         request.setAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD, false);
+        HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
+        HttpSession httpSession = new HttpSession();
+        SettingDAO settingDAO = new SettingDAOImpl();
 
+        Integer httpSessionId = -1;
         String username = request.getParameter(Parameter.PARAM_USERNAME);
         String password = request.getParameter(Parameter.PARAM_PASSWORD);
+        Setting settingSessionTime = settingDAO.getByName(SettingDAOImpl.SETTING_SESSION_TIME);
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             onBadCredentials(request, response);
@@ -49,8 +64,29 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+        if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+            // Student is logging in. Check session for timeout
+            HttpSession session = userDAO.getLastSession(user.getId());
+            request.getSession().setMaxInactiveInterval(TimeFormatter.minutesToMillisInteger(settingSessionTime.getValue()));
+
+            if (session != null) {
+                /*if (isSessionTimedOut(session)) {
+                    userDAO.randomizePassword(user.getId());
+                    response.sendRedirect("/login");
+                    return;
+                }*/
+            } else {
+                response.sendRedirect("/login");
+                return;
+            }
+        }
+
+        httpSession.setUser(user);
+        httpSession.setInvalid(false);
+        httpSessionId = httpSessionDAO.insert(httpSession);
+
         sessionUtils.setUser(user);
+        sessionUtils.setHttpSessionId(httpSessionId);
 
         response.sendRedirect("/me");
     }
@@ -59,5 +95,16 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Bad username or password");
         request.setAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD, true);
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+    }
+
+    private Boolean isSessionTimedOut(HttpSession httpSession) {
+        SettingDAO settingDAO = new SettingDAOImpl();
+        Setting setting = settingDAO.getByName(SettingDAOImpl.SETTING_SESSION_TIME);
+
+        Date loginTime = httpSession.getLoginTime();
+        Date invalidationTime = new Date(loginTime.getTime() + TimeFormatter.minutesToMillisLong(setting.getValue()));
+        Date currentTime = new Date();
+
+        return invalidationTime.getTime() > currentTime.getTime();
     }
 }

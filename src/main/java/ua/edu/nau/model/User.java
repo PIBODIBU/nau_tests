@@ -13,6 +13,7 @@ public class User {
     private String email;
     private UserRole userRole;
     private Set<TestSession> testSessions;
+    private Set<HttpSession> httpSessions;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +72,7 @@ public class User {
         this.userRole = userRole;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     @OrderBy("id DESC")
     public Set<TestSession> getTestSessions() {
         return testSessions;
@@ -79,5 +80,15 @@ public class User {
 
     public void setTestSessions(Set<TestSession> testSessions) {
         this.testSessions = testSessions;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OrderBy("id DESC")
+    public Set<HttpSession> getHttpSessions() {
+        return httpSessions;
+    }
+
+    public void setHttpSessions(Set<HttpSession> httpSessions) {
+        this.httpSessions = httpSessions;
     }
 }
