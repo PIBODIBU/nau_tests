@@ -21,7 +21,14 @@ public class HttpSessionDAOImpl extends BasicDAOImpl<HttpSession> implements Htt
 
     @Override
     public HttpSession getById(Integer id) {
-        return super.getById(id);
+        Session session = HibernateUtil.getSession();
+
+        session.beginTransaction();
+        HttpSession httpSession = ((HttpSession) session.get(HttpSession.class, id));
+        session.refresh(httpSession);
+        session.getTransaction().commit();
+
+        return httpSession;
     }
 
     @Override

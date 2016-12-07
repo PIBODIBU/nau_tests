@@ -20,10 +20,7 @@
     <title><%=test.getName()%>
     </title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <jsp:include page="/jsp/mdl_commons.jsp"/>
 
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/body_style.css" rel="stylesheet">

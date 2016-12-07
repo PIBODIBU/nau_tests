@@ -96,15 +96,4 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD, true);
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
     }
-
-    private Boolean isSessionTimedOut(HttpSession httpSession) {
-        SettingDAO settingDAO = new SettingDAOImpl();
-        Setting setting = settingDAO.getByName(SettingDAOImpl.SETTING_SESSION_TIME);
-
-        Date loginTime = httpSession.getLoginTime();
-        Date invalidationTime = new Date(loginTime.getTime() + TimeFormatter.minutesToMillisLong(setting.getValue()));
-        Date currentTime = new Date();
-
-        return invalidationTime.getTime() > currentTime.getTime();
-    }
 }

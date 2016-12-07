@@ -1,10 +1,16 @@
 package ua.edu.nau.servlet;
 
+import ua.edu.nau.dao.HttpSessionDAO;
+import ua.edu.nau.dao.SettingDAO;
 import ua.edu.nau.dao.UserDAO;
+import ua.edu.nau.dao.impl.HttpSessionDAOImpl;
+import ua.edu.nau.dao.impl.SettingDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
+import ua.edu.nau.helper.TimeFormatter;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.Setting;
 import ua.edu.nau.model.User;
 
 import javax.servlet.ServletException;
@@ -13,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet(urlPatterns = {"/me"})
 public class MyPageServlet extends HttpServlet {
@@ -20,6 +27,8 @@ public class MyPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         UserDAO userDAO = new UserDAOImpl();
+        SettingDAO settingDAO = new SettingDAOImpl();
+        HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
         String jspName;
 
         if (!sessionUtils.isUserLoggedIn()) {
@@ -44,6 +53,15 @@ public class MyPageServlet extends HttpServlet {
         } else {
             response.sendRedirect("/logout");
             return;
+        }
+
+        if (userRoleCode.equals(RoleCode.STUDENT)) {
+            Setting setting = settingDAO.getByName(SettingDAOImpl.SETTING_SESSION_TIME);
+            Date loginTime = httpSessionDAO.getById(sessionUtils.getHttpSessionId()).getLoginTime();
+            Date invalidationTime = new Date((loginTime.getTime() + TimeFormatter.minutesToMillisLong(setting.getValue())));
+            Date currentTime = new Date();
+            request.setAttribute(Attribute.ATTR_DATE_SESSION_TIMER,
+                    new Date(currentTime.getTime() - invalidationTime.getTime()));
         }
 
         request.setAttribute(Attribute.ATTR_USER_MODEL, userModel);

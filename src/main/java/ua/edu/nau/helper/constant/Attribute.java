@@ -15,4 +15,5 @@ public class Attribute {
     public static final String ATTR_CORRECT_ANSWERS_COUNT = "correct_answers_count";
     public static final String ATTR_SESSION_REDIRECT_TO_PAGE = "session_redirect_to_page";
     public static final String ATTR_SESSION_REDIRECT_ID = "session_redirect_id";
+    public static final String ATTR_DATE_SESSION_TIMER = "date_session_timer";
 }

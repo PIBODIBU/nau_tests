@@ -3,6 +3,8 @@
 <%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
 <%@ page import="ua.edu.nau.model.TestSession" %>
 <%@ page import="ua.edu.nau.model.User" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE HTML>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,15 +16,54 @@
     <title><%=user.getName()%>
     </title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-red.min.css"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    <jsp:include page="/jsp/mdl_commons.jsp"/>
 
     <link href="${pageContext.request.contextPath}/css/my_page_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
-<body>
+<body onload="timer()">
+
+<%
+    Date remain = ((Date) request.getAttribute(Attribute.ATTR_DATE_SESSION_TIMER));
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(remain);
+
+    String minutes = String.valueOf(calendar.get(Calendar.MINUTE));
+    String seconds = String.valueOf(calendar.get(Calendar.SECOND));
+%>
+
+<script type="text/javascript">
+    <!--
+    var mins = <%=minutes%>; // write minutes to javascript
+    var secs = <%=seconds%>; // write seconds to javascript
+    function timer() {
+// tic tac
+        if (--secs == -1) {
+            secs = 59;
+            --mins;
+        }
+
+// leading zero? formatting
+        if (secs < 10) secs = "0" + secs;
+        if (mins < 10) mins = "0" + parseInt(mins, 10);
+
+// display
+        document.getElementById("div-minutes").innerHTML = mins;
+        document.getElementById("div-seconds").innerHTML = secs;
+
+// continue?
+        if (secs == 0 && mins == 0) // time over
+        {
+            document.forma.ok.disabled = true;
+            document.formb.results.style.display = "block";
+        }
+        else // call timer() recursively every 1000 ms == 1 sec
+        {
+            window.setTimeout("timer()", 1000);
+        }
+    }
+    //-->
+</script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
@@ -32,8 +73,11 @@
                 <%=user.getName()%>
             </span>
             <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="">Link</a>
+            <nav class="mdl-navigation">
+                <h6>Залишилося часу сесії:&nbsp;</h6>
+                <h6 id="div-minutes"></h6>
+                <h6>:</h6>
+                <h6 id="div-seconds"></h6>
             </nav>
         </div>
     </header>
