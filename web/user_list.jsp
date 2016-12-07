@@ -15,6 +15,7 @@
     <jsp:include page="/jsp/mdl_commons.jsp"/>
 
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/table.css" rel="stylesheet">
 </head>
 <body>
 
@@ -31,9 +32,9 @@
     }
 
     .mdl-data-table {
-        width: 100%;
+        /*width: 100%;
         min-width: 100%;
-        max-width: 100%;
+        max-width: 100%;*/
         margin: 24px auto auto;
     }
 </style>
@@ -64,30 +65,32 @@
 
     <main class="mdl-layout__content">
         <div class="page-content">
-            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                <thead>
-                <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
-                    <th class="mdl-data-table__cell--non-numeric">Email</th>
-                    <th class="mdl-data-table__cell--non-numeric">Рівень доступу</th>
-                </tr>
-                </thead>
+            <div class="table-wrapper">
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                    <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
+                        <th class="mdl-data-table__cell--non-numeric">Email</th>
+                        <th class="mdl-data-table__cell--non-numeric">Рівень доступу</th>
+                    </tr>
+                    </thead>
 
-                <%
-                    for (User user : users) {
-                %>
-                <tr>
-                    <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
-                    </td>
-                    <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
-                    </td>
-                    <td class="mdl-data-table__cell--non-numeric"><%=user.getUserRole().getDescription()%>
-                    </td>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
+                    <%
+                        for (User user : users) {
+                    %>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric"><%=user.getUserRole().getDescription()%>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </table>
+            </div>
         </div>
     </main>
 </div>

@@ -18,6 +18,7 @@
 
     <link href="${pageContext.request.contextPath}/css/my_page_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/table.css" rel="stylesheet">
 </head>
 <body>
 
@@ -53,7 +54,7 @@
                     <p class="mdl-typography--display-1-color-contrast">Основна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col  mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Ім'я користувача
@@ -66,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Логін
@@ -79,7 +80,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Email
@@ -96,7 +97,7 @@
                     <p class="mdl-typography--display-1-color-contrast">Системна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Ідентифікатор користувача
@@ -109,7 +110,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Рівень доступу
@@ -122,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Ідентифікатор рівня доступу
@@ -135,7 +136,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Код рівня доступу
@@ -159,46 +160,48 @@
                             </h2>
                         </div>
 
-                        <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
-                            <thead>
-                            <tr>
-                                <th>№</th>
-                                <th class="mdl-data-table__cell--non-numeric">Назва</th>
-                                <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
-                                <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
-                                <th>Правильних відповідей</th>
-                                <th>К-ть питань</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%
-                                int counter = 1;
+                        <div class="table-wrapper">
+                            <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Назва</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
+                                    <th>Правильних відповідей</th>
+                                    <th>К-ть питань</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%
+                                    int counter = 1;
 
-                                for (TestSession testSession : user.getTestSessions()) {
-                                    if (testSession.getDone()) {
-                            %>
-                            <tr>
-                                <td><%=counter%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    <%=TimeFormatter.dateToHumanReadable(testSession.getEndTime())%>
-                                </td>
-                                <td><%=testSession.getCorrectAnswers()%>
-                                </td>
-                                <td><%=testSession.getTest().getQuestions().size()%>
-                                </td>
-                            </tr>
-                            <%
-                                        counter++;
+                                    for (TestSession testSession : user.getTestSessions()) {
+                                        if (testSession.getDone()) {
+                                %>
+                                <tr>
+                                    <td><%=counter%>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <%=TimeFormatter.dateToHumanReadable(testSession.getEndTime())%>
+                                    </td>
+                                    <td><%=testSession.getCorrectAnswers()%>
+                                    </td>
+                                    <td><%=testSession.getTest().getQuestions().size()%>
+                                    </td>
+                                </tr>
+                                <%
+                                            counter++;
+                                        }
                                     }
-                                }
-                            %>
-                            </tbody>
-                        </table>
+                                %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

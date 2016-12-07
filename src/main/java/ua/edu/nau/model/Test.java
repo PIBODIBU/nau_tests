@@ -1,10 +1,6 @@
 package ua.edu.nau.model;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import java.util.Date;
 import java.util.Set;
 

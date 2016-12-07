@@ -101,7 +101,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--2-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Час виконання
@@ -109,14 +109,13 @@
                         </div>
 
                         <div class="mdl-card__supporting-text">
-                            <p class="mdl-typography--subhead"><%=test.getTime().toString()
-                            %>
+                            <p class="mdl-typography--subhead"><%=test.getTime().toString()%>
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-cell mdl-cell--3-col">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Власник

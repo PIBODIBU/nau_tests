@@ -76,7 +76,7 @@ public class SessionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         SessionUtils sessionUtils = new SessionUtils(((HttpServletRequest) request).getSession());
 
-        /*if (sessionUtils.getHttpSessionId() != null) {
+        if (sessionUtils.getHttpSessionId() != null) {
             HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
             UserDAO userDAO = new UserDAOImpl();
             HttpSession httpSession = userDAO.getLastSession(sessionUtils.getUser().getId());
@@ -94,7 +94,7 @@ public class SessionFilter implements Filter {
                     return;
                 }
             }
-        }*/
+        }
 
         chain.doFilter(request, response);
     }

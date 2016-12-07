@@ -19,6 +19,7 @@
 
     <jsp:include page="/jsp/mdl_commons.jsp"/>
 
+    <link href="${pageContext.request.contextPath}/css/my_page_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
 <body>
@@ -46,9 +47,6 @@
         padding-bottom: 8px;
         color: #ffffff;
         background-color: #2196F3;
-    }
-
-    .mdl-card__supporting-text {
     }
 
     .mdl-button--fab {

@@ -1,5 +1,8 @@
 package ua.edu.nau.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -63,6 +66,7 @@ public class Question {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
     @OrderBy("id")
+    @Fetch(FetchMode.SELECT)
     public List<Answer> getAnswers() {
         return answers;
     }

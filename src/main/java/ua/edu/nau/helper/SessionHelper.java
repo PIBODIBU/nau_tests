@@ -16,10 +16,12 @@ public class SessionHelper {
         Date invalidationTime = new Date((loginTime.getTime() + TimeFormatter.minutesToMillisLong(setting.getValue())));
         Date currentTime = new Date();
 
-        System.out.println("Login time: " + loginTime.toString());
-        System.out.println("Current time: " + currentTime.toString());
-        System.out.println("Invalidation time: " + invalidationTime.toString());
+        System.out.println("fuck, pisos");
+        System.out.println("Login time: " + loginTime.getTime());
+        System.out.println("Session timeout: " + TimeFormatter.minutesToMillisLong(setting.getValue()));
+        System.out.println("Current time: " + currentTime.getTime());
+        System.out.println("Invalidation time: " + invalidationTime.getTime());
 
-        return invalidationTime.getTime() > currentTime.getTime();
+        return currentTime.getTime() > invalidationTime.getTime();
     }
 }
