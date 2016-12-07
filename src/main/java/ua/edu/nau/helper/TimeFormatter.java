@@ -1,9 +1,10 @@
 package ua.edu.nau.helper;
 
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static java.lang.Math.toIntExact;
 
 public class TimeFormatter {
     public static String dateToHumanReadable(Date date) {
@@ -19,10 +20,14 @@ public class TimeFormatter {
     }
 
     public static Long minutesToMillisLong(String minutes) {
-        return Long.valueOf(minutes) * 60 * 60;
+        return Long.valueOf(minutes) * 60000;
+    }
+
+    public static Integer millisToMinutes(Long millis) {
+        return toIntExact(millis / 60000);
     }
 
     public static Integer minutesToMillisInteger(String minutes) {
-        return Integer.valueOf(minutes) * 60 * 60;
+        return Integer.valueOf(minutes) * 60000;
     }
 }

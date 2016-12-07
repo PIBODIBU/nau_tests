@@ -7,6 +7,7 @@ import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.dao.impl.HttpSessionDAOImpl;
 import ua.edu.nau.dao.impl.SettingDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
+import ua.edu.nau.helper.SessionHelper;
 import ua.edu.nau.helper.TimeFormatter;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
@@ -67,10 +68,14 @@ public class LoginServlet extends HttpServlet {
         if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
             // Student is logging in. Check session for timeout
             HttpSession session = userDAO.getLastSession(user.getId());
-            request.getSession().setMaxInactiveInterval(TimeFormatter.minutesToMillisInteger(settingSessionTime.getValue()));
+            request.getSession().setMaxInactiveInterval(
+                    TimeFormatter.millisToMinutes(TimeFormatter.minutesToMillisLong(settingSessionTime.getValue())));
 
+            System.out.println("Max interval: " +
+                    TimeFormatter.millisToMinutes(TimeFormatter.minutesToMillisLong(settingSessionTime.getValue())));
+            
             if (session != null) {
-                /*if (isSessionTimedOut(session)) {
+                /*if (SessionHelper.isSessionTimedOut(session)) {
                     userDAO.randomizePassword(user.getId());
                     response.sendRedirect("/login");
                     return;

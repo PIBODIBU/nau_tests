@@ -57,11 +57,13 @@ public class MyPageServlet extends HttpServlet {
 
         if (userRoleCode.equals(RoleCode.STUDENT)) {
             Setting setting = settingDAO.getByName(SettingDAOImpl.SETTING_SESSION_TIME);
+
             Date loginTime = httpSessionDAO.getById(sessionUtils.getHttpSessionId()).getLoginTime();
-            Date invalidationTime = new Date((loginTime.getTime() + TimeFormatter.minutesToMillisLong(setting.getValue())));
             Date currentTime = new Date();
-            request.setAttribute(Attribute.ATTR_DATE_SESSION_TIMER,
-                    new Date(currentTime.getTime() - invalidationTime.getTime()));
+            Date remain = new Date(
+                    loginTime.getTime() + TimeFormatter.minutesToMillisLong(setting.getValue()) - currentTime.getTime());
+
+            request.setAttribute(Attribute.ATTR_DATE_SESSION_TIMER, remain);
         }
 
         request.setAttribute(Attribute.ATTR_USER_MODEL, userModel);

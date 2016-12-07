@@ -31,6 +31,7 @@ public class SettingDAOImpl extends BasicDAOImpl<Setting> implements SettingDAO 
 
         try {
             setting = ((Setting) criteria.list().get(0));
+            session.refresh(setting);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
