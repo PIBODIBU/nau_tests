@@ -177,7 +177,13 @@
                                     <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
                                 </td>
                                 <td class="mdl-data-table__cell--non-numeric">
-                                    <%=TimeFormatter.dateToHumanReadable(testSession.getEndTime())%>
+                                    <%
+                                        if (testSession.getEndTime() != null) {
+                                            out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
+                                        } else{
+                                            out.print("Не здав");
+                                        }
+                                    %>
                                 </td>
                                 <td><%=testSession.getCorrectAnswers()%>
                                 </td>

@@ -44,7 +44,28 @@ public class UserListServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SessionUtils sessionUtils = new SessionUtils(request.getSession());
+        UserDAO userDAO = new UserDAOImpl();
+        String[] studentIds = request.getParameterValues("students");
+        String action = request.getParameter("action");
 
+        if (!sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/login");
+            return;
+        }
+
+        if (sessionUtils.getUserAccessLevel().equals(RoleCode.STUDENT)) {
+            response.sendRedirect("/me");
+            return;
+        }
+
+        if (action.equals("action_randomize_pass")) {
+            for (String id : studentIds) {
+                userDAO.randomizePassword(Integer.valueOf(id));
+            }
+        }
+
+        doGet(request, response);
     }
 }
