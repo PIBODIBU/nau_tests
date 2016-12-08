@@ -68,6 +68,7 @@ public class LoginServlet extends HttpServlet {
         if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
             // Student is logging in. Check session for timeout
             HttpSession session = userDAO.getLastSession(user.getId());
+            userDAO.randomizePassword(user.getId());
             //request.getSession().setMaxInactiveInterval(Integer.valueOf(settingSessionTime.getValue()) * 60);
 
             if (session != null) {

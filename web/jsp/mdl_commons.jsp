@@ -10,3 +10,5 @@
 <meta name="theme-color" content="#2196F3">
 
 <link href="${pageContext.request.contextPath}/css/page_content.css" rel="stylesheet">
+
+<link rel="icon" sizes="192x192" href="${pageContext.request.contextPath}/images/favicon.png">
