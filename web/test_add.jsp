@@ -46,13 +46,12 @@
 
     .mdl-grid {
         width: 100%;
-        padding: 0;
+        padding: 24px;
         margin-top: 24px;
     }
 
     .mdl-cell {
-        padding-right: 24px;
-        padding-left: 24px;
+        margin: 0;
     }
 
     .p-title {
@@ -61,28 +60,51 @@
 
     .question-title-cell {
         display: inline-block;
-        margin: 24px;
-        width: 80%;
     }
 
     .question-button-delete {
         display: inline-block;
+        margin: initial;
+    }
+
+    .page-content {
+        width: 70%;
+        /* max-width: 70%;
+         min-width: 70%;*/
         margin: auto;
     }
 
     @media screen
     and (max-device-width: 500px)
     and (max-device-height: 800px) {
-        .question-title-cell {
-            display: inline-block;
-            margin: 24px;
-            width: 60%;
+        .page-content {
+            width: 100%;
+            /*padding: 24px;*/
+            margin: auto;
         }
 
-        .question-button-delete {
-            display: inline-block;
-            margin: 16px 8px auto auto;
+        .mdl-grid {
+            width: 70%;
+            /*padding: 24px;*/
+            margin-top: auto;
         }
+
+        .p-title {
+            margin: 24px;
+        }
+    }
+
+    .mdl-list__item {
+        padding: 0;
+    }
+
+    .mdl-radio {
+        margin-left: 16px;
+    }
+
+    .mdl-list {
+        padding: 0;
+        margin: 0;
     }
 </style>
 

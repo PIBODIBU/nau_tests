@@ -147,7 +147,13 @@
                 <div class="card-square mdl-card mdl-shadow--8dp">
                     <p class="mdl-typography--subhead">
                         <%=questionCounter%>. <%=question.getText()%>
-                        <img src="<%=question.getImgUrl() == null ? "" :question.getImgUrl()%>"/>
+                        <%
+                            if (question.getImgUrl() != null && !question.getImgUrl().equals("")) {
+                        %>
+                        <img src="<%=question.getImgUrl()%>"/>
+                        <%
+                            }
+                        %>
                     </p>
 
                     <ul class="list-icon mdl-list" style="display: block">
