@@ -57,7 +57,20 @@
         bottom: 36px;
         z-index: 999;
     }
+
+    .menu-lower-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 8px;
+    }
 </style>
+
+<script type="text/javascript">
+    function deleteTest(formId) {
+        document.getElementById(formId).submit();
+    }
+</script>
 
 <%ArrayList<Test> tests = ((ArrayList<Test>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST));%>
 
@@ -94,6 +107,26 @@
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text"><%=test.getName()%>
                             </h2>
+
+                            <!-- Right aligned menu below button -->
+
+                            <button id="menu-lower-right-<%=test.getId()%>"
+                                    type="button"
+                                    class="mdl-button mdl-js-button mdl-button--icon menu-lower-right">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                for="menu-lower-right-<%=test.getId()%>">
+                                <form id="form-delete-test-<%=test.getId()%>"
+                                      action="${pageContext.request.contextPath}/me" method="get">
+                                    <input type="hidden" name="test_id" value="<%=test.getId()%>">
+                                    <li class="mdl-menu__item"
+                                        onclick="deleteTest('form-delete-test-<%=test.getId()%>')">
+                                        Видалити
+                                    </li>
+                                </form>
+                            </ul>
                         </div>
 
                         <div class="mdl-card__supporting-text">

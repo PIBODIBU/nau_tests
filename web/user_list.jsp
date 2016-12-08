@@ -54,24 +54,6 @@
 <%ArrayList<User> users = ((ArrayList<User>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_USER));%>
 
 <script type="text/javascript">
-    /* var table = document.getElementsByTagName('table').get(0);
-     var headerCheckbox = table.querySelector('thead .mdl-data-table__select input');
-     var boxes = table.querySelectorAll('tbody .mdl-data-table__select');
-     var headerCheckHandler = function (event) {
-     if (event.target.checked) {
-     for (var i = 0, length = boxes.length; i < length; i++) {
-     boxes[i].MaterialCheckbox.check();
-     boxes[i].MaterialCheckbox.updateClasses();
-     }
-     } else {
-     for (var i = 0, length = boxes.length; i < length; i++) {
-     boxes[i].MaterialCheckbox.uncheck();
-     boxes[i].MaterialCheckbox.updateClasses();
-     }
-     }
-     };
-     headerCheckbox.addEventListener('change', headerCheckHandler);*/
-
     function printUsers() {
         var form = document.getElementById("form-students");
         var inputAction = document.createElement("input");

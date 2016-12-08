@@ -89,7 +89,5 @@ public class UserListServlet extends HttpServlet {
             request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
             getServletContext().getRequestDispatcher("/print_students.jsp").forward(request, response);
         }
-
-        doGet(request, response);
     }
 }
