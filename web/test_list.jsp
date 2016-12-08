@@ -65,7 +65,6 @@
             <span class="mdl-layout-title">Тести</span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="">Link</a>
             </nav>
         </div>
     </header>

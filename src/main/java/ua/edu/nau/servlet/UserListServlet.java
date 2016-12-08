@@ -1,10 +1,12 @@
 package ua.edu.nau.servlet;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 @WebServlet(urlPatterns = {"/users"})
 public class UserListServlet extends HttpServlet {
@@ -64,6 +68,26 @@ public class UserListServlet extends HttpServlet {
             for (String id : studentIds) {
                 userDAO.randomizePassword(Integer.valueOf(id));
             }
+        } else if (action.equals("print_students")) {
+            ArrayList<User> users = userDAO.getAll();
+
+            for (Iterator<User> iterator = users.iterator(); iterator.hasNext(); ) {
+                User user = iterator.next();
+                Boolean wasFound = false;
+
+                for (String id : studentIds) {
+                    if (user.getId().equals(Integer.valueOf(id))) {
+                        wasFound = true;
+                        break;
+                    }
+                }
+
+                if (!wasFound)
+                    iterator.remove();
+            }
+
+            request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
+            getServletContext().getRequestDispatcher("/print_students.jsp").forward(request, response);
         }
 
         doGet(request, response);

@@ -72,6 +72,20 @@
      };
      headerCheckbox.addEventListener('change', headerCheckHandler);*/
 
+    function printUsers() {
+        var form = document.getElementById("form-students");
+        var inputAction = document.createElement("input");
+
+        inputAction.name = "action";
+        inputAction.value = "print_students";
+        inputAction.type = "hidden";
+
+        form.action = "/users";
+        form.method = "post";
+        form.appendChild(inputAction);
+        form.submit();
+    }
+
     function onStudentRandomizePasswords() {
         var form = document.getElementById("form-students");
         var inputAction = document.createElement("input");
@@ -175,6 +189,12 @@
                 </div>
 
                 <div class="mdl-button--fab-menu">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
+                            id="button-print"
+                            type="button"
+                            onclick="printUsers()">
+                        <i class="material-icons">print</i>
+                    </button>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
                             id="button-randomize-pass"
                             type="button"
