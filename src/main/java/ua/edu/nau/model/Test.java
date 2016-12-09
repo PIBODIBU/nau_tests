@@ -1,6 +1,12 @@
 package ua.edu.nau.model;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,6 +19,7 @@ public class Test {
     private User owner;
     private Date time;
     private Set<Question> questions;
+    private Set<TestSession> testSessions;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +50,8 @@ public class Test {
         this.description = description;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "owner")
     public User getOwner() {
         return owner;
@@ -63,7 +71,8 @@ public class Test {
         this.time = startTime;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "test")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "test", orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @OrderBy("id")
     public Set<Question> getQuestions() {
         return questions;
@@ -71,5 +80,21 @@ public class Test {
 
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "test", orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OrderBy("id")
+    public Set<TestSession> getTestSessions() {
+        return testSessions;
+    }
+
+    public void setTestSessions(Set<TestSession> testSessions) {
+        this.testSessions = testSessions;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
     }
 }

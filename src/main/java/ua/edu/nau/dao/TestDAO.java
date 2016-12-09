@@ -7,4 +7,6 @@ import java.util.ArrayList;
 
 public interface TestDAO extends BasicDAO<Test> {
     ArrayList<Test> getUserTests(User owner);
+
+    Boolean isTestBelongsToUser(Integer testId, Integer userId);
 }

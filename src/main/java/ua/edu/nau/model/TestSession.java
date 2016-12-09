@@ -1,5 +1,7 @@
 package ua.edu.nau.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,7 +27,7 @@ public class TestSession {
         this.id = id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "test_id")
     public Test getTest() {
         return test;

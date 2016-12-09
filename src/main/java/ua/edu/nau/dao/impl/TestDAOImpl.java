@@ -1,10 +1,12 @@
 package ua.edu.nau.dao.impl;
 
+import com.sun.istack.internal.NotNull;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import ua.edu.nau.dao.TestDAO;
+import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.Test;
 import ua.edu.nau.model.User;
@@ -72,7 +74,30 @@ public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
     }
 
     @Override
-    public void delete(Test model) {
+    public void delete(Test test) {
+        Session session = HibernateUtil.getSession();
 
+        session.beginTransaction();
+//        test.getQuestions().clear();
+        session.delete(test);
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public Boolean isTestBelongsToUser(@NotNull Integer testId, @NotNull Integer userId) throws IllegalStateException {
+        UserDAO userDAO = new UserDAOImpl();
+
+        if (userId == null) {
+            throw new IllegalStateException("User id cannot be null");
+        }
+
+        if (testId == null) {
+            throw new IllegalStateException("Test id cannot be null");
+        }
+
+        User user = userDAO.getById(userId);
+        Test test = getById(testId);
+
+        return test.getOwner().getId().equals(user.getId());
     }
 }

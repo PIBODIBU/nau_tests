@@ -109,7 +109,6 @@
                             </h2>
 
                             <!-- Right aligned menu below button -->
-
                             <button id="menu-lower-right-<%=test.getId()%>"
                                     type="button"
                                     class="mdl-button mdl-js-button mdl-button--icon menu-lower-right">
@@ -119,8 +118,10 @@
                             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                                 for="menu-lower-right-<%=test.getId()%>">
                                 <form id="form-delete-test-<%=test.getId()%>"
-                                      action="${pageContext.request.contextPath}/me" method="get">
-                                    <input type="hidden" name="test_id" value="<%=test.getId()%>">
+                                      action="${pageContext.request.contextPath}/me/tests" method="post">
+                                    <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>">
+                                    <input type="hidden" name="<%=Parameter.PARAM_ACTION%>"
+                                           value="<%=Parameter.PARAM_ACTION_DELETE_TEST%>">
                                     <li class="mdl-menu__item"
                                         onclick="deleteTest('form-delete-test-<%=test.getId()%>')">
                                         Видалити

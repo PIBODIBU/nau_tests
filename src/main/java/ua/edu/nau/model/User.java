@@ -1,5 +1,7 @@
 package ua.edu.nau.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -72,7 +74,8 @@ public class User {
         this.userRole = userRole;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
     @OrderBy("id DESC")
     public Set<TestSession> getTestSessions() {
         return testSessions;

@@ -1,5 +1,6 @@
 package ua.edu.nau.model;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -64,7 +65,8 @@ public class Question {
         this.imgUrl = imgUrl;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", orphanRemoval = true)
     @OrderBy("id")
     @Fetch(FetchMode.SELECT)
     public List<Answer> getAnswers() {

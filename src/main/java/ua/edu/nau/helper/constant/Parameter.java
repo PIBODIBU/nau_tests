@@ -18,4 +18,7 @@ public class Parameter {
 
     public static final String PARAM_QUESTION_TEXT = "question_text";
     public static final String PARAM_QUESTION_IMAGE_URL = "question_image_url";
+
+    public static final String PARAM_ACTION = "action";
+    public static final String PARAM_ACTION_DELETE_TEST = "delete_test";
 }

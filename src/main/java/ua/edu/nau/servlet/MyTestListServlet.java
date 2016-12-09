@@ -7,6 +7,7 @@ import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.TimeFormatter;
 import ua.edu.nau.helper.constant.Attribute;
+import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
 import ua.edu.nau.model.Test;
@@ -55,10 +56,49 @@ public class MyTestListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
+        TestDAO testDAO = new TestDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
             return;
         }
+
+        if (sessionUtils.getUserAccessLevel().equals(RoleCode.STUDENT)) {
+            response.sendRedirect("/me");
+            return;
+        }
+
+        System.out.println(request.getParameter(Parameter.PARAM_ACTION));
+
+        switch (request.getParameter(Parameter.PARAM_ACTION)) {
+            case Parameter.PARAM_ACTION_DELETE_TEST: {
+                Integer testId;
+
+                try {
+                    testId = Integer.valueOf(request.getParameter(Parameter.PARAM_TEST_ID));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    break;
+                }
+
+                if (testId == null) {
+                    System.out.println("Test id is null");
+                    break;
+                }
+
+                if (testDAO.isTestBelongsToUser(testId, sessionUtils.getUser().getId())) {
+                    testDAO.delete(testDAO.getById(testId));
+                    break;
+                } else {
+                    System.out.println("Test is not belongs to this user");
+                }
+
+                break;
+            }
+            default:
+                break;
+        }
+
+        response.sendRedirect("/me/tests");
     }
 }
