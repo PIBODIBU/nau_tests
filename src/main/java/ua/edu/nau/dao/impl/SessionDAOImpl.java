@@ -11,7 +11,7 @@ import ua.edu.nau.hibernate.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionDAOImpl implements SessionDAO {
+public class SessionDAOImpl extends BasicDAOImpl<ua.edu.nau.model.Session> implements SessionDAO {
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<ua.edu.nau.model.Session> getAll() {

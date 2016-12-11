@@ -97,6 +97,10 @@
                 document.getElementById(formId).submit();
             }
 
+            function editTest(formId) {
+                document.getElementById(formId).submit();
+            }
+
             function checkEvents() {
 //                showSnackBar("LOAD");
 
@@ -144,6 +148,15 @@
                                         Видалити
                                     </li>
                                 </form>
+
+                                <%--<form id="form-update-test-<%=test.getId()%>"
+                                      action="${pageContext.request.contextPath}/tests/edit" method="get">
+                                    <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>">
+                                    <li class="mdl-menu__item"
+                                        onclick="editTest('form-update-test-<%=test.getId()%>')">
+                                        Редагувати
+                                    </li>
+                                </form>--%>
                             </ul>
                         </div>
 

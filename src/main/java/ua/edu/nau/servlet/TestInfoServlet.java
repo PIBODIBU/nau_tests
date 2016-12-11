@@ -1,8 +1,10 @@
 package ua.edu.nau.servlet;
 
 import ua.edu.nau.dao.TestDAO;
+import ua.edu.nau.dao.TestSessionDAO;
 import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.dao.impl.TestDAOImpl;
+import ua.edu.nau.dao.impl.TestSessionDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
 import ua.edu.nau.helper.constant.Parameter;
@@ -25,6 +27,7 @@ public class TestInfoServlet extends HttpServlet {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         TestDAO testDAO = new TestDAOImpl();
         UserDAO userDAO = new UserDAOImpl();
+        TestSessionDAO testSessionDAO = new TestSessionDAOImpl();
         String jspName;
 
         if (!sessionUtils.isUserLoggedIn()) {
@@ -51,12 +54,12 @@ public class TestInfoServlet extends HttpServlet {
             return;
         }
 
-
         Integer testId = Integer.valueOf(request.getParameter(Parameter.PARAM_TEST_ID));
         Test test = testDAO.getById(testId);
 
         request.setAttribute(Attribute.ATTR_TEST_MODEL, test);
         request.setAttribute(Attribute.ATTR_USER_MODEL, userModel);
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION_TODAY, testSessionDAO.getTodayResult(test));
 
         getServletContext().getRequestDispatcher(jspName).forward(request, response);
     }

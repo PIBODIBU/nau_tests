@@ -14,4 +14,6 @@ public interface BasicDAO<T> {
     void update(T model);
 
     void delete(T model);
+
+    void insertOrUpdate(T model);
 }

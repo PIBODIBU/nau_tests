@@ -373,7 +373,7 @@
                 PREFIX_ID_INPUT_ANSWERS_CHECKBOX + String("is-correct-" + answersCounter),
                 "<%=Parameter.PARAM_ANSWER_IS_CORRECT%>" + currC);
 
-        // Answers list
+        // Answer list
         cell = createCell(PREFIX_ID_CELL + "answers-" + counter, 12);
         grid.appendChild(cell);
         cell.appendChild(answerList);

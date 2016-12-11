@@ -2,14 +2,17 @@
 
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
-<%@ page import="ua.edu.nau.model.Answer" %>
-<%@ page import="ua.edu.nau.model.Question" %>
-<%@ page import="ua.edu.nau.model.Test" %>
-<%@ page import="ua.edu.nau.model.User" %>
+<%@ page import="ua.edu.nau.model.*" %>
+<%@ page import="ua.edu.nau.helper.TimeFormatter" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%Test test = (Test) request.getAttribute(Attribute.ATTR_TEST_MODEL);%>
-<%User user = (User) request.getAttribute(Attribute.ATTR_USER_MODEL);%>
+<%
+    Test test = (Test) request.getAttribute(Attribute.ATTR_TEST_MODEL);
+    User user = (User) request.getAttribute(Attribute.ATTR_USER_MODEL);
+    ArrayList<TestSession> todayTestSessions =
+            ((ArrayList<TestSession>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST_SESSION_TODAY));
+%>
 
 <html>
 <head>
@@ -19,6 +22,7 @@
     <jsp:include page="/jsp/mdl_commons.jsp"/>
 
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/table.css" rel="stylesheet">
 </head>
 <body>
 
@@ -178,12 +182,64 @@
                         </ul>
                     </div>
                 </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand">
+                            <h2 class="mdl-card__title-text">Результати за сьогодні
+                            </h2>
+                        </div>
+
+                        <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th class="mdl-data-table__cell--non-numeric">Учасник</th>
+                                <th class="mdl-data-table__cell--non-numeric">Назва</th>
+                                <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
+                                <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
+                                <th>Правильних відповідей</th>
+                                <th>К-ть питань</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                int counter = 1;
+
+                                for (TestSession testSession : todayTestSessions) {
+                            %>
+                            <tr>
+                                <td><%=counter%>
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getUser().getName()%>
+                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <%
+                                        if (testSession.getEndTime() != null) {
+                                            out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
+                                        } else {
+                                            out.print("Не здав");
+                                        }
+                                    %>
+                                </td>
+                                <td><%=testSession.getCorrectAnswers()%>
+                                </td>
+                                <td><%=testSession.getTest().getQuestions().size()%>
+                                </td>
+                            </tr>
+                            <%
+                                    counter++;
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <%--<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">edit</i>
-        </button>--%>
     </main>
 </div>
 </body>

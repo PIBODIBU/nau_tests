@@ -1,12 +1,17 @@
 package ua.edu.nau.dao.impl;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import ua.edu.nau.dao.TestSessionDAO;
 import ua.edu.nau.hibernate.HibernateUtil;
+import ua.edu.nau.model.Test;
 import ua.edu.nau.model.TestSession;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TestSessionDAOImpl extends BasicDAOImpl<TestSession> implements TestSessionDAO {
     @Override
@@ -58,6 +63,34 @@ public class TestSessionDAOImpl extends BasicDAOImpl<TestSession> implements Tes
         testSessions.forEach(session::refresh);
 
         session.getTransaction().commit();
+
+        return testSessions;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public ArrayList<TestSession> getTodayResult(Test test) {
+        Session session = HibernateUtil.getSession();
+
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.HOUR_OF_DAY, 0); //anything 0 - 23
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH - 1);
+        Date midnight = calendar.getTime(); // The midnight, that's the first second of the day.
+
+        session.beginTransaction();
+        ArrayList<TestSession> testSessions = new ArrayList<TestSession>(session.createCriteria(TestSession.class)
+                .add(Restrictions.eq("test", test))
+                .add(Restrictions.gt("endTime", midnight))
+                .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+                .list());
+        testSessions.forEach(session::refresh);
+        session.getTransaction().commit();
+
+        for (TestSession testSession : testSessions) {
+            System.out.println(testSession.getId());
+        }
 
         return testSessions;
     }

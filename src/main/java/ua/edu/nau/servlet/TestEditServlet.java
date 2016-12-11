@@ -27,12 +27,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@WebServlet(urlPatterns = {"/tests/add"})
-public class TestAddServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/tests/edit"})
+public class TestEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         UserDAO userDAO = new UserDAOImpl();
+        TestDAO testDAO = new TestDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
@@ -44,9 +45,17 @@ public class TestAddServlet extends HttpServlet {
             return;
         }
 
-        request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
+        Integer testId = Integer.valueOf(request.getParameter(Parameter.PARAM_TEST_ID));
 
-        getServletContext().getRequestDispatcher("/test_add.jsp").forward(request, response);
+        if (testId == null) {
+            response.sendRedirect("/me/tests");
+            return;
+        }
+
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
+        request.setAttribute(Attribute.ATTR_TEST_MODEL, testDAO.getById(testId));
+
+        getServletContext().getRequestDispatcher("/test_edit.jsp").forward(request, response);
     }
 
     @Override
@@ -54,6 +63,7 @@ public class TestAddServlet extends HttpServlet {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
         String testName, testDescription, testTime;
+        Integer testId;
 
         TestDAO testDAO = new TestDAOImpl();
         QuestionDAO questionDAO = new QuestionDAOImpl();
@@ -76,6 +86,7 @@ public class TestAddServlet extends HttpServlet {
         }
 
         Integer questionsCount = Integer.valueOf(request.getParameter(Parameter.PARAM_ANSWER_COUNT));
+        testId = Integer.valueOf(request.getParameter(Parameter.PARAM_TEST_ID));
         testName = request.getParameter(Parameter.PARAM_TEST_NAME);
         testDescription = request.getParameter(Parameter.PARAM_TEST_DESCRIPTION);
         testTime = request.getParameter(Parameter.PARAM_TEST_TIME);
@@ -83,14 +94,15 @@ public class TestAddServlet extends HttpServlet {
         user = userDAO.getById(sessionUtils.getUser().getId());
 
         test = new Test();
+        test.setId(testId);
         test.setName(testName);
         test.setDescription(testDescription);
         test.setTime(createDateFromString(testTime));
         test.setOwner(user);
 
-        testDAO.insert(test);
+        testDAO.insertOrUpdate(test);
 
-        for (int qCounter = 1; qCounter <= questionsCount; qCounter++) {
+        for (int qCounter = 0; qCounter <= questionsCount; qCounter++) {
             questionModel = new Question();
 
             // Question text
@@ -101,7 +113,7 @@ public class TestAddServlet extends HttpServlet {
                 questionModel.setImgUrl(questionImgUrl);
                 questionModel.setTest(test);
 
-                questionDAO.insert(questionModel);
+                questionDAO.insertOrUpdate(questionModel);
             }
 
             // Correct answer
@@ -125,7 +137,7 @@ public class TestAddServlet extends HttpServlet {
                         answerModel.setCorrect(false);
                     }
 
-                    answerDAO.insert(answerModel);
+                    answerDAO.insertOrUpdate(answerModel);
                 }
         }
 

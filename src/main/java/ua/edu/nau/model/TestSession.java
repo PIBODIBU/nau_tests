@@ -1,7 +1,5 @@
 package ua.edu.nau.model;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.Date;
 

@@ -13,6 +13,12 @@ public class TimeFormatter {
         return dateFormat.format(date);
     }
 
+    public static String dateToMinutes(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("mm");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(date);
+    }
+
     public static String dateToHumanMinutes(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

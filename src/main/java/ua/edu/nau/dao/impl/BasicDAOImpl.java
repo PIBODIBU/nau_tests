@@ -36,6 +36,15 @@ public class BasicDAOImpl<T> implements BasicDAO<T> {
     }
 
     @Override
+    public void insertOrUpdate(T model) {
+        Session session = HibernateUtil.getSession();
+
+        session.beginTransaction();
+        session.saveOrUpdate(model);
+        session.getTransaction().commit();
+    }
+
+    @Override
     public void update(T model) {
 
     }

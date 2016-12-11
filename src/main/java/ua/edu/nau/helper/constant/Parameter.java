@@ -21,4 +21,5 @@ public abstract class Parameter {
 
     public static final String PARAM_ACTION = "action";
     public static final String PARAM_ACTION_DELETE_TEST = "delete_test";
+    public static final String PARAM_ACTION_UPDATE_TEST = "update_test";
 }
