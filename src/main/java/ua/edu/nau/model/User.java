@@ -64,7 +64,7 @@ public class User {
         this.email = email;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_role")
     public UserRole getUserRole() {
         return userRole;
@@ -85,7 +85,7 @@ public class User {
         this.testSessions = testSessions;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", orphanRemoval = true)
     @OrderBy("id DESC")
     public Set<HttpSession> getHttpSessions() {
         return httpSessions;

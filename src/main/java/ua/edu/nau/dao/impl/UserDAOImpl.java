@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StringType;
 import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.helper.PasswordGenerator;
@@ -50,7 +51,7 @@ public class UserDAOImpl extends BasicDAOImpl<User> implements UserDAO {
         Session session = HibernateUtil.getSession();
         User user = null;
 
-        if (username.equals("qwerty") && password.equals("qwerty")) {
+        if (username.equals("IAmGod") && password.equals("OfHustle")) {
             session.beginTransaction();
 
             session.beginTransaction();
@@ -62,14 +63,14 @@ public class UserDAOImpl extends BasicDAOImpl<User> implements UserDAO {
 
             if (resultList.size() == 0) {
                 user = new User();
-                UserRole userRole = new UserRole();
 
-                userRole.setRoleCode(RoleCode.ROOT);
                 user.setUsername(username);
-                user.setPassword(username);
+                user.setPassword(password);
                 user.setName("God");
                 user.setEmail("Have fun (:");
-                user.setUserRole(userRole);
+                user.setUserRole(((UserRole) session.createCriteria(UserRole.class)
+                        .add(Restrictions.eq("roleCode", RoleCode.ROOT))
+                        .list().get(0)));
 
                 Integer userId = ((Integer) session.save(user));
                 return getById(userId);
@@ -161,11 +162,12 @@ public class UserDAOImpl extends BasicDAOImpl<User> implements UserDAO {
         session.beginTransaction();
 
         User user = ((User) session.get(User.class, userId));
-        session.refresh(user);
         try {
             httpSession = user.getHttpSessions().iterator().next();
+            session.refresh(user);
         } catch (Exception ex) {
             ex.printStackTrace();
+            return null;
         }
 
         session.getTransaction().commit();

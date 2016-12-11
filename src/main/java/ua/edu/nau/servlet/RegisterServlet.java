@@ -1,6 +1,5 @@
 package ua.edu.nau.servlet;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import ua.edu.nau.dao.UserDAO;
@@ -26,6 +25,11 @@ public class RegisterServlet extends HttpServlet {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
         if (sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/me");
+            return;
+        }
+
+        if (sessionUtils.getUserAccessLevel().equals(RoleCode.STUDENT)) {
             response.sendRedirect("/me");
             return;
         }
