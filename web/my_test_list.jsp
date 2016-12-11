@@ -7,6 +7,7 @@
 <%@ page import="ua.edu.nau.helper.TimeFormatter" %>
 <%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
 <%@ page import="ua.edu.nau.model.User" %>
+<%@ page import="ua.edu.nau.helper.constant.JSPEvent" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -21,7 +22,7 @@
 
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
 </head>
-<body>
+<body onload="checkEvents()">
 
 <style>
     body {
@@ -66,12 +67,6 @@
     }
 </style>
 
-<script type="text/javascript">
-    function deleteTest(formId) {
-        document.getElementById(formId).submit();
-    }
-</script>
-
 <%ArrayList<Test> tests = ((ArrayList<Test>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_TEST));%>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -96,7 +91,29 @@
         }
     %>
 
-    <main class="mdl-layout__content">
+    <main id="mdl-layout__content" class="mdl-layout__content">
+        <script type="text/javascript">
+            function deleteTest(formId) {
+                document.getElementById(formId).submit();
+            }
+
+            function checkEvents() {
+//                showSnackBar("LOAD");
+
+                <%
+                if(request.getAttribute(Attribute.ATTR_JSP_EVENT) != null){
+                    String event =((String) request.getAttribute(Attribute.ATTR_JSP_EVENT));
+
+                    if(event.equals(JSPEvent.TEST_DELETED)){
+                    %>
+//                showSnackBar("Тест видалено");
+                <%
+                }
+            }
+           %>
+            }
+        </script>
+
         <div class="page-content">
             <div class="mdl-grid">
                 <%

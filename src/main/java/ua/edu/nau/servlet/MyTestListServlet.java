@@ -7,6 +7,7 @@ import ua.edu.nau.dao.impl.TestDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.TimeFormatter;
 import ua.edu.nau.helper.constant.Attribute;
+import ua.edu.nau.helper.constant.JSPEvent;
 import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
@@ -57,6 +58,7 @@ public class MyTestListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         TestDAO testDAO = new TestDAOImpl();
+        UserDAO userDAO = new UserDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
@@ -88,6 +90,7 @@ public class MyTestListServlet extends HttpServlet {
 
                 if (testDAO.isTestBelongsToUser(testId, sessionUtils.getUser().getId())) {
                     testDAO.delete(testDAO.getById(testId));
+                    request.setAttribute(Attribute.ATTR_JSP_EVENT, JSPEvent.TEST_DELETED);
                     break;
                 } else {
                     System.out.println("Test is not belongs to this user");
@@ -99,6 +102,17 @@ public class MyTestListServlet extends HttpServlet {
                 break;
         }
 
-        response.sendRedirect("/me/tests");
+        // Proceed request
+        ArrayList<Test> tests = testDAO.getUserTests(sessionUtils.getUser());
+
+        Date loginTime = userDAO.getLastSession(sessionUtils.getUser().getId()).getLoginTime();
+        Date remain = new Date(new Date().getTime() - (loginTime.getTime() +
+                TimeFormatter.minutesToMillisLong(new SettingDAOImpl().getByName(SettingDAOImpl.SETTING_SESSION_TIME).getValue())));
+        request.setAttribute("remain", remain);
+
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_TEST, tests);
+        request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
+
+        getServletContext().getRequestDispatcher("/my_test_list.jsp").forward(request, response);
     }
 }

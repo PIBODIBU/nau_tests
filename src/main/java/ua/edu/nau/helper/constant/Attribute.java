@@ -1,6 +1,6 @@
 package ua.edu.nau.helper.constant;
 
-public class Attribute {
+public abstract class Attribute {
     public static final String ATTR_BAD_LOGIN_OR_PASSWORD = "bad_login_or_password";
     public static final String ATTR_USER_MODEL = "user_model";
     public static final String ATTR_TEST_MODEL = "test_model";
@@ -17,4 +17,5 @@ public class Attribute {
     public static final String ATTR_SESSION_REDIRECT_TO_PAGE = "session_redirect_to_page";
     public static final String ATTR_SESSION_REDIRECT_ID = "session_redirect_id";
     public static final String ATTR_DATE_SESSION_TIMER = "date_session_timer";
+    public static final String ATTR_JSP_EVENT = "jsp_event";
 }

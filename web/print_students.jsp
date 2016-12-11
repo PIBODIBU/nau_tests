@@ -26,7 +26,7 @@
         self.focus();
         win.document.open();
 
-        win.document.write('<' + 'html' + '><' + 'body' + '>');
+        win.document.write('<html><body>');
 
         <%for(User user:users){%>
         win.document.write("<%=user.getName()%>" + "          " + "<%=user.getPassword()%>");
@@ -34,11 +34,13 @@
         <%
         }
         %>
-        win.document.write('<' + '/body' + '><' + '/html' + '>');
+        win.document.write('</body></html>');
 
         win.document.close();
         win.print();
         win.close();
+
+        document.location = "/users";
     }
 </script>
 

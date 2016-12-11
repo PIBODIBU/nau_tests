@@ -1,6 +1,5 @@
 package ua.edu.nau.servlet;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import ua.edu.nau.dao.UserDAO;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;

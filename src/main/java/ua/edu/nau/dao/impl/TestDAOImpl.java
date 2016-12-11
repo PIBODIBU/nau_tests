@@ -78,7 +78,6 @@ public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
         Session session = HibernateUtil.getSession();
 
         session.beginTransaction();
-//        test.getQuestions().clear();
         session.delete(test);
         session.getTransaction().commit();
     }
