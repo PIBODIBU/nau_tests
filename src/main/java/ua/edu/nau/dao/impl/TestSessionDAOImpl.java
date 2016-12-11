@@ -72,11 +72,10 @@ public class TestSessionDAOImpl extends BasicDAOImpl<TestSession> implements Tes
     public ArrayList<TestSession> getTodayResult(Test test) {
         Session session = HibernateUtil.getSession();
 
-        Calendar calendar = new GregorianCalendar();
+        Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0); //anything 0 - 23
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH - 1);
         Date midnight = calendar.getTime(); // The midnight, that's the first second of the day.
 
         session.beginTransaction();
@@ -88,9 +87,7 @@ public class TestSessionDAOImpl extends BasicDAOImpl<TestSession> implements Tes
         testSessions.forEach(session::refresh);
         session.getTransaction().commit();
 
-        for (TestSession testSession : testSessions) {
-            System.out.println(testSession.getId());
-        }
+        System.out.println(midnight.toString());
 
         return testSessions;
     }
