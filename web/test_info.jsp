@@ -52,13 +52,6 @@
         min-height: 150px;
     }
 
-    .mdl-button--fab {
-        position: fixed;
-        right: 36px;
-        bottom: 36px;
-        z-index: 999;
-    }
-
     .mdl-grid {
         padding: 0;
         width: 100%;
@@ -67,7 +60,15 @@
         margin: auto;
     }
 
-    .mdl-card__actions {
+    .mdl-data-table {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        margin: 0;
+        border-width: 0;
+    }
+
+    .mdl-card {
         padding: 0;
     }
 </style>
@@ -190,52 +191,54 @@
                             </h2>
                         </div>
 
-                        <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
-                            <thead>
-                            <tr>
-                                <th>№</th>
-                                <th class="mdl-data-table__cell--non-numeric">Учасник</th>
-                                <th class="mdl-data-table__cell--non-numeric">Назва</th>
-                                <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
-                                <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
-                                <th>Правильних відповідей</th>
-                                <th>К-ть питань</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%
-                                int counter = 1;
+                        <div class="table-wrapper">
+                            <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Учасник</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Назва</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
+                                    <th>Правильних відповідей</th>
+                                    <th>К-ть питань</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%
+                                    int counter = 1;
 
-                                for (TestSession testSession : todayTestSessions) {
-                            %>
-                            <tr>
-                                <td><%=counter%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getUser().getName()%>
-                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    <%
-                                        if (testSession.getEndTime() != null) {
-                                            out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
-                                        } else {
-                                            out.print("Не здав");
-                                        }
-                                    %>
-                                </td>
-                                <td><%=testSession.getCorrectAnswers()%>
-                                </td>
-                                <td><%=testSession.getTest().getQuestions().size()%>
-                                </td>
-                            </tr>
-                            <%
-                                    counter++;
-                                }
-                            %>
-                            </tbody>
-                        </table>
+                                    for (TestSession testSession : todayTestSessions) {
+                                %>
+                                <tr>
+                                    <td><%=counter%>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=testSession.getUser().getName()%>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <%
+                                            if (testSession.getEndTime() != null) {
+                                                out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
+                                            } else {
+                                                out.print("Не здав");
+                                            }
+                                        %>
+                                    </td>
+                                    <td><%=testSession.getCorrectAnswers()%>
+                                    </td>
+                                    <td><%=testSession.getTest().getQuestions().size()%>
+                                    </td>
+                                </tr>
+                                <%
+                                        counter++;
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
