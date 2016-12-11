@@ -165,7 +165,7 @@
                                         for (Answer answer : question.getAnswers()) {
                                     %>
                                     <li class="mdl-list__item">
-                                        <i class="material-icons mdl-list__item-icon"><%=answer.getCorrect() ? "star" : ""%>
+                                        <i class="material-icons mdl-list__item-icon"><%=answer.getCorrect() ? "done" : ""%>
                                         </i>
                                         <%=alphabet[answerCounter]%>) <%=answer.getText()%>
                                     </li>

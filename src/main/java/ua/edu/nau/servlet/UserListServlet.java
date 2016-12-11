@@ -63,6 +63,11 @@ public class UserListServlet extends HttpServlet {
             return;
         }
 
+        if (action == null) {
+            response.sendRedirect("/users");
+            return;
+        }
+
         if (action.equals("action_randomize_pass")) {
             for (String id : studentIds) {
                 userDAO.randomizePassword(Integer.valueOf(id));

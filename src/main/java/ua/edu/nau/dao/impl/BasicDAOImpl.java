@@ -51,5 +51,10 @@ public class BasicDAOImpl<T> implements BasicDAO<T> {
 
     @Override
     public void delete(T model) {
+        Session session = HibernateUtil.getSession();
+
+        session.beginTransaction();
+        session.delete(model);
+        session.getTransaction().commit();
     }
 }

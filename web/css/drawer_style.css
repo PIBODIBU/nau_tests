@@ -20,5 +20,5 @@
 .mdl-layout__drawer-head-text-wrapper {
     position: absolute;
     bottom: 0;
-    padding: 8px;
+    padding: 8px 8px 8px 16px;
 }

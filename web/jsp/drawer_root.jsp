@@ -5,11 +5,12 @@
 <%User user = (User) request.getAttribute(Attribute.ATTR_USER_MODEL);%>
 
 <div class="mdl-layout__drawer">
-    <div style="height: 150px; background-color: #2196F3; margin: 0; position: relative">
+    <div style="height: 150px; background-color: #2196F3; margin: 0; position: relative"
+         class="mdl-shadow--2dp">
         <div class="mdl-layout__drawer-head-text-wrapper">
-            <h5 class="mdl-layout__drawer-title">
+            <h6 class="mdl-layout__drawer-title">
                 <%=user.getName()%>
-            </h5>
+            </h6>
 
             <h7 class="mdl-layout__drawer-subtitle">
                 <%=user.getEmail()%>

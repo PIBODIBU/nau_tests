@@ -45,12 +45,10 @@ public class LoginServlet extends HttpServlet {
         request.setAttribute(Attribute.ATTR_BAD_LOGIN_OR_PASSWORD, false);
         HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
         HttpSession httpSession = new HttpSession();
-        SettingDAO settingDAO = new SettingDAOImpl();
 
         Integer httpSessionId = -1;
         String username = request.getParameter(Parameter.PARAM_USERNAME);
         String password = request.getParameter(Parameter.PARAM_PASSWORD);
-        Setting settingSessionTime = settingDAO.getByName(SettingDAOImpl.SETTING_SESSION_TIME);
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             onBadCredentials(request, response);
@@ -69,17 +67,9 @@ public class LoginServlet extends HttpServlet {
             // Student is logging in. Check session for timeout
             HttpSession session = userDAO.getLastSession(user.getId());
             userDAO.randomizePassword(user.getId());
-            //request.getSession().setMaxInactiveInterval(Integer.valueOf(settingSessionTime.getValue()) * 60);
 
-            if (session != null) {
-                /*if (SessionHelper.isSessionTimedOut(session)) {
-                    userDAO.randomizePassword(user.getId());
-                    response.sendRedirect("/login");
-                    return;
-                }*/
-            } else {
+            if (session == null) {
                 response.sendRedirect("/login");
-                return;
             }
         }
 

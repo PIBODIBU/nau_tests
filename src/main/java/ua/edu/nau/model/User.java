@@ -85,7 +85,7 @@ public class User {
         this.testSessions = testSessions;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     @OrderBy("id DESC")
     public Set<HttpSession> getHttpSessions() {
         return httpSessions;
