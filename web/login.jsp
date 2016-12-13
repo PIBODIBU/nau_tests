@@ -123,7 +123,10 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row toolbar_row-1">
-            <h2 class="toolbar-title">NAUTests</h2>
+            <h2 class="toolbar-title">
+                <img src="${pageContext.request.contextPath}/images/drawer_logo.png"
+                     style="height: 100px; margin-bottom: 36px;"/>
+            </h2>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation mdl-layout--large-screen-only">
             </nav>

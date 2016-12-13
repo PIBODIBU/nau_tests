@@ -24,7 +24,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
-        if (sessionUtils.isUserLoggedIn()) {
+        if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/me");
             return;
         }
@@ -42,7 +42,12 @@ public class RegisterServlet extends HttpServlet {
         Session session = HibernateUtil.getSessionFactory().openSession();
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
-        if (sessionUtils.isUserLoggedIn()) {
+        if (!sessionUtils.isUserLoggedIn()) {
+            response.sendRedirect("/me");
+            return;
+        }
+
+        if (sessionUtils.getUserAccessLevel().equals(RoleCode.STUDENT)) {
             response.sendRedirect("/me");
             return;
         }
@@ -68,8 +73,8 @@ public class RegisterServlet extends HttpServlet {
 
         Integer insertedId = userDAO.insert(user);
 
-        sessionUtils.setUser(userDAO.getById(insertedId));
+//        sessionUtils.setUser(userDAO.getById(insertedId));
 
-        response.sendRedirect("/me");
+        response.sendRedirect("/users");
     }
 }

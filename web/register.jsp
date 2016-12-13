@@ -21,6 +21,11 @@
         background-color: #f9f9f9;
     }
 
+    .toolbar_row-1 {
+        height: 200px;
+        text-align: center;
+    }
+
     .page-content {
         margin: -100px auto auto;
         width: 60%;
@@ -61,7 +66,7 @@
     }
 
     .mdl-button {
-        width: 200px;
+        width: 150px;
         min-width: 150px;
     }
 
@@ -87,6 +92,11 @@
         margin: auto;
     }
 
+    .mdl-checkbox {
+        display: block;
+        margin-left: 10%;
+    }
+
     .text-fields-wrapper {
         width: 100%;
         min-width: 100%;
@@ -99,12 +109,19 @@
         width: 100%;
         min-width: 100%;
     }
+
+    #btn_register {
+        width: 200px;
+    }
 </style>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row toolbar_row-1">
-            <h2 class="toolbar-title">NAUTests</h2>
+            <h2 class="toolbar-title">
+                <img src="${pageContext.request.contextPath}/images/drawer_logo.png"
+                     style="height: 100px; margin-bottom: 36px;"/>
+            </h2>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation mdl-layout--large-screen-only">
             </nav>
@@ -125,7 +142,7 @@
                                     <input class="mdl-textfield__input" type="text"
                                            name="<%=Parameter.PARAM_NAME%>"
                                            id="name">
-                                    <label class="mdl-textfield__label" for="name">Ім'я</label>
+                                    <label class="mdl-textfield__label" for="name">Ім'я та прізвище</label>
                                 </div>
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -152,8 +169,9 @@
                         </div>
 
                         <div class="mdl-card__actions">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-                                    type="submit">
+                            <button id="btn_register"
+                                    type="submit"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                                 Зареєструватися
                             </button>
                         </div>

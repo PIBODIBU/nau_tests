@@ -81,6 +81,10 @@
         form.appendChild(inputAction);
         form.submit();
     }
+
+    function addStudent() {
+        window.location = "/register";
+    }
 </script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
@@ -177,6 +181,10 @@
                             onclick="printUsers()">
                         <i class="material-icons">print</i>
                     </button>
+                    <div class="mdl-tooltip mdl-tooltip--left"
+                         data-mdl-for="button-print">
+                        Роздрукувати паролі
+                    </div>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
                             id="button-randomize-pass"
                             type="button"
@@ -188,9 +196,15 @@
                         Рандомізувати пароль
                     </div>
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--fab-menu-item"
-                            type="submit">
-                        <i class="material-icons">done_all</i>
+                            id="button-add_student"
+                            type="button"
+                            onclick="addStudent()">
+                        <i class="material-icons">add</i>
                     </button>
+                    <div class="mdl-tooltip mdl-tooltip--left"
+                         data-mdl-for="button-add_student">
+                        Додати студента
+                    </div>
                 </div>
             </form>
         </section>

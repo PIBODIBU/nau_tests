@@ -67,10 +67,14 @@ public class TestValidatorServlet extends HttpServlet {
             String[] answers = request.getParameterValues(String.valueOf(question.getId()));
 
             for (Answer answer : question.getAnswers()) {
-                if (answer.getId().equals(Integer.valueOf(answers[0]))) {
-                    if (answer.getCorrect()) {
-                        correctAnswers++;
+                try {
+                    if (answer.getId().equals(Integer.valueOf(answers[0]))) {
+                        if (answer.getCorrect()) {
+                            correctAnswers++;
+                        }
                     }
+                } catch (NullPointerException ex) {
+
                 }
             }
         }

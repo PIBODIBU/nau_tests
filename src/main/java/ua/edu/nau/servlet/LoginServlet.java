@@ -63,15 +63,16 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+      /*  if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
             // Student is logging in. Check session for timeout
             HttpSession session = userDAO.getLastSession(user.getId());
             userDAO.randomizePassword(user.getId());
 
             if (session == null) {
                 response.sendRedirect("/login");
+                return;
             }
-        }
+        }*/
 
         httpSession.setUser(user);
         httpSession.setInvalid(false);

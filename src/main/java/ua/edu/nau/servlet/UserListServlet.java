@@ -72,6 +72,9 @@ public class UserListServlet extends HttpServlet {
             for (String id : studentIds) {
                 userDAO.randomizePassword(Integer.valueOf(id));
             }
+
+            response.sendRedirect("/users");
+            return;
         } else if (action.equals("print_students")) {
             ArrayList<User> users = userDAO.getAll();
 

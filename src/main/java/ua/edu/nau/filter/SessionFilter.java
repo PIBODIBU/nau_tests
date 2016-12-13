@@ -17,6 +17,8 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*")
 public class SessionFilter implements Filter {
+    private static final String TAG = "SessionFilter -> ";
+
     /**
      * Called by the web container to indicate to a filter that it is
      * being placed into service.
@@ -79,11 +81,17 @@ public class SessionFilter implements Filter {
         if (sessionUtils.getHttpSessionId() != null) {
             HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
             UserDAO userDAO = new UserDAOImpl();
-            HttpSession httpSession = userDAO.getLastSession(sessionUtils.getUser().getId());
+            HttpSession lastHttpSession = userDAO.getLastSession(sessionUtils.getUser().getId());
+
+            if (lastHttpSession == null) {
+                System.out.println(TAG + "Can't fetch last http session");
+                chain.doFilter(request, response);
+                return;
+            }
 
             if (sessionUtils.getUser().getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
-                if (httpSession != null && SessionHelper.isSessionTimedOut(httpSession)) {
-                    System.out.println("Session timed out");
+                if (SessionHelper.isSessionTimedOut(lastHttpSession)) {
+                    System.out.println(TAG + "Session timed out");
 
                     httpSessionDAO.invalidate(sessionUtils.getHttpSessionId());
                     userDAO.randomizePassword(sessionUtils.getUser().getId());

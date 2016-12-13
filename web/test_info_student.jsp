@@ -2,9 +2,14 @@
 
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <%@ page import="ua.edu.nau.model.Test" %>
+<%@ page import="ua.edu.nau.model.User" %>
+<%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%Test test = (Test) request.getAttribute(Attribute.ATTR_TEST_MODEL);%>
+<%
+    Test test = (Test) request.getAttribute(Attribute.ATTR_TEST_MODEL);
+    User user = (User) request.getAttribute(Attribute.ATTR_USER_MODEL);
+%>
 
 <html>
 <head>
@@ -73,17 +78,17 @@
         </div>
     </header>
 
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">NAUTests</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
-            <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/users">Користувачі</a>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
-            </div>
-        </nav>
-    </div>
+    <%
+        if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+    %>
+    <jsp:include page="/jsp/drawer_student.jsp"/>
+    <%
+    } else if (user.getUserRole().getRoleCode().equals(RoleCode.ROOT)) {
+    %>
+    <jsp:include page="/jsp/drawer_root.jsp"/>
+    <%
+        }
+    %>
 
     <main class="mdl-layout__content">
         <div class="page-content">

@@ -117,11 +117,15 @@ public class TestAddServlet extends HttpServlet {
                     answerModel.setText(answers[i]);
                     answerModel.setQuestion(questionModel);
 
-                    if (i == Integer.valueOf(correctAnswer) - 1) {
-                        // Answer is correct
-                        answerModel.setCorrect(true);
-                    } else {
-                        // Common answer
+                    try {
+                        if (i == Integer.valueOf(correctAnswer) - 1) {
+                            // Answer is correct
+                            answerModel.setCorrect(true);
+                        } else {
+                            // Common answer
+                            answerModel.setCorrect(false);
+                        }
+                    } catch (Exception ex) {
                         answerModel.setCorrect(false);
                     }
 
