@@ -69,9 +69,10 @@ public class UserListServlet extends HttpServlet {
         }
 
         if (action.equals("action_randomize_pass")) {
-            for (String id : studentIds) {
-                userDAO.randomizePassword(Integer.valueOf(id));
-            }
+            if (studentIds != null)
+                for (String id : studentIds) {
+                    userDAO.randomizePassword(Integer.valueOf(id));
+                }
 
             response.sendRedirect("/users");
             return;
@@ -81,6 +82,11 @@ public class UserListServlet extends HttpServlet {
             for (Iterator<User> iterator = users.iterator(); iterator.hasNext(); ) {
                 User user = iterator.next();
                 Boolean wasFound = false;
+
+                if (studentIds == null) {
+                    response.sendRedirect("/users");
+                    return;
+                }
 
                 for (String id : studentIds) {
                     if (user.getId().equals(Integer.valueOf(id))) {
@@ -95,6 +101,18 @@ public class UserListServlet extends HttpServlet {
 
             request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
             getServletContext().getRequestDispatcher("/print_students.jsp").forward(request, response);
+        } else if (action.equals("action_delete_students")) {
+            if (studentIds != null)
+                for (String id : studentIds) {
+                    try {
+                        userDAO.delete(userDAO.getById(Integer.valueOf(id)));
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+            response.sendRedirect("/users");
+            return;
         }
     }
 }

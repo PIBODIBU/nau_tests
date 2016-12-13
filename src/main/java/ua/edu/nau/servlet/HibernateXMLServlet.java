@@ -13,18 +13,13 @@ import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = {"/h/xml/*"})
 public class HibernateXMLServlet extends HttpServlet {
-    private PrintWriter printWriter;
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        printWriter = response.getWriter();
+        PrintWriter printWriter = response.getWriter();
 
         Configuration configuration = new AnnotationConfiguration();
         configuration.configure("/hibernate.cfg.xml");
 
-        printWriter.println(configuration.getProperty("hibernate.connection.url"));
-
-//        getServletContext().getRequestDispatcher("/hibernate_xml.jsp").forward(request, response);
+        printWriter.println(configuration.getProperties().toString());
     }
 }
-

@@ -113,7 +113,11 @@ public class UserDAOImpl extends BasicDAOImpl<User> implements UserDAO {
         session.beginTransaction();
 
         user = ((User) session.get(User.class, userId));
-        session.refresh(user);
+        try {
+            session.refresh(user);
+        } catch (Exception ex) {
+
+        }
         user.setPassword(newPassword);
         session.update(user);
 

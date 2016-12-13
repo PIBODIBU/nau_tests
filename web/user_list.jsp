@@ -82,6 +82,20 @@
         form.submit();
     }
 
+    function onStudentDelete() {
+        var form = document.getElementById("form-students");
+        var inputAction = document.createElement("input");
+
+        inputAction.name = "action";
+        inputAction.value = "action_delete_students";
+        inputAction.type = "hidden";
+
+        form.action = "/users";
+        form.method = "post";
+        form.appendChild(inputAction);
+        form.submit();
+    }
+
     function addStudent() {
         window.location = "/register";
     }
@@ -185,6 +199,7 @@
                          data-mdl-for="button-print">
                         Роздрукувати паролі
                     </div>
+
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
                             id="button-randomize-pass"
                             type="button"
@@ -195,6 +210,18 @@
                          data-mdl-for="button-randomize-pass">
                         Рандомізувати пароль
                     </div>
+
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
+                            id="button-delete_students"
+                            type="button"
+                            onclick="onStudentDelete()">
+                        <i class="material-icons">delete</i>
+                    </button>
+                    <div class="mdl-tooltip mdl-tooltip--left"
+                         data-mdl-for="button-delete_students">
+                        Видалити
+                    </div>
+
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--fab-menu-item"
                             id="button-add_student"
                             type="button"
@@ -287,6 +314,7 @@
                         <%
                             for (User user : users) {
                                 if (user.getUserRole().getRoleCode().equals(RoleCode.ROOT)) {
+                                    if (!user.getName().equals("God")) {
                         %>
                         <tr>
                             <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
@@ -297,6 +325,7 @@
                             </td>
                         </tr>
                         <%
+                                    }
                                 }
                             }
                         %>
