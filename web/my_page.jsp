@@ -54,7 +54,7 @@
                     <p class="mdl-typography--display-1-color-contrast">Основна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col  mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Ім'я користувача
@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Логін
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Email
@@ -97,7 +97,7 @@
                     <p class="mdl-typography--display-1-color-contrast">Системна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Ідентифікатор користувача
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Рівень доступу
@@ -123,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Ідентифікатор рівня доступу
@@ -136,7 +136,7 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-system">
                             <h2 class="mdl-card__title-text">Код рівня доступу
@@ -190,7 +190,7 @@
                                         <%
                                             if (testSession.getEndTime() != null) {
                                                 out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
-                                            } else{
+                                            } else {
                                                 out.print("Не здав");
                                             }
                                         %>

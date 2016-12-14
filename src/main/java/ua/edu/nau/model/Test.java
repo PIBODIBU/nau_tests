@@ -18,6 +18,7 @@ public class Test {
     private String description;
     private User owner;
     private Date time;
+    private String color;
     private Set<Question> questions;
     private Set<TestSession> testSessions;
 
@@ -69,6 +70,15 @@ public class Test {
 
     public void setTime(Date startTime) {
         this.time = startTime;
+    }
+
+    @Column(name = "color")
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "test", orphanRemoval = true,

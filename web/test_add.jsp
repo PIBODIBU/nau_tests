@@ -395,6 +395,7 @@
 
 <form action="${pageContext.request.contextPath}/tests/add" method="post" accept-charset="UTF-8">
     <input id="input-question-counter" type="hidden" name="<%=Parameter.PARAM_ANSWER_COUNT%>">
+    <input id="input-test-color" type="hidden" name="<%=Parameter.PARAM_TEST_COLOR%>">
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -478,5 +479,13 @@
         </div>
     </div>
 </form>
+
+<script>
+    $('#input-test-color').val(getColor('500'));
+
+    /*var colorInput = document.getElementById("input-test-color");
+     colorInput.value = getColor('500');*/
+</script>
+
 </body>
 </html>

@@ -25,5 +25,9 @@
         <mapping class="ua.edu.nau.model.TestSession"/>
         <mapping class="ua.edu.nau.model.HttpSession"/>
         <mapping class="ua.edu.nau.model.Setting"/>
+
+        <mapping class="ua.edu.nau.model.UniversityStructure.Institute"/>
+        <mapping class="ua.edu.nau.model.UniversityStructure.Department"/>
+        <mapping class="ua.edu.nau.model.UniversityStructure.Group"/>
     </session-factory>
 </hibernate-configuration>

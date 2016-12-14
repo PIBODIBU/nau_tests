@@ -53,7 +53,7 @@ public class TestAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
 
-        String testName, testDescription, testTime;
+        String testName, testDescription, testTime, testColor;
 
         TestDAO testDAO = new TestDAOImpl();
         QuestionDAO questionDAO = new QuestionDAOImpl();
@@ -79,6 +79,7 @@ public class TestAddServlet extends HttpServlet {
         testName = request.getParameter(Parameter.PARAM_TEST_NAME);
         testDescription = request.getParameter(Parameter.PARAM_TEST_DESCRIPTION);
         testTime = request.getParameter(Parameter.PARAM_TEST_TIME);
+        testColor = request.getParameter(Parameter.PARAM_TEST_COLOR);
 
         user = userDAO.getById(sessionUtils.getUser().getId());
 
@@ -86,6 +87,7 @@ public class TestAddServlet extends HttpServlet {
         test.setName(testName);
         test.setDescription(testDescription);
         test.setTime(createDateFromString(testTime));
+        test.setColor(testColor);
         test.setOwner(user);
 
         testDAO.insert(test);

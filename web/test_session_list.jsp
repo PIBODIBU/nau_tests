@@ -48,13 +48,6 @@
 %>
 
 <style>
-    .mdl-button--fab {
-        position: fixed;
-        right: 36px;
-        bottom: 36px;
-        z-index: 999;
-    }
-
     .mdl-card__actions {
         display: table;
     }
@@ -64,6 +57,58 @@
         vertical-align: middle;
         text-align: right;
         margin-right: 16px;
+    }
+
+    body {
+        width: 100%;
+        max-width: 100%;
+        background-color: #f9f9f9;
+    }
+
+    .page-content {
+        width: 100%;
+        padding-bottom: 24px;
+    }
+
+    .card-square {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        margin-top: 16px;
+    }
+
+    .mdl-card__title {
+        height: 100px;
+        padding-left: 16px;
+        padding-bottom: 8px;
+        color: #ffffff;
+        background-color: #2196F3;
+    }
+
+    @media screen
+    and (max-device-width: 1000px)
+    and (max-device-height: 1200px) {
+        .page-content {
+            width: 100%;
+            min-width: 100%;
+            margin: 0;
+            padding-bottom: 24px;
+        }
+
+        .mdl-grid {
+            width: 95%;
+            min-width: 95%;
+        }
+
+        .card-square {
+            width: 100%;
+            max-width: 100%;
+            margin-top: 16px;
+        }
+    }
+
+    h6 {
+        margin-bottom: 0;
     }
 </style>
 
@@ -95,7 +140,7 @@
                 <%
                     for (TestSession testSession : testSessions) {
                 %>
-                <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <%
                             if (testSession.getDone()) {
@@ -125,6 +170,17 @@
 
                         <div class="mdl-card__supporting-text">
                             <%=testSession.getTest().getDescription()%>
+
+                            <%
+                                if (testSession.getDone()) {
+                            %>
+                            <h6>
+                                Результат
+                                <%=testSession.getCorrectAnswers()%> / <%=testSession.getTest().getQuestions().size()%>
+                            </h6>
+                            <%
+                                }
+                            %>
                         </div>
 
                         <div class="mdl-card__actions mdl-card--border">
@@ -151,13 +207,6 @@
                                     Продовжити
                                 </button>
                             </form>
-                            <%
-                            } else {
-                            %>
-                            <p class="mdl-typography--subhead-color-contrast text-result">
-                                Результат
-                                <%=testSession.getCorrectAnswers()%> / <%=testSession.getTest().getQuestions().size()%>
-                            </p>
                             <%
                                 }
                             %>

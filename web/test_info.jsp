@@ -35,7 +35,6 @@
 
     .page-content {
         width: 90%;
-        /*margin: 24px auto auto;*/
         margin: auto;
         padding-bottom: 24px;
     }
@@ -47,7 +46,7 @@
     }
 
     .mdl-card__title {
-        background-color: #2196F3;
+        background-color: <%=test.getColor()%>;
         color: #ffffff;
         min-height: 150px;
     }
@@ -99,7 +98,7 @@
         <div class="page-content">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-phone">
-                    <div class="card-square mdl-card mdl-shadow--2dp">
+                    <div class="card-square mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Опис
                             </h2>
@@ -113,7 +112,7 @@
                 </div>
 
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
-                    <div class="card-square mdl-card mdl-shadow--2dp">
+                    <div class="card-square mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Час виконання
                             </h2>
@@ -127,7 +126,7 @@
                 </div>
 
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--6-col-phone">
-                    <div class="card-square mdl-card mdl-shadow--2dp">
+                    <div class="card-square mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Власник
                             </h2>
@@ -141,7 +140,7 @@
                 </div>
 
                 <div class="mdl-cell mdl-cell--12-col">
-                    <div class="card-square mdl-card mdl-shadow--2dp">
+                    <div class="card-square mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Питання
                             </h2>
@@ -185,7 +184,7 @@
                 </div>
 
                 <div class="mdl-cell mdl-cell--12-col">
-                    <div class="card-square mdl-card mdl-shadow--2dp">
+                    <div class="card-square mdl-card mdl-shadow--4dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text">Результати за сьогодні
                             </h2>

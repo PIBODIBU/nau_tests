@@ -39,12 +39,13 @@
     .card-square {
         width: 100%;
         max-width: 100%;
-        height: 100%;
         margin-top: 16px;
     }
 
     .mdl-card__title {
-        height: 100px;
+        height: 150px;
+        min-height: 150px;
+        max-height: 150px;
         padding-left: 16px;
         padding-bottom: 8px;
         color: #ffffff;
@@ -78,6 +79,10 @@
         right: 36px;
         bottom: 36px;
         z-index: 999;
+    }
+
+    h6 {
+        margin: 16px 0 0 0;
     }
 </style>
 
@@ -120,9 +125,11 @@
 
                         <div class="mdl-card__supporting-text">
                             <%=test.getDescription()%>
-                            <br/>
-                            Час виконання
-                            <%=TimeFormatter.dateToHumanMinutes(test.getTime())%>
+
+                            <h6>
+                                Час виконання
+                                <%=TimeFormatter.dateToHumanMinutes(test.getTime())%>
+                            </h6>
                         </div>
 
                         <div class="mdl-card__actions mdl-card--border">

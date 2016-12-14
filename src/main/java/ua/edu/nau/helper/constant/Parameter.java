@@ -11,6 +11,7 @@ public abstract class Parameter {
     public static final String PARAM_TEST_NAME = "test_name";
     public static final String PARAM_TEST_DESCRIPTION = "test_description";
     public static final String PARAM_TEST_TIME = "test_time";
+    public static final String PARAM_TEST_COLOR = "test_color";
 
     public static final String PARAM_ANSWER_TEXT = "answer_text";
     public static final String PARAM_ANSWER_IS_CORRECT = "answer_radio-";

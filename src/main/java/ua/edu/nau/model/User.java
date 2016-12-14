@@ -1,6 +1,7 @@
 package ua.edu.nau.model;
 
 import org.hibernate.annotations.Cascade;
+import ua.edu.nau.model.UniversityStructure.Group;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +15,7 @@ public class User {
     private String password;
     private String email;
     private UserRole userRole;
+    private Group group;
     private Set<TestSession> testSessions;
     private Set<HttpSession> httpSessions;
 
@@ -72,6 +74,16 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id")
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)

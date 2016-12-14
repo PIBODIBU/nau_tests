@@ -150,7 +150,9 @@
                         <%
                             if (question.getImgUrl() != null && !question.getImgUrl().equals("")) {
                         %>
-                        <img src="<%=question.getImgUrl()%>"/>
+                        <a href="<%=question.getImgUrl()%>" target="_blank">
+                            <img src="<%=question.getImgUrl()%>"/>
+                        </a>
                         <%
                             }
                         %>
