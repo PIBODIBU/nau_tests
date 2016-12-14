@@ -54,7 +54,7 @@ public class Institute {
     public Set<Group> getGroups() {
         return groups;
     }
-
+    
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }

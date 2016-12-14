@@ -54,7 +54,7 @@ public class Group {
         this.institute = institute;
     }
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "group")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "group", fetch = FetchType.EAGER)
     public Set<User> getUsers() {
         return users;
     }

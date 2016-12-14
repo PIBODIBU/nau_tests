@@ -6,3 +6,12 @@
     overflow: auto;
     display: table;
 }
+
+.table-wrapper--full-width {
+    overflow: auto;
+    padding: 16px;
+}
+
+.mdl-data-table--full-width {
+    width: 80%
+}

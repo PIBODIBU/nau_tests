@@ -4,9 +4,12 @@
 <%@ page import="ua.edu.nau.model.User" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ua.edu.nau.helper.constant.RoleCode" %>
+<%@ page import="ua.edu.nau.model.UniversityStructure.Group" %>
+<%@ page import="ua.edu.nau.helper.constant.Parameter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%User activeUser = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
+<%ArrayList<Group> groups = ((ArrayList<Group>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_GROUP));%>
 
 <html>
 <head>
@@ -18,6 +21,9 @@
     <link href="${pageContext.request.contextPath}/css/table.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/fab-menu.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/js/mdl-selectfield/mdl-selectfield.min.css">
+    <script src="${pageContext.request.contextPath}/js/mdl-selectfield/mdl-selectfield.min.js"></script>
 </head>
 <body>
 
@@ -35,9 +41,6 @@
     }
 
     .mdl-data-table {
-        /*width: 100%;
-        min-width: 100%;
-        max-width: 100%;*/
         margin: 24px auto;
     }
 
@@ -48,6 +51,11 @@
     .mdl-button--fab-menu {
         right: 0;
         bottom: 0;
+    }
+
+    .chips-wrapper {
+        width: 100%;
+        padding: 16px;
     }
 </style>
 
@@ -99,6 +107,19 @@
     function addStudent() {
         window.location = "/register";
     }
+
+    function onGroupChanged(groupId) {
+        var inputGroupId = document.createElement("input");
+        var form = document.getElementById('form-students');
+
+        inputGroupId.name = '<%=Parameter.PARAM_GROUP_ID%>';
+        inputGroupId.value = groupId;
+        inputGroupId.type = 'hidden';
+
+        form.appendChild(inputGroupId);
+        form.method = 'get';
+        form.submit();
+    }
 </script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
@@ -132,60 +153,81 @@
     %>
 
     <main class="mdl-layout__content">
-
         <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
-            <form id="form-students" action="${pageContext.request.contextPath}/users" method="post">
-                <div class="page-content">
-                    <div class="table-wrapper">
-                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--8dp">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <%-- <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
-                                            for="table-header">
-                                         <input type="checkbox" id="table-header" class="mdl-checkbox__input"/>
-                                     </label>--%>
-                                </th>
-                                <th>ID</th>
-                                <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
-                                <th class="mdl-data-table__cell--non-numeric">Заліковка</th>
-                                <th class="mdl-data-table__cell--non-numeric">Пароль</th>
-                                <th class="mdl-data-table__cell--non-numeric">Email</th>
-                            </tr>
-                            </thead>
 
-                            <%
-                                for (User user : users) {
-                                    if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
-                            %>
-                            <tr>
-                                <td>
-                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
-                                           for="checkbox-<%=user.getId()%>">
-                                        <input type="checkbox"
-                                               id="checkbox-<%=user.getId()%>"
-                                               name="students"
-                                               value="<%=user.getId()%>"
-                                               class="mdl-checkbox__input"/>
-                                    </label>
-                                </td>
-                                <td><%=user.getId()%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=user.getUsername()%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=user.getPassword()%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
-                                </td>
-                            </tr>
-                            <%
-                                    }
+            <%--<div class="chips-wrapper"></div>--%>
+
+            <form id="form-students" action="${pageContext.request.contextPath}/users" method="post">
+                <div class="table-wrapper--full-width">
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp mdl-data-table--full-width">
+                        <thead>
+                        <tr>
+                            <th style="width: 1%;">
+                                <button id="fab-choose-group"
+                                        class="mdl-button mdl-js-button mdl-button--icon"
+                                        type="button">
+                                    <i class="material-icons">supervisor_account</i>
+                                </button>
+
+                                <div class="mdl-tooltip" data-mdl-for="fab-choose-group">
+                                    Обрати групу
+                                </div>
+
+                                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                                    for="fab-choose-group">
+                                    <%
+                                        for (Group group : groups) {
+                                    %>
+                                    <li class="mdl-menu__item"
+                                        onclick="onGroupChanged('<%=group.getId()%>')"><%=group.getName()%>
+                                    </li>
+                                    <%
+                                        }
+                                    %>
+                                </ul>
+                            </th>
+                            <th>ID</th>
+                            <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
+                            <th class="mdl-data-table__cell--non-numeric">Група</th>
+                            <th class="mdl-data-table__cell--non-numeric">Заліковка</th>
+                            <th class="mdl-data-table__cell--non-numeric">Пароль</th>
+                            <th class="mdl-data-table__cell--non-numeric">Email</th>
+                        </tr>
+                        </thead>
+
+                        <%
+                            for (User user : users) {
+                                if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+                        %>
+                        <tr>
+                            <td>
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
+                                       for="checkbox-<%=user.getId()%>">
+                                    <input type="checkbox"
+                                           id="checkbox-<%=user.getId()%>"
+                                           name="students"
+                                           value="<%=user.getId()%>"
+                                           class="mdl-checkbox__input"/>
+                                </label>
+                            </td>
+                            <td><%=user.getId()%>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric"><%=user.getGroup().getName()%>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric"><%=user.getUsername()%>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric"><%=user.getPassword()%>
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
+                            </td>
+                        </tr>
+                        <%
                                 }
-                            %>
-                        </table>
-                    </div>
+                            }
+                        %>
+                    </table>
                 </div>
 
                 <div class="mdl-button--fab-menu">

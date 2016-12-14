@@ -1,10 +1,14 @@
 package ua.edu.nau.servlet;
 
+import ua.edu.nau.dao.GroupDAO;
 import ua.edu.nau.dao.UserDAO;
+import ua.edu.nau.dao.impl.GroupDAOImpl;
 import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.constant.Attribute;
+import ua.edu.nau.helper.constant.Parameter;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
+import ua.edu.nau.model.UniversityStructure.Group;
 import ua.edu.nau.model.User;
 
 import javax.servlet.ServletException;
@@ -29,6 +33,9 @@ public class UserListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         UserDAO userDAO = new UserDAOImpl();
+        GroupDAO groupDAO = new GroupDAOImpl();
+
+        Integer groupId = null;
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
@@ -40,7 +47,19 @@ public class UserListServlet extends HttpServlet {
             return;
         }
 
-        request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, userDAO.getAll());
+        try {
+            groupId = Integer.valueOf(request.getParameter(Parameter.PARAM_GROUP_ID));
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+
+        // Fetching all users or users of the specified group
+        ArrayList<User> users = new ArrayList<User>();
+        users.addAll(groupId == null ? userDAO.getAll() : groupDAO.getById(groupId).getUsers());
+
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_GROUP, groupDAO.getAll());
+        request.setAttribute(Attribute.ATTR_GROUP_ID, groupId);
         request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
 
         getServletContext().getRequestDispatcher("/user_list.jsp").forward(request, response);
