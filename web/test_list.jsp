@@ -32,21 +32,45 @@
     }
 
     .page-content {
-        width: 80%;
-        margin: auto;
+        width: 100%;
+        padding-bottom: 24px;
     }
 
     .card-square {
         width: 100%;
         max-width: 100%;
+        height: 100%;
         margin-top: 16px;
     }
 
     .mdl-card__title {
+        height: 100px;
         padding-left: 16px;
         padding-bottom: 8px;
         color: #ffffff;
         background-color: #2196F3;
+    }
+
+    @media screen
+    and (max-device-width: 1000px)
+    and (max-device-height: 1200px) {
+        .page-content {
+            width: 100%;
+            min-width: 100%;
+            margin: 0;
+            padding-bottom: 24px;
+        }
+
+        .mdl-grid {
+            width: 95%;
+            min-width: 95%;
+        }
+
+        .card-square {
+            width: 100%;
+            max-width: 100%;
+            margin-top: 16px;
+        }
     }
 
     .mdl-button--fab {
@@ -87,7 +111,7 @@
                 <%
                     for (Test test : tests) {
                 %>
-                <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand">
                             <h2 class="mdl-card__title-text"><%=test.getName()%>

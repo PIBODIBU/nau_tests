@@ -146,6 +146,7 @@
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  <%=isCredentialsBad?"is-invalid":""%>">
                                     <input class="mdl-textfield__input"
                                            type="text"
+                                           autocomplete="off"
                                            name="<%=Parameter.PARAM_USERNAME%>"
                                            id="username">
                                     <label class="mdl-textfield__label" for="username">Логін</label>
@@ -154,6 +155,7 @@
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label <%=isCredentialsBad?"is-invalid":""%>">
                                     <input class="mdl-textfield__input"
                                            type="password"
+                                           autocomplete="off"
                                            name="<%=Parameter.PARAM_PASSWORD%>"
                                            id="password">
                                     <label class="mdl-textfield__label" for="password">Пароль</label>
