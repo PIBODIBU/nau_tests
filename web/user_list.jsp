@@ -449,9 +449,9 @@
         </section>
 
         <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-            <div class="page-content">
-                <div class="table-wrapper">
-                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--8dp">
+            <div class="page-content" style="padding-top: 8px;">
+                <div class="table-wrapper--full-width">
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp mdl-data-table--full-width">
                         <thead>
                         <tr>
                             <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
@@ -481,9 +481,9 @@
             </div>
         </section>
         <section class="mdl-layout__tab-panel" id="fixed-tab-3">
-            <div class="page-content">
-                <div class="table-wrapper">
-                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--8dp">
+            <div class="page-content" style="padding-top: 8px;">
+                <div class="table-wrapper--full-width">
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp mdl-data-table--full-width">
                         <thead>
                         <tr>
                             <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
@@ -513,9 +513,9 @@
             </div>
         </section>
         <section class="mdl-layout__tab-panel" id="fixed-tab-4">
-            <div class="page-content">
-                <div class="table-wrapper">
-                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--8dp">
+            <div class="page-content" style="padding-top: 8px;">
+                <div class="table-wrapper--full-width">
+                    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp mdl-data-table--full-width">
                         <thead>
                         <tr>
                             <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
