@@ -128,7 +128,9 @@
         width: 200px;
     }
 
-    .getmdl-select__fix-height .mdl-menu__container {
+    .mdl-menu__container {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
         height: 200px !important;
     }
 </style>
@@ -144,8 +146,10 @@
         inputGroupId.value = departmentId;
     }
 
-    function onGroupSelected(groupId) {
-        alert(groupId);
+    function onGroupSelected(groupId, groupName) {
+        $('#group-name').val(groupName);
+        $('#group-name-label').html("");
+
         var inputGroupId = document.getElementById('input-group');
         inputGroupId.value = groupId;
     }
@@ -181,87 +185,70 @@
                                     <label class="mdl-textfield__label" for="name">Ім'я та прізвище</label>
                                 </div>
 
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
-                                    <input type="hidden" id="input-institute" name="<%=Parameter.PARAM_INSTITUTE_ID%>"
-                                           value="<%=institutes.get(0).getId()%>">
+                                <%--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">--%>
+                                <%--<input type="hidden" id="input-institute" name="<%=Parameter.PARAM_INSTITUTE_ID%>"--%>
+                                <%--value="<%=institutes.get(0).getId()%>">--%>
 
-                                    <input class="mdl-textfield__input" id="institute-name" name="country"
-                                           value="<%=institutes.get(0).getName()%>"
-                                           type="text" readonly tabIndex="-1"/>
+                                <%--<input class="mdl-textfield__input" id="institute-name" name="country"--%>
+                                <%--value="<%=institutes.get(0).getName()%>"--%>
+                                <%--type="text" readonly tabIndex="-1"/>--%>
 
-                                    <label class="mdl-textfield__label" for="institute-name">Інститут</label>
-                                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="institute-name">
-                                        <%
-                                            for (Institute institute : institutes) {
-                                        %>
-                                        <li class="mdl-menu__item"
-                                            onclick="onInstituteSelected('<%=institute.getId()%>')"><%=institute.getShortName()%>
-                                        </li>
-                                        <%
-                                            }
-                                        %>
-                                    </ul>
-                                </div>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
-                                    <input type="hidden" id="input-department" name="<%=Parameter.PARAM_DEPARTMENT_ID%>"
-                                           value="<%=departments.get(0).getId()%>">
+                                <%--<label class="mdl-textfield__label" for="institute-name">Інститут</label>--%>
+                                <%--<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="institute-name">--%>
+                                <%--<%--%>
+                                <%--for (Institute institute : institutes) {--%>
+                                <%--%>--%>
+                                <%--<li class="mdl-menu__item"--%>
+                                <%--onclick="onInstituteSelected('<%=institute.getId()%>')"><%=institute.getShortName()%>--%>
+                                <%--</li>--%>
+                                <%--<%--%>
+                                <%--}--%>
+                                <%--%>--%>
+                                <%--</ul>--%>
+                                <%--</div>--%>
+                                <%--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">--%>
+                                <%--<input type="hidden" id="input-department" name="<%=Parameter.PARAM_DEPARTMENT_ID%>"--%>
+                                <%--value="<%=departments.get(0).getId()%>">--%>
 
-                                    <input class="mdl-textfield__input" id="department-name" name="country"
-                                           value="<%=departments.get(0).getName()%>"
-                                           type="text" readonly tabIndex="-1"/>
+                                <%--<input class="mdl-textfield__input" id="department-name" name="country"--%>
+                                <%--value="<%=departments.get(0).getName()%>"--%>
+                                <%--type="text" readonly tabIndex="-1"/>--%>
 
-                                    <label class="mdl-textfield__label" for="department-name">Кафедра</label>
-                                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="department-name">
-                                        <%
-                                            for (Department department : departments) {
-                                        %>
-                                        <li class="mdl-menu__item"
-                                            onclick="onDepartmentSelected('<%=department.getId()%>')"><%=department.getShortName()%>
-                                        </li>
-                                        <%
-                                            }
-                                        %>
-                                    </ul>
-                                </div>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">
+                                <%--<label class="mdl-textfield__label" for="department-name">Кафедра</label>--%>
+                                <%--<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="department-name">--%>
+                                <%--<%--%>
+                                <%--for (Department department : departments) {--%>
+                                <%--%>--%>
+                                <%--<li class="mdl-menu__item"--%>
+                                <%--onclick="onDepartmentSelected('<%=department.getId()%>')"><%=department.getShortName()%>--%>
+                                <%--</li>--%>
+                                <%--<%--%>
+                                <%--}--%>
+                                <%--%>--%>
+                                <%--</ul>--%>
+                                <%--</div>--%>
+
+                                <input type="hidden" id="input-group" name="<%=Parameter.PARAM_GROUP_ID%>"
+                                       value="<%=groups.get(0).getId()%>">
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input" id="group-name"
                                            type="text" readonly tabIndex="-1"/>
-                                    <label class="mdl-textfield__label" for="group-name">Група</label>
+                                    <label id="group-name-label" class="mdl-textfield__label"
+                                           for="group-name">Група</label>
 
                                     <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="group-name">
                                         <%
                                             for (Group group : groups) {
                                         %>
                                         <li class="mdl-menu__item"
-                                            onclick="onGroupSelected('<%=group.getId()%>')"><%=group.getName()%>
+                                            onclick="onGroupSelected('<%=group.getId()%>','<%=group.getName()%>')"><%=group.getName()%>
                                         </li>
                                         <%
                                             }
                                         %>
                                     </ul>
                                 </div>
-
-                                <button id="demo-menu-lower-right"
-                                        type="button"
-                                        class="mdl-button mdl-js-button mdl-button--icon">
-                                    <i class="material-icons">more_vert</i>
-                                </button>
-
-                                <input type="hidden" id="input-group" name="<%=Parameter.PARAM_GROUP_ID%>"
-                                       value="<%=groups.get(0).getId()%>">
-
-                                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                                    for="demo-menu-lower-right">
-                                    <%
-                                        for (Group group : groups) {
-                                    %>
-                                    <li class="mdl-menu__item"
-                                        onclick="onGroupSelected('<%=group.getId()%>')"><%=group.getName()%>
-                                    </li>
-                                    <%
-                                        }
-                                    %>
-                                </ul>
 
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input" type="text"
