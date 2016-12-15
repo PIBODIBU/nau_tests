@@ -144,4 +144,30 @@ public class UserDAOImpl extends BasicDAOImpl<User> implements UserDAO {
 
         return httpSession;
     }
+
+    @Override
+    public User getStudentByBookNumber(String bookNumber) {
+        Session session = HibernateUtil.getSession();
+        User user = null;
+
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ua.edu.nau.model.User.class)
+                .add(Expression.sql("BINARY username=?", bookNumber, new StringType()));
+
+        List resultList = criteria.list();
+
+        if (resultList.size() == 0) {
+            return null;
+        }
+
+        try {
+            user = ((User) criteria.list().get(0));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        session.getTransaction().commit();
+
+        return user;
+    }
 }

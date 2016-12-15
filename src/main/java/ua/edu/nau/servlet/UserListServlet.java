@@ -57,6 +57,8 @@ public class UserListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         UserDAO userDAO = new UserDAOImpl();
+        GroupDAO groupDAO = new GroupDAOImpl();
+
         String[] studentIds = request.getParameterValues("students");
         String action = request.getParameter("action");
 
@@ -75,8 +77,6 @@ public class UserListServlet extends HttpServlet {
             return;
         }
 
-        fetchGroupsAndUsers(request, response);
-
         if (action.equals("action_randomize_pass")) {
             if (studentIds != null)
                 for (String id : studentIds) {
@@ -84,6 +84,7 @@ public class UserListServlet extends HttpServlet {
                 }
 
             response.sendRedirect("/users");
+            fetchGroupsAndUsers(request, response);
             return;
         } else if (action.equals("print_students")) {
             ArrayList<User> users = userDAO.getAll();
@@ -108,6 +109,7 @@ public class UserListServlet extends HttpServlet {
                     iterator.remove();
             }
 
+            fetchGroupsAndUsers(request, response);
             request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
             getServletContext().getRequestDispatcher("/print_students.jsp").forward(request, response);
         } else if (action.equals("action_delete_students")) {
@@ -120,8 +122,24 @@ public class UserListServlet extends HttpServlet {
                     }
                 }
 
+            fetchGroupsAndUsers(request, response);
             response.sendRedirect("/users");
             return;
+        } else if (action.equals("student_search")) {
+            ArrayList<User> users = new ArrayList<>();
+            String studentBookNumber = request.getParameter(Parameter.PARAM_STUDENT_BOOK_NUMBER);
+
+            if (studentBookNumber == null || studentBookNumber.equals("")) {
+                return;
+            }
+
+            users.add(userDAO.getStudentByBookNumber(studentBookNumber));
+
+            request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
+            request.setAttribute(Attribute.ATTR_ARRAY_LIST_GROUP, groupDAO.getAll());
+            request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
+
+            getServletContext().getRequestDispatcher("/user_list.jsp").forward(request, response);
         }
     }
 

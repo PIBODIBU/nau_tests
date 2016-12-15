@@ -11,4 +11,6 @@ public interface UserDAO extends BasicDAO<User> {
     void randomizePassword(int userId);
 
     HttpSession getLastSession(Integer userId);
+
+    User getStudentByBookNumber(String bookNumber);
 }

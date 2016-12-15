@@ -216,7 +216,6 @@
             <div class="mdl-layout-spacer"></div>
         </div>
 
-        <!-- Tabs -->
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
             <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Студенти</a>
             <a href="#fixed-tab-2" class="mdl-layout__tab">Адміністратори</a>
@@ -318,11 +317,14 @@
                             <h5 class="mdl-tools--title">Пошук</h5>
 
                             <form style="width: 100%; margin-top: 8px; text-align: center"
-                                  action="#">
+                                  action="${pageContext.request.contextPath}/users" method="post">
+                                <input type="hidden" name="action" value="student_search">
                                 <div style="width: 100%"
                                      class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" id="sample3">
-                                    <label class="mdl-textfield__label" for="sample3">Введіть групу</label>
+                                    <input class="mdl-textfield__input" type="text"
+                                           name="<%=Parameter.PARAM_STUDENT_BOOK_NUMBER%>" id="sample3">
+                                    <label class="mdl-textfield__label" for="sample3">Введіть номер залікової книжки
+                                    </label>
                                 </div>
                             </form>
                         </div>

@@ -7,6 +7,7 @@ public abstract class Parameter {
     public static final String PARAM_EMAIL = "email";
     public static final String PARAM_INSTITUTE_ID = "institute_id";
     public static final String PARAM_DEPARTMENT_ID = "department_id";
+    public static final String PARAM_STUDENT_BOOK_NUMBER = "student_book_number";
     public static final String PARAM_GROUP_ID = "group_id";
     public static final String PARAM_GROUP_CHOOSE_ID = "group_choosed_id";
     public static final String PARAM_TEST_ID = "test_id";
