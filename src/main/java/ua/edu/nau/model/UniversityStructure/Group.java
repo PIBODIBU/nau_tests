@@ -55,6 +55,7 @@ public class Group {
     }
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "group", fetch = FetchType.EAGER)
+    @OrderBy("name ASC")
     public Set<User> getUsers() {
         return users;
     }

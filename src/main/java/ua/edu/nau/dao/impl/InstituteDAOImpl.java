@@ -3,41 +3,40 @@ package ua.edu.nau.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
-import ua.edu.nau.dao.GroupDAO;
+import ua.edu.nau.dao.InstituteDAO;
 import ua.edu.nau.hibernate.HibernateUtil;
-import ua.edu.nau.model.UniversityStructure.Group;
+import ua.edu.nau.model.UniversityStructure.Institute;
 
-import java.util.*;
+import java.util.ArrayList;
 
-public class GroupDAOImpl extends BasicDAOImpl<Group> implements GroupDAO {
+public class InstituteDAOImpl extends BasicDAOImpl<Institute> implements InstituteDAO {
     @Override
-    public Group getById(Integer id) {
+    public Institute getById(Integer id) {
         Session session = HibernateUtil.getSession();
 
         session.beginTransaction();
-        Group group = ((Group) session.get(Group.class, id));
-        session.refresh(group);
+        Institute institute = ((Institute) session.get(Institute.class, id));
+        session.refresh(institute);
         session.getTransaction().commit();
 
-        return group;
+        return institute;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public ArrayList<Group> getAll() {
+    public ArrayList<Institute> getAll() {
         Session session = HibernateUtil.getSession();
-        ArrayList<Group> groups;
+        ArrayList<Institute> institutes;
 
         session.beginTransaction();
-        List<Group> groupSet = session.createCriteria(Group.class)
+
+        institutes = new ArrayList<Institute>(session.createCriteria(Institute.class)
                 .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                 .addOrder(Order.asc("name"))
-                .list();
-
-        groups = new ArrayList<Group>(groupSet);
+                .list());
 
         session.getTransaction().commit();
 
-        return groups;
+        return institutes;
     }
 }

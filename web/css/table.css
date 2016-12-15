@@ -13,5 +13,7 @@
 }
 
 .mdl-data-table--full-width {
-    width: 80%
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }

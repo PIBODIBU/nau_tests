@@ -5,8 +5,11 @@ public abstract class Parameter {
     public static final String PARAM_PASSWORD = "password";
     public static final String PARAM_NAME = "name";
     public static final String PARAM_EMAIL = "email";
-    public static final String PARAM_TEST_ID = "test_id";
+    public static final String PARAM_INSTITUTE_ID = "institute_id";
+    public static final String PARAM_DEPARTMENT_ID = "department_id";
     public static final String PARAM_GROUP_ID = "group_id";
+    public static final String PARAM_GROUP_CHOOSE_ID = "group_choosed_id";
+    public static final String PARAM_TEST_ID = "test_id";
     public static final String PARAM_TEST_SESSION_ID = "test_session_id";
 
     public static final String PARAM_TEST_NAME = "test_name";

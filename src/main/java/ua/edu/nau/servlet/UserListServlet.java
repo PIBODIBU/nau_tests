@@ -32,10 +32,8 @@ public class UserListServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
-        UserDAO userDAO = new UserDAOImpl();
         GroupDAO groupDAO = new GroupDAOImpl();
-
-        Integer groupId = null;
+        UserDAO userDAO = new UserDAOImpl();
 
         if (!sessionUtils.isUserLoggedIn()) {
             response.sendRedirect("/login");
@@ -47,19 +45,9 @@ public class UserListServlet extends HttpServlet {
             return;
         }
 
-        try {
-            groupId = Integer.valueOf(request.getParameter(Parameter.PARAM_GROUP_ID));
-        } catch (NumberFormatException ex) {
-            ex.printStackTrace();
-        }
+        fetchGroupsAndUsers(request, response);
 
-        // Fetching all users or users of the specified group
-        ArrayList<User> users = new ArrayList<User>();
-        users.addAll(groupId == null ? userDAO.getAll() : groupDAO.getById(groupId).getUsers());
-
-        request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
         request.setAttribute(Attribute.ATTR_ARRAY_LIST_GROUP, groupDAO.getAll());
-        request.setAttribute(Attribute.ATTR_GROUP_ID, groupId);
         request.setAttribute(Attribute.ATTR_USER_MODEL, userDAO.getById(sessionUtils.getUser().getId()));
 
         getServletContext().getRequestDispatcher("/user_list.jsp").forward(request, response);
@@ -86,6 +74,8 @@ public class UserListServlet extends HttpServlet {
             response.sendRedirect("/users");
             return;
         }
+
+        fetchGroupsAndUsers(request, response);
 
         if (action.equals("action_randomize_pass")) {
             if (studentIds != null)
@@ -133,5 +123,48 @@ public class UserListServlet extends HttpServlet {
             response.sendRedirect("/users");
             return;
         }
+    }
+
+    private void fetchGroupsAndUsers(HttpServletRequest request, HttpServletResponse response) {
+        UserDAO userDAO = new UserDAOImpl();
+        GroupDAO groupDAO = new GroupDAOImpl();
+
+        Integer[] groupIds = null;
+        String[] chooseGroupsIdsAsString = null;
+
+        try {
+            chooseGroupsIdsAsString = request.getParameterValues(Parameter.PARAM_GROUP_CHOOSE_ID);
+            groupIds = new Integer[chooseGroupsIdsAsString.length];
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (chooseGroupsIdsAsString != null && groupIds != null)
+            for (int i = 0; i < chooseGroupsIdsAsString.length; i++) {
+                try {
+                    groupIds[i] = Integer.valueOf(chooseGroupsIdsAsString[i]);
+                    System.out.println(groupIds[i]);
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        // Fetching all users or users of the specified group
+        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<Group> chooseGroups = new ArrayList<Group>();
+
+        if (groupIds == null) {
+            users.addAll(userDAO.getAll());
+        } else {
+            for (Integer groupId : groupIds) {
+                Group group = groupDAO.getById(groupId);
+                chooseGroups.add(group);
+                users.addAll(group.getUsers());
+            }
+        }
+
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_GROUP_CHOOSE, chooseGroups);
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_GROUP_CHOOSE, chooseGroups);
+        request.setAttribute(Attribute.ATTR_ARRAY_LIST_USER, users);
     }
 }

@@ -18,7 +18,7 @@ public class DeleteServlet extends HttpServlet {
         SessionUtils sessionUtils = new SessionUtils(request.getSession());
         UserDAO userDAO = new UserDAOImpl();
 
-        userDAO.delete(sessionUtils.getUser());
+        userDAO.delete(userDAO.getById(sessionUtils.getUser().getId()));
         request.getSession().invalidate();
         response.sendRedirect("/login");
     }

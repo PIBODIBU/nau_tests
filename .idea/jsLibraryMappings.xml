@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{NAUTests/node_modules}" />
-    <file url="PROJECT" libraries="{jquery, jquery.scrollTo}" />
+    <file url="PROJECT" libraries="{getmdl-select, jquery, jquery.scrollTo}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
 </project>

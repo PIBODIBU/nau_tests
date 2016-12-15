@@ -8,8 +8,12 @@
 <%@ page import="ua.edu.nau.helper.constant.Parameter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%User activeUser = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));%>
-<%ArrayList<Group> groups = ((ArrayList<Group>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_GROUP));%>
+<%
+    User activeUser = ((User) request.getAttribute(Attribute.ATTR_USER_MODEL));
+    ArrayList<Group> groups = ((ArrayList<Group>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_GROUP));
+    ArrayList<Group> chooseGroups = ((ArrayList<Group>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_GROUP_CHOOSE));
+    ArrayList<User> users = ((ArrayList<User>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_USER));
+%>
 
 <html>
 <head>
@@ -21,9 +25,6 @@
     <link href="${pageContext.request.contextPath}/css/table.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/fab-menu.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/js/mdl-selectfield/mdl-selectfield.min.css">
-    <script src="${pageContext.request.contextPath}/js/mdl-selectfield/mdl-selectfield.min.js"></script>
 </head>
 <body>
 
@@ -35,13 +36,13 @@
     }
 
     .page-content {
-        width: 80%;
+        width: 100%;
         margin: auto;
         padding-bottom: 24px;
     }
 
     .mdl-data-table {
-        margin: 24px auto;
+        margin: auto;
     }
 
     .mdl-button--fab {
@@ -55,20 +56,69 @@
 
     .chips-wrapper {
         width: 100%;
-        padding: 16px;
+        margin: 0 8px 0 0;
+        position: relative;
+    }
+
+    .table-wrapper--full-width {
+        margin: 0;
+        padding: 0 0 16px 0;
+    }
+
+    .mdl-menu__container {
+        /*max-height: 150px;
+        overflow-x: hidden;
+        overflow-y: auto;*/
+    }
+
+    .tool-btn {
+        margin: 16px 8px;
+    }
+
+    .tool-btn--group-chooser {
+    }
+
+    .mdl-grid {
+        padding: 0;
+        margin: 0;
+    }
+
+    .mdl-cell {
+        padding: 0;
+    }
+
+    .mdl-grid--tools-wrapper {
+        margin-top: 24px;
+        padding: 24px;
+    }
+
+    .mdl-grid--tools-wrapper-first {
+
+    }
+
+    .mdl-tools--title {
+        margin: 0;
+        padding: 0;
+    }
+
+    .mdl-grid--tools-content {
+        margin-top: 8px;
     }
 </style>
-
-<%ArrayList<User> users = ((ArrayList<User>) request.getAttribute(Attribute.ATTR_ARRAY_LIST_USER));%>
 
 <script type="text/javascript">
     function printUsers() {
         var form = document.getElementById("form-students");
         var inputAction = document.createElement("input");
+        var inputsChooseGroups = document.getElementsByName("<%=Parameter.PARAM_GROUP_CHOOSE_ID%>");
 
         inputAction.name = "action";
         inputAction.value = "print_students";
         inputAction.type = "hidden";
+
+        for (var i = 0; i < inputsChooseGroups.length; i++) {
+            form.appendChild(inputsChooseGroups[i]);
+        }
 
         form.action = "/users";
         form.method = "post";
@@ -78,11 +128,16 @@
 
     function onStudentRandomizePasswords() {
         var form = document.getElementById("form-students");
+        var inputsChooseGroups = document.getElementsByName("<%=Parameter.PARAM_GROUP_CHOOSE_ID%>");
         var inputAction = document.createElement("input");
 
         inputAction.name = "action";
         inputAction.value = "action_randomize_pass";
         inputAction.type = "hidden";
+
+        for (var i = 0; i < inputsChooseGroups.length; i++) {
+            form.appendChild(inputsChooseGroups[i]);
+        }
 
         form.action = "/users";
         form.method = "post";
@@ -98,6 +153,12 @@
         inputAction.value = "action_delete_students";
         inputAction.type = "hidden";
 
+        var inputsChooseGroups = document.getElementsByName("<%=Parameter.PARAM_GROUP_CHOOSE_ID%>");
+
+        for (var i = 0; i < inputsChooseGroups.length; i++) {
+            form.appendChild(inputsChooseGroups[i]);
+        }
+
         form.action = "/users";
         form.method = "post";
         form.appendChild(inputAction);
@@ -108,27 +169,51 @@
         window.location = "/register";
     }
 
-    function onGroupChanged(groupId) {
+    function onGroupAdded(groupId) {
         var inputGroupId = document.createElement("input");
-        var form = document.getElementById('form-students');
+        var form = document.getElementById('form-students-groups-chips');
+        var duplicated = false;
+        var inputsChooseGroups = document.getElementsByName("<%=Parameter.PARAM_GROUP_CHOOSE_ID%>");
 
-        inputGroupId.name = '<%=Parameter.PARAM_GROUP_ID%>';
-        inputGroupId.value = groupId;
-        inputGroupId.type = 'hidden';
+        for (var i = 0; i < inputsChooseGroups.length; i++) {
+            if (inputsChooseGroups[i].value == groupId) {
+                duplicated = true;
+            }
+        }
 
-        form.appendChild(inputGroupId);
+        if (!duplicated) {
+            inputGroupId.name = '<%=Parameter.PARAM_GROUP_CHOOSE_ID%>';
+            inputGroupId.value = groupId;
+            inputGroupId.type = 'hidden';
+            form.appendChild(inputGroupId);
+        }
+
+        form.method = 'get';
+        form.submit();
+    }
+
+    function onGroupChipDelete(chipLayoutId, deletedGroupId) {
+        var inputsChooseGroups = document.getElementsByName("<%=Parameter.PARAM_GROUP_CHOOSE_ID%>");
+        var form = document.getElementById('form-students-groups-chips');
+
+        for (var i = 0; i < inputsChooseGroups.length; i++) {
+            if (inputsChooseGroups[i].value == deletedGroupId) {
+                $('#' + inputsChooseGroups[i].id).remove();
+            }
+        }
+
+        $('#' + chipLayoutId).remove();
+
         form.method = 'get';
         form.submit();
     }
 </script>
 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title">Користувачі</span>
             <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-            </nav>
         </div>
 
         <!-- Tabs -->
@@ -154,129 +239,213 @@
 
     <main class="mdl-layout__content">
         <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col">
+                    <div class="chips-wrapper">
+                        <div class="mdl-grid mdl-shadow--8dp mdl-grid--tools-wrapper-first">
+                            <button id="fab-choose-group"
+                                    class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--grey-500 tool-btn tool-btn--group-chooser"
+                                    type="button">
+                                <i class="material-icons">supervisor_account</i>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                                for="fab-choose-group">
+                                <%
+                                    for (Group group : groups) {
+                                %>
+                                <li class="mdl-menu__item"
+                                    onclick="onGroupAdded('<%=group.getId()%>')"><%=group.getName()%>
+                                </li>
+                                <%
+                                    }
+                                %>
+                            </ul>
 
-            <%--<div class="chips-wrapper"></div>--%>
+                            <button id="tool-btn-print-students"
+                                    class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--grey-500 tool-btn tool-btn--group-chooser"
+                                    type="button"
+                                    onclick="printUsers()">
+                                <i class="material-icons">print</i>
+                            </button>
 
-            <form id="form-students" action="${pageContext.request.contextPath}/users" method="post">
-                <div class="table-wrapper--full-width">
-                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp mdl-data-table--full-width">
-                        <thead>
-                        <tr>
-                            <th style="width: 1%;">
-                                <button id="fab-choose-group"
-                                        class="mdl-button mdl-js-button mdl-button--icon"
-                                        type="button">
-                                    <i class="material-icons">supervisor_account</i>
-                                </button>
+                            <button id="tool-btn-delete-students"
+                                    class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--grey-500 tool-btn tool-btn--group-chooser"
+                                    type="button"
+                                    onclick="onStudentDelete()">
+                                <i class="material-icons">delete</i>
+                            </button>
 
-                                <div class="mdl-tooltip" data-mdl-for="fab-choose-group">
-                                    Обрати групу
+                            <button id="tool-btn-randomize-passwords"
+                                    class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--grey-500 tool-btn tool-btn--group-chooser"
+                                    type="button"
+                                    onclick="onStudentRandomizePasswords()">
+                                <i class="material-icons">cached</i>
+                            </button>
+
+                            <div class="mdl-tooltip"
+                                 data-mdl-for="fab-choose-group">
+                                Обрати групу
+                            </div>
+                            <div class="mdl-tooltip"
+                                 data-mdl-for="tool-btn-print-students">
+                                Роздрукувати логіни та паролі
+                            </div>
+                            <div class="mdl-tooltip"
+                                 data-mdl-for="tool-btn-delete-students">
+                                Видалити
+                            </div>
+                            <div class="mdl-tooltip"
+                                 data-mdl-for="tool-btn-randomize-passwords">
+                                Оновити паролі
+                            </div>
+
+                            <button id="demo-menu-lower-right"
+                                    style="position: absolute; right: 16px; top: 16px;"
+                                    class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--grey-500">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                for="demo-menu-lower-right">
+                                <li class="mdl-menu__item">Some Action</li>
+                                <li class="mdl-menu__item">Another Action</li>
+                                <li disabled class="mdl-menu__item">Disabled Action</li>
+                                <li class="mdl-menu__item">Yet Another Action</li>
+                            </ul>
+                        </div>
+
+                        <div class="mdl-grid mdl-shadow--4dp mdl-grid--tools-wrapper">
+                            <h5 class="mdl-tools--title">Пошук</h5>
+
+                            <form style="width: 100%; margin-top: 8px; text-align: center"
+                                  action="#">
+                                <div style="width: 100%"
+                                     class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="sample3">
+                                    <label class="mdl-textfield__label" for="sample3">Введіть групу</label>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="mdl-grid mdl-shadow--4dp mdl-grid--tools-wrapper">
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col">
+                                    <h5 class="mdl-tools--title">Обрані групи</h5>
                                 </div>
 
-                                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-                                    for="fab-choose-group">
-                                    <%
-                                        for (Group group : groups) {
-                                    %>
-                                    <li class="mdl-menu__item"
-                                        onclick="onGroupChanged('<%=group.getId()%>')"><%=group.getName()%>
-                                    </li>
-                                    <%
+                                <form id="form-students-groups-chips">
+                                    <div class="mdl-grid--tools-content">
+                                        <%
+                                            if (chooseGroups != null) {
+                                                for (Group group : chooseGroups) {
+                                        %>
+                                        <input id="input-group-selected-<%=group.getId()%>"
+                                               type="hidden" name="<%=Parameter.PARAM_GROUP_CHOOSE_ID%>"
+                                               value="<%=group.getId()%>">
+                                        <span id="span-chip-student-delete-<%=group.getId()%>"
+                                              class="mdl-chip mdl-chip--deletable">
+                                        <span class="mdl-chip__text"><%=group.getName()%></span>
+                                        <button type="button"
+                                                class="mdl-chip__action"
+                                                onclick="onGroupChipDelete('span-chip-student-delete-<%=group.getId()%>',
+                                                        '<%=group.getId()%>')">
+                                            <i class="material-icons">cancel</i>
+                                        </button>
+                                    </span>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--8-col">
+                    <form id="form-students" action="${pageContext.request.contextPath}/users" method="post">
+                        <div class="table-wrapper--full-width">
+                            <table id="table-students"
+                                   class="mdl-data-table mdl-js-data-table mdl-shadow--4dp mdl-data-table--full-width">
+                                <thead>
+                                <tr>
+                                    <th style="width: 1%;">
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
+                                               for="checkbox-header-students">
+                                            <input type="checkbox"
+                                                   id="checkbox-header-students"
+                                                   name="students-header"
+                                                   class="mdl-checkbox__input"/>
+                                        </label>
+                                    </th>
+                                    <th>ID</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Група</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Заліковка</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Пароль</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Email</th>
+                                </tr>
+                                </thead>
+
+                                <%
+                                    for (User user : users) {
+                                        if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+                                %>
+                                <tr>
+                                    <td>
+                                        <label id="checkbox-table-students"
+                                               class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
+                                               for="checkbox-<%=user.getId()%>">
+                                            <input type="checkbox"
+                                                   id="checkbox-<%=user.getId()%>"
+                                                   name="students"
+                                                   value="<%=user.getId()%>"
+                                                   class="mdl-checkbox__input"/>
+                                        </label>
+                                    </td>
+                                    <td style="width: 30px"><%=user.getId()%>
+                                    </td>
+
+                                    <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
+                                    </td>
+
+                                    <td class="mdl-data-table__cell--non-numeric"><%=user.getGroup().getName()%>
+                                    </td>
+
+                                    <td class="mdl-data-table__cell--non-numeric"><%=user.getUsername()%>
+                                    </td>
+
+                                    <td class="mdl-data-table__cell--non-numeric"><%=user.getPassword()%>
+                                    </td>
+
+                                    <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
+                                    </td>
+                                </tr>
+                                <%
                                         }
-                                    %>
-                                </ul>
-                            </th>
-                            <th>ID</th>
-                            <th class="mdl-data-table__cell--non-numeric">Ім'я</th>
-                            <th class="mdl-data-table__cell--non-numeric">Група</th>
-                            <th class="mdl-data-table__cell--non-numeric">Заліковка</th>
-                            <th class="mdl-data-table__cell--non-numeric">Пароль</th>
-                            <th class="mdl-data-table__cell--non-numeric">Email</th>
-                        </tr>
-                        </thead>
+                                    }
+                                %>
+                            </table>
+                        </div>
 
-                        <%
-                            for (User user : users) {
-                                if (user.getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
-                        %>
-                        <tr>
-                            <td>
-                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
-                                       for="checkbox-<%=user.getId()%>">
-                                    <input type="checkbox"
-                                           id="checkbox-<%=user.getId()%>"
-                                           name="students"
-                                           value="<%=user.getId()%>"
-                                           class="mdl-checkbox__input"/>
-                                </label>
-                            </td>
-                            <td><%=user.getId()%>
-                            </td>
-                            <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%>
-                            </td>
-                            <td class="mdl-data-table__cell--non-numeric"><%=user.getGroup().getName()%>
-                            </td>
-                            <td class="mdl-data-table__cell--non-numeric"><%=user.getUsername()%>
-                            </td>
-                            <td class="mdl-data-table__cell--non-numeric"><%=user.getPassword()%>
-                            </td>
-                            <td class="mdl-data-table__cell--non-numeric"><%=user.getEmail()%>
-                            </td>
-                        </tr>
-                        <%
-                                }
-                            }
-                        %>
-                    </table>
+                        <div class="mdl-button--fab-menu">
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--fab-menu-item"
+                                    id="button-add_student"
+                                    type="button"
+                                    onclick="addStudent()">
+                                <i class="material-icons">add</i>
+                            </button>
+                            <div class="mdl-tooltip mdl-tooltip--left"
+                                 data-mdl-for="button-add_student">
+                                Додати студента
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="mdl-button--fab-menu">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
-                            id="button-print"
-                            type="button"
-                            onclick="printUsers()">
-                        <i class="material-icons">print</i>
-                    </button>
-                    <div class="mdl-tooltip mdl-tooltip--left"
-                         data-mdl-for="button-print">
-                        Роздрукувати паролі
-                    </div>
-
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
-                            id="button-randomize-pass"
-                            type="button"
-                            onclick="onStudentRandomizePasswords()">
-                        <i class="material-icons">cached</i>
-                    </button>
-                    <div class="mdl-tooltip mdl-tooltip--left"
-                         data-mdl-for="button-randomize-pass">
-                        Рандомізувати пароль
-                    </div>
-
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-button--fab-menu-item"
-                            id="button-delete_students"
-                            type="button"
-                            onclick="onStudentDelete()">
-                        <i class="material-icons">delete</i>
-                    </button>
-                    <div class="mdl-tooltip mdl-tooltip--left"
-                         data-mdl-for="button-delete_students">
-                        Видалити
-                    </div>
-
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--fab-menu-item"
-                            id="button-add_student"
-                            type="button"
-                            onclick="addStudent()">
-                        <i class="material-icons">add</i>
-                    </button>
-                    <div class="mdl-tooltip mdl-tooltip--left"
-                         data-mdl-for="button-add_student">
-                        Додати студента
-                    </div>
-                </div>
-            </form>
+            </div>
         </section>
+
         <section class="mdl-layout__tab-panel" id="fixed-tab-2">
             <div class="page-content">
                 <div class="table-wrapper">
@@ -377,5 +546,25 @@
         </section>
     </main>
 </div>
+
+<script>
+    var table = document.getElementById('table-students');
+    var headerCheckbox = table.querySelector('thead .mdl-data-table__select input');
+    var boxes = table.querySelectorAll('tbody .mdl-data-table__select');
+
+    var headerCheckHandler = function (event) {
+        if (event.target.checked) {
+            for (var i = 0, length = boxes.length; i < length; i++) {
+                boxes[i].MaterialCheckbox.check();
+            }
+        } else {
+            for (var i = 0, length = boxes.length; i < length; i++) {
+                boxes[i].MaterialCheckbox.uncheck();
+            }
+        }
+    };
+    headerCheckbox.addEventListener('change', headerCheckHandler);
+</script>
+
 </body>
 </html>

@@ -39,7 +39,7 @@ public class User {
         this.name = name;
     }
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     public String getUsername() {
         return username;
     }
