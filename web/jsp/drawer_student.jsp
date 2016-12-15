@@ -19,12 +19,23 @@
     </div>
 
     <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">Моя сторінка</a>
-        <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">Тести</a>
+        <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/me">
+            <i class="material-icons">person</i>&nbsp;&nbsp;&nbsp;Моя сторінка
+        </a>
+
+        <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/tests">
+            <i class="material-icons">playlist_add_check</i>&nbsp;&nbsp;&nbsp;Тести
+        </a>
+
         <a class="mdl-navigation__link navigation__sub-link"
-           href="${pageContext.request.contextPath}/tests/sessions">Активні
-            тести</a>
+           href="${pageContext.request.contextPath}/tests/sessions">
+            <i class="material-icons">arrow_drop_down</i> Активні тести
+        </a>
+
         <hr style="margin: 0"/>
-        <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">Вихід</a>
+
+        <a class="mdl-navigation__link" href="${pageContext.request.contextPath}/logout">
+            <i class="material-icons">exit_to_app</i>&nbsp;&nbsp;&nbsp;Вихід
+        </a>
     </nav>
 </div>

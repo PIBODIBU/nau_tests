@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>79061757-7fdf-4914-bdaf-d4900baea623</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1125.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.answers</node>
+    <node x="126.58333333333333" y="0.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_institutes</node>
+    <node x="0.0" y="930.5">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.questions</node>
+    <node x="54.833333333333314" y="142.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_departments</node>
+    <node x="29.25" y="694.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.tests</node>
+    <node x="246.25" y="704.5">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.http_sessions</node>
+    <node x="342.786941580756" y="142.65979381443302">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.settings</node>
+    <node x="271.0" y="899.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.test_sessions</node>
+    <node x="320.8333333333333" y="315.5">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users_roles</node>
+    <node x="214.8125" y="468.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users</node>
+    <node x="134.83333333333331" y="305.0">79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_groups</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_groups" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_institutes">
+      <point x="41.5" y="-56.5" />
+      <point x="44.25" y="46.0" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_groups" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_departments">
+      <point x="-41.5" y="-56.5" />
+      <point x="176.33333333333331" y="280.0" />
+      <point x="151.83333333333331" y="280.0" />
+      <point x="0.0" y="56.5" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.test_sessions" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.tests">
+      <point x="-54.25" y="-88.0" />
+      <point x="325.25" y="874.0" />
+      <point x="177.0" y="874.0" />
+      <point x="49.25" y="77.5" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.test_sessions" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users">
+      <point x="54.250000000000014" y="-88.0" />
+      <point x="433.75" y="669.0" />
+      <point x="395.6458333333333" y="669.0" />
+      <point x="72.33333333333333" y="88.0" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users_roles">
+      <point x="54.25" y="-88.0" />
+      <point x="377.5625" y="443.0" />
+      <point x="402.3333333333333" y="443.0" />
+      <point x="0.0" y="46.0" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.http_sessions" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users">
+      <point x="0.0" y="-67.0" />
+      <point x="334.75" y="669.0" />
+      <point x="323.3125" y="669.0" />
+      <point x="0.0" y="88.0" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_departments" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_institutes">
+      <point x="0.0" y="-56.5" />
+      <point x="151.83333333333331" y="117.0" />
+      <point x="170.83333333333331" y="117.0" />
+      <point x="-44.25" y="46.0" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.tests" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users">
+      <point x="0.0" y="-77.5" />
+      <point x="127.75" y="669.0" />
+      <point x="250.97916666666669" y="669.0" />
+      <point x="-72.33333333333331" y="88.0" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.questions" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.tests">
+      <point x="0.0" y="-56.5" />
+      <point x="-49.25" y="77.5" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.answers" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.questions">
+      <point x="0.0" y="-56.5" />
+      <point x="0.0" y="56.5" />
+    </edge>
+    <edge source="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.users" target="79061757-7fdf-4914-bdaf-d4900baea623.TABLE:nau_tests.university_structure_groups">
+      <point x="-54.25" y="-88.0" />
+      <point x="269.0625" y="443.0" />
+      <point x="217.83333333333331" y="443.0" />
+      <point x="0.0" y="56.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4626391096979332" x="335.0" y="619.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+

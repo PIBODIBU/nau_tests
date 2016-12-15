@@ -75,8 +75,8 @@ public class RegisterServlet extends HttpServlet {
         username = request.getParameter(Parameter.PARAM_USERNAME);
         password = request.getParameter(Parameter.PARAM_PASSWORD);
 
-        instituteId = Integer.valueOf(request.getParameter(Parameter.PARAM_INSTITUTE_ID));
-        departmentId = Integer.valueOf(request.getParameter(Parameter.PARAM_DEPARTMENT_ID));
+//        instituteId = Integer.valueOf(request.getParameter(Parameter.PARAM_INSTITUTE_ID));
+//        departmentId = Integer.valueOf(request.getParameter(Parameter.PARAM_DEPARTMENT_ID));
         groupId = Integer.valueOf(request.getParameter(Parameter.PARAM_GROUP_ID));
 
         UserDAO userDAO = new UserDAOImpl();

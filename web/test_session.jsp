@@ -25,7 +25,6 @@
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/body_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/timer.css" rel="stylesheet">
-    <%--<link href="${pageContext.request.contextPath}/css/fab.css" rel="stylesheet">--%>
 </head>
 
 <body onload="timer()">
@@ -114,12 +113,6 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title"><%=test.getName()%></span>
                 <div class="mdl-layout-spacer"></div>
-                <nav class="mdl-navigation">
-                    <h6>Залишилося часу:&nbsp;</h6>
-                    <h6 id="div-minutes"></h6>
-                    <h6>:</h6>
-                    <h6 id="div-seconds"></h6>
-                </nav>
             </div>
         </header>
 
@@ -139,6 +132,13 @@
             <div class="page-content">
                 <input type="hidden" name="<%=Parameter.PARAM_TEST_ID%>" value="<%=test.getId()%>"/>
                 <input type="hidden" name="<%=Parameter.PARAM_TEST_SESSION_ID%>" value="<%=testSession.getId()%>"/>
+
+                <div class="mdl-grid mdl-typography--display-1-color-contrast" style="width: 80%; margin-top:16px;">
+                    <div>Залишилося часу:&nbsp;</div>
+                    <div id="div-minutes"></div>
+                    <div>:</div>
+                    <div id="div-seconds"></div>
+                </div>
 
                 <%
                     int questionCounter = 1;

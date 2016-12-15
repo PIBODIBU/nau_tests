@@ -20,6 +20,7 @@
 
     <link href="${pageContext.request.contextPath}/css/my_page_style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/drawer_style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/table.css" rel="stylesheet">
 </head>
 <body onload="timer()">
 
@@ -74,10 +75,6 @@
             </span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation">
-                <h6>Залишилося часу сесії:&nbsp;</h6>
-                <h6 id="div-minutes"></h6>
-                <h6>:</h6>
-                <h6 id="div-seconds"></h6>
             </nav>
         </div>
     </header>
@@ -98,10 +95,23 @@
         <div class="page-content">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--12-col">
+                    <p class="mdl-typography--display-1-color-contrast">Час сесії</p>
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div class="mdl-grid mdl-typography--display-1-color-contrast"
+                         style="padding: 0; margin: 0">
+                        <div id="div-minutes"></div>
+                        <div>:</div>
+                        <div id="div-seconds"></div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
                     <p class="mdl-typography--display-1-color-contrast">Основна інформація</p>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Ім'я користувача
@@ -114,10 +124,10 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
-                            <h2 class="mdl-card__title-text">Логін
+                            <h2 class="mdl-card__title-text">Залікова книжка
                             </h2>
                         </div>
 
@@ -127,7 +137,46 @@
                     </div>
                 </div>
 
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-main">
+                            <h2 class="mdl-card__title-text">Інститут
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <%=user.getGroup().getInstitute().getName()%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-main">
+                            <h2 class="mdl-card__title-text">Кафедра
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <%=user.getGroup().getDepartment().getName()%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
+                    <div class="card-square mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-card--expand card-info-title-main">
+                            <h2 class="mdl-card__title-text">Група
+                            </h2>
+                        </div>
+
+                        <div class="mdl-card__supporting-text">
+                            <%=user.getGroup().getName()%>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--6-col-phone mdl-cell--8-col-tablet">
                     <div class="card-square mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title mdl-card--expand card-info-title-main">
                             <h2 class="mdl-card__title-text">Email
@@ -150,53 +199,54 @@
                             <h2 class="mdl-card__title-text">Завершені тести
                             </h2>
                         </div>
+                        <div class="table-wrapper">
+                            <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Назва</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
+                                    <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
+                                    <th>Правильних відповідей</th>
+                                    <th>К-ть питань</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%
+                                    int counter = 1;
 
-                        <table class="mdl-data-table mdl-js-data-table mdl-data-table_full-width">
-                            <thead>
-                            <tr>
-                                <th>№</th>
-                                <th class="mdl-data-table__cell--non-numeric">Назва</th>
-                                <th class="mdl-data-table__cell--non-numeric">Дата початку</th>
-                                <th class="mdl-data-table__cell--non-numeric">Дата закінчення</th>
-                                <th>Правильних відповідей</th>
-                                <th>К-ть питань</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%
-                                int counter = 1;
-
-                                for (TestSession testSession : user.getTestSessions()) {
-                                    if (testSession.getDone()) {
-                            %>
-                            <tr>
-                                <td><%=counter%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric">
-                                    <%
-                                        if (testSession.getEndTime() != null) {
-                                            out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
-                                        } else{
-                                            out.print("Не здав");
+                                    for (TestSession testSession : user.getTestSessions()) {
+                                        if (testSession.getDone()) {
+                                %>
+                                <tr>
+                                    <td><%=counter%>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=testSession.getTest().getName()%>
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <%=TimeFormatter.dateToHumanReadable(testSession.getStartTime())%>
+                                    </td>
+                                    <td class="mdl-data-table__cell--non-numeric">
+                                        <%
+                                            if (testSession.getEndTime() != null) {
+                                                out.print(TimeFormatter.dateToHumanReadable(testSession.getEndTime()));
+                                            } else {
+                                                out.print("Не здав");
+                                            }
+                                        %>
+                                    </td>
+                                    <td><%=testSession.getCorrectAnswers()%>
+                                    </td>
+                                    <td><%=testSession.getTest().getQuestions().size()%>
+                                    </td>
+                                </tr>
+                                <%
+                                            counter++;
                                         }
-                                    %>
-                                </td>
-                                <td><%=testSession.getCorrectAnswers()%>
-                                </td>
-                                <td><%=testSession.getTest().getQuestions().size()%>
-                                </td>
-                            </tr>
-                            <%
-                                        counter++;
                                     }
-                                }
-                            %>
-                            </tbody>
-                        </table>
+                                %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@
 <%@ page import="ua.edu.nau.helper.constant.Attribute" %>
 <%@ page import="ua.edu.nau.model.UniversityStructure.Institute" %>
 <%@ page import="ua.edu.nau.model.UniversityStructure.Department" %>
+<%@ page import="ua.edu.nau.helper.PasswordGenerator" %>
 <!DOCTYPE HTML>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,7 +17,7 @@
 
 <html>
 <head>
-    <title>Вхід</title>
+    <title>Реєстрація</title>
 
     <jsp:include page="/jsp/mdl_commons.jsp"/>
 
@@ -79,7 +80,7 @@
         padding-bottom: 16px;
     }
 
-    .mdl-button {
+    .mdl-button--submit {
         width: 150px;
         min-width: 150px;
     }
@@ -153,6 +154,16 @@
         var inputGroupId = document.getElementById('input-group');
         inputGroupId.value = groupId;
     }
+
+    function randomizePassword() {
+        <%
+            String randomPassword = PasswordGenerator.generate(5);
+        %>
+
+        $('#password').val('<%=randomPassword%>');
+
+        componentHandler.upgradeDom();
+    }
 </script>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -184,49 +195,6 @@
                                            id="name">
                                     <label class="mdl-textfield__label" for="name">Ім'я та прізвище</label>
                                 </div>
-
-                                <%--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">--%>
-                                <%--<input type="hidden" id="input-institute" name="<%=Parameter.PARAM_INSTITUTE_ID%>"--%>
-                                <%--value="<%=institutes.get(0).getId()%>">--%>
-
-                                <%--<input class="mdl-textfield__input" id="institute-name" name="country"--%>
-                                <%--value="<%=institutes.get(0).getName()%>"--%>
-                                <%--type="text" readonly tabIndex="-1"/>--%>
-
-                                <%--<label class="mdl-textfield__label" for="institute-name">Інститут</label>--%>
-                                <%--<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="institute-name">--%>
-                                <%--<%--%>
-                                <%--for (Institute institute : institutes) {--%>
-                                <%--%>--%>
-                                <%--<li class="mdl-menu__item"--%>
-                                <%--onclick="onInstituteSelected('<%=institute.getId()%>')"><%=institute.getShortName()%>--%>
-                                <%--</li>--%>
-                                <%--<%--%>
-                                <%--}--%>
-                                <%--%>--%>
-                                <%--</ul>--%>
-                                <%--</div>--%>
-                                <%--<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height">--%>
-                                <%--<input type="hidden" id="input-department" name="<%=Parameter.PARAM_DEPARTMENT_ID%>"--%>
-                                <%--value="<%=departments.get(0).getId()%>">--%>
-
-                                <%--<input class="mdl-textfield__input" id="department-name" name="country"--%>
-                                <%--value="<%=departments.get(0).getName()%>"--%>
-                                <%--type="text" readonly tabIndex="-1"/>--%>
-
-                                <%--<label class="mdl-textfield__label" for="department-name">Кафедра</label>--%>
-                                <%--<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu" for="department-name">--%>
-                                <%--<%--%>
-                                <%--for (Department department : departments) {--%>
-                                <%--%>--%>
-                                <%--<li class="mdl-menu__item"--%>
-                                <%--onclick="onDepartmentSelected('<%=department.getId()%>')"><%=department.getShortName()%>--%>
-                                <%--</li>--%>
-                                <%--<%--%>
-                                <%--}--%>
-                                <%--%>--%>
-                                <%--</ul>--%>
-                                <%--</div>--%>
 
                                 <input type="hidden" id="input-group" name="<%=Parameter.PARAM_GROUP_ID%>"
                                        value="<%=groups.get(0).getId()%>">
@@ -264,11 +232,30 @@
                                     <label class="mdl-textfield__label" for="username">Номер залікової книжки</label>
                                 </div>
 
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="password"
-                                           name="<%=Parameter.PARAM_PASSWORD%>"
-                                           id="password">
-                                    <label class="mdl-textfield__label" for="password">Пароль</label>
+                                <div class="mdl-grid" style="width: 80%">
+                                    <div class="mdl-cell--11-col">
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                                             style="width: 100%">
+                                            <input class="mdl-textfield__input" type="text"
+                                                   name="<%=Parameter.PARAM_PASSWORD%>"
+                                                   id="password">
+                                            <label class="mdl-textfield__label" for="password">Пароль</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mdl-cell--1-col">
+                                        <button id="btn_randomize_password"
+                                                onclick="randomizePassword()"
+                                                class="mdl-button mdl-js-button mdl-button--icon"
+                                                style="margin: 16px 0 0 16px;"
+                                                type="button">
+                                            <i class="material-icons">cached</i>
+                                        </button>
+
+                                        <div class="mdl-tooltip" data-mdl-for="btn_randomize_password">
+                                            Рандомізувати пароль
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -276,7 +263,7 @@
                         <div class="mdl-card__actions">
                             <button id="btn_register"
                                     type="submit"
-                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-button--submit">
                                 Зареєструватися
                             </button>
                         </div>
