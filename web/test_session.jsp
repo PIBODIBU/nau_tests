@@ -57,9 +57,15 @@
         z-index: 999;
     }
 
-    img {
+    .img-wrapper {
+        padding: 0 48px 0 48px;
         width: 100%;
         max-width: 100%;
+    }
+
+    img {
+        width: 50%;
+        max-width: 50%;
     }
 </style>
 
@@ -150,9 +156,11 @@
                         <%
                             if (question.getImgUrl() != null && !question.getImgUrl().equals("")) {
                         %>
-                        <a href="<%=question.getImgUrl()%>" target="_blank">
-                            <img src="<%=question.getImgUrl()%>"/>
-                        </a>
+                        <div class="img-wrapper">
+                            <a href="<%=question.getImgUrl()%>" target="_blank">
+                                <img src="<%=question.getImgUrl()%>"/>
+                            </a>
+                        </div>
                         <%
                             }
                         %>

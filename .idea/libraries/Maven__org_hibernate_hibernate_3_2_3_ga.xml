@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.3.ga/hibernate-3.2.3.ga.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.3.ga/hibernate-3.2.3.ga-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.3.ga/hibernate-3.2.3.ga-sources.jar!/" />
     </SOURCES>
