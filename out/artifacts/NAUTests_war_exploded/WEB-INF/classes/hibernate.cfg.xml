@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/nau_tests</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.connection.useUnicode">true</property>
+        <property name="hibernate.connection.characterEncoding">UTF-8</property>
+        <property name="hibernate.connection.charSet">UTF-8</property>
+
+        <mapping class="ua.edu.nau.model.UserRole"/>
+        <mapping class="ua.edu.nau.model.User"/>
+        <mapping class="ua.edu.nau.model.Session"/>
+        <mapping class="ua.edu.nau.model.Test"/>
+        <mapping class="ua.edu.nau.model.Question"/>
+        <mapping class="ua.edu.nau.model.Answer"/>
+        <mapping class="ua.edu.nau.model.TestSession"/>
+        <mapping class="ua.edu.nau.model.HttpSession"/>
+        <mapping class="ua.edu.nau.model.Setting"/>
+
+        <mapping class="ua.edu.nau.model.UniversityStructure.Institute"/>
+        <mapping class="ua.edu.nau.model.UniversityStructure.Department"/>
+        <mapping class="ua.edu.nau.model.UniversityStructure.Group"/>
+    </session-factory>
+</hibernate-configuration>

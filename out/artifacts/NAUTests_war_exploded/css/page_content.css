@@ -1,0 +1,17 @@
+.page-content {
+    width: 70%;
+    max-width: 70%;
+    min-width: 70%;
+    margin: auto;
+}
+
+@media screen
+and (max-device-width: 500px)
+and (max-device-height: 800px) {
+    .page-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        margin: 0;
+    }
+}

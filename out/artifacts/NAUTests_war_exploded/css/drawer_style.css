@@ -1,0 +1,24 @@
+.navigation__sub-link {
+    padding-left: 56px !important;
+}
+
+.mdl-layout__drawer {
+    color: #ffffff !important;
+    border: 0 !important;
+}
+
+.mdl-layout__drawer-title {
+    padding: 0;
+    margin: 0;
+}
+
+.mdl-layout__drawer-subtitle {
+    padding: 0;
+    margin: 0;
+}
+
+.mdl-layout__drawer-head-text-wrapper {
+    position: absolute;
+    bottom: 0;
+    padding: 8px 8px 8px 16px;
+}
