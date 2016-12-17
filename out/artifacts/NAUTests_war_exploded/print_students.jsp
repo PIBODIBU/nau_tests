@@ -29,7 +29,7 @@
         win.document.write('<html><body>');
 
         <%for(User user:users){%>
-        win.document.write("<%=user.getName()%>" + "          " + "<%=user.getPassword()%>");
+        win.document.write("<%=user.getName()%>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + "<%=user.getUsername()%>" + "&nbsp;&nbsp;&nbsp;&nbsp;" + "<%=user.getPassword()%>");
         win.document.write("<br/>");
         <%
         }

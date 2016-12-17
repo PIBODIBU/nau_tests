@@ -13,6 +13,11 @@ public class BasicDAOImpl<T> implements BasicDAO<T> {
     }
 
     @Override
+    public ArrayList<String> getAllAsJson() {
+        return null;
+    }
+
+    @Override
     public T get(Integer id) {
         return null;
     }

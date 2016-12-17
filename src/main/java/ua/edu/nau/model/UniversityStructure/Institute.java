@@ -41,7 +41,7 @@ public class Institute {
         this.shortName = shortName;
     }
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "institute")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "institute", fetch = FetchType.EAGER)
     public Set<Department> getDepartments() {
         return departments;
     }
@@ -50,11 +50,11 @@ public class Institute {
         this.departments = departments;
     }
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "institute")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "institute", fetch = FetchType.EAGER)
     public Set<Group> getGroups() {
         return groups;
     }
-    
+
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }

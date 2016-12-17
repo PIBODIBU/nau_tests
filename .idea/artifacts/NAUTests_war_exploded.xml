@@ -6,6 +6,20 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="NAUTests" />
+          <element id="library" level="application" name="jquery" />
+          <element id="library" level="application" name="jquery.scrollTo" />
+          <element id="library" level="application" name="getmdl-select" />
+          <element id="library" level="application" name="angular" />
+          <element id="library" level="application" name="angular-animate" />
+          <element id="library" level="application" name="angular-aria" />
+          <element id="library" level="application" name="angular-messages" />
+          <element id="library" level="application" name="angular-material" />
+          <element id="library" level="application" name="angular-material-calendar" />
+          <element id="library" level="application" name="material" />
+          <element id="library" level="application" name="dojo" />
+          <element id="library" level="application" name="angular-resource" />
+          <element id="library" level="application" name="angular-route" />
+          <element id="library" level="application" name="svg-assets-cache" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.hibernate:hibernate:3.2.3.ga" />
@@ -55,6 +69,7 @@
           <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" />
           <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.3.1" />
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.22.0-CR1" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.0" />
         </element>
       </element>
     </root>

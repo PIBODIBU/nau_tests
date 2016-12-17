@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public interface BasicDAO<T> {
     ArrayList<T> getAll();
 
+    ArrayList<String> getAllAsJson();
+
     T get(Integer id);
 
     T getById(Integer id);
