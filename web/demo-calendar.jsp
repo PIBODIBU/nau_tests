@@ -12,6 +12,8 @@
 <head>
     <title>Calendar</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
@@ -20,7 +22,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-
     <script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -68,9 +69,9 @@
 
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
     <md-toolbar class="md-tall" layout="column" layout-align="end none" md-whiteframe="4">
-        <div class="md-toolbar-tools" layout="column" layout-align="end start">
-            <div class=".md-title">Святненко Роман</div>
-            <div class=".md-subhead">roman@gmail.com</div>
+        <div layout-padding>
+            <span class="md-title">Svyatnenko Roman</span>
+            <small class="md-caption">roman@gmail.com</small>
         </div>
     </md-toolbar>
 
@@ -81,9 +82,11 @@
     </md-content>
 </md-sidenav>
 
-<div layout="row" flex layout-wrap ng-controller="InstituteCardController" class='md-padding'>
-    <div flex="33" layout="column" ng-repeat="institute in institutes">
-        <md-card md-whiteframe="4">
+<div layout="row" flex layout-wrap ng-controller="InstituteCardController"
+     class='md-padding'>
+    <md-content flex-gt-md="33" flex-xs="100" flex-gt-xs="50" flex-xl="25" layout="column"
+                ng-repeat="institute in institutes">
+        <md-card flex md-whiteframe="4">
             <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{institute.shortName}}</span>
@@ -98,11 +101,12 @@
                 <md-button>Детальніше</md-button>
             </md-card-actions>
         </md-card>
-    </div>
+    </md-content>
 </div>
 
 <script type="text/javascript">
-    var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+    var app = angular.module('MyApp',
+            ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
 
     app.config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default')
@@ -116,6 +120,8 @@
     });
 
     app.controller('ToolbarController', function ($scope, $timeout, $mdSidenav, $mdDialog) {
+        var originatorEv;
+
         $scope.pageTitle = "Інститути";
 
         $scope.toggleLeft = buildToggler('left');
@@ -126,8 +132,6 @@
                 $mdSidenav(componentId).toggle();
             }
         }
-
-        var originatorEv;
 
         this.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;

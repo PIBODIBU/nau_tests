@@ -13,7 +13,15 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="web crunchify servlet context" name="MVC crunchify servlet context" removed="true">
+          <file>file://$MODULE_DIR$/web/WEB-INF/crunchify-servlet.xml</file>
+        </fileset>
+        <fileset id="web application context" name="MVC application context" removed="true" />
+        <fileset id="fileset" name="Spring Context" removed="false">
+          <file>file://$MODULE_DIR$/web/WEB-INF/spring/app.xml</file>
+        </fileset>
+      </configuration>
     </facet>
     <facet type="hibernate" name="Hibernate">
       <configuration>
@@ -99,5 +107,13 @@
     <orderEntry type="library" name="Maven: javax.transaction:jta:1.1" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.5" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
   </component>
 </module>

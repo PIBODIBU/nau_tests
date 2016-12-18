@@ -69,9 +69,9 @@
 
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
     <md-toolbar class="md-tall" layout="column" layout-align="end none" md-whiteframe="4">
-        <div class="md-toolbar-tools" layout="column" layout-align="end start">
-            <div class=".md-title">Святненко Роман</div>
-            <div class=".md-subhead">roman@gmail.com</div>
+        <div layout-padding>
+            <span class="md-title">Svyatnenko Roman</span>
+            <small class="md-caption">roman@gmail.com</small>
         </div>
     </md-toolbar>
 
@@ -84,7 +84,8 @@
 
 <div layout="row" flex layout-wrap ng-controller="InstituteCardController"
      class='md-padding'>
-    <md-content flex-gt-md="33" flex-xs="100" flex-gt-xs="50" layout="column" ng-repeat="institute in institutes">
+    <md-content flex-gt-md="33" flex-xs="100" flex-gt-xs="50" flex-xl="25" layout="column"
+                ng-repeat="institute in institutes">
         <md-card flex md-whiteframe="4">
             <md-card-title>
                 <md-card-title-text>
