@@ -22,7 +22,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-
     <script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -83,9 +82,10 @@
     </md-content>
 </md-sidenav>
 
-<div layout="row" flex layout-wrap ng-controller="InstituteCardController" class='md-padding'>
-    <div flex="33" flex-xs="100" flex-gt-xs="50" layout="column" ng-repeat="institute in institutes">
-        <md-card md-whiteframe="4">
+<div layout="row" flex layout-wrap ng-controller="InstituteCardController"
+     class='md-padding'>
+    <md-content flex-gt-md="33" flex-xs="100" flex-gt-xs="50" layout="column" ng-repeat="institute in institutes">
+        <md-card flex md-whiteframe="4">
             <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{institute.shortName}}</span>
@@ -100,11 +100,12 @@
                 <md-button>Детальніше</md-button>
             </md-card-actions>
         </md-card>
-    </div>
+    </md-content>
 </div>
 
 <script type="text/javascript">
-    var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+    var app = angular.module('MyApp',
+            ['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
 
     app.config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default')
