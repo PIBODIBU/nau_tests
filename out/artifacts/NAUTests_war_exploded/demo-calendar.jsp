@@ -12,6 +12,8 @@
 <head>
     <title>Calendar</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
@@ -36,7 +38,7 @@
 
 <body ng-app="MyApp" ng-cloak="">
 
-<md-toolbar ng-controller="ToolbarController" md-whiteframe="4">
+<md-toolbar ng-controller="ToolbarController as ctrl" md-whiteframe="4">
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
             <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
@@ -82,7 +84,7 @@
 </md-sidenav>
 
 <div layout="row" flex layout-wrap ng-controller="InstituteCardController" class='md-padding'>
-    <div flex="33" layout="column" ng-repeat="institute in institutes">
+    <div flex="33" flex-xs="100" flex-gt-xs="50" layout="column" ng-repeat="institute in institutes">
         <md-card md-whiteframe="4">
             <md-card-title>
                 <md-card-title-text>
@@ -115,7 +117,9 @@
         });
     });
 
-    app.controller('ToolbarController', function ($scope, $timeout, $mdSidenav) {
+    app.controller('ToolbarController', function ($scope, $timeout, $mdSidenav, $mdDialog) {
+        var originatorEv;
+
         $scope.pageTitle = "Інститути";
 
         $scope.toggleLeft = buildToggler('left');
@@ -126,28 +130,6 @@
                 $mdSidenav(componentId).toggle();
             }
         }
-    });
-
-    app.controller('AppCtrl', function ($compile, $scope) {
-    });
-
-    app.controller('CustomCardHolder', function ($compile, $scope) {
-    });
-
-    app.controller('InstituteCardController', function ($scope) {
-        $scope.institutes = JSON.parse('<%=jsonData%>');
-    });
-
-    app.config(function ($mdIconProvider) {
-        $mdIconProvider
-                .iconSet("call", 'img/icons/sets/communication-icons.svg', 24)
-                .iconSet("social", 'img/icons/sets/social-icons.svg', 24);
-    });
-
-    app.controller('PositionDemoCtrl', function DemoCtrl($mdDialog) {
-        var originatorEv;
-
-        this.menuHref = "http://www.google.com/design/spec/components/menus.html#menus-specs";
 
         this.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
@@ -164,6 +146,22 @@
             );
             originatorEv = null;
         };
+    });
+
+    app.controller('AppCtrl', function ($compile, $scope) {
+    });
+
+    app.controller('CustomCardHolder', function ($compile, $scope) {
+    });
+
+    app.controller('InstituteCardController', function ($scope) {
+        $scope.institutes = JSON.parse('<%=jsonData%>');
+    });
+
+    app.config(function ($mdIconProvider) {
+        $mdIconProvider
+                .iconSet("call", 'img/icons/sets/communication-icons.svg', 24)
+                .iconSet("social", 'img/icons/sets/social-icons.svg', 24);
     });
 </script>
 </body>
