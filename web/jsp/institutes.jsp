@@ -60,7 +60,7 @@
     </md-content>
 </md-sidenav>
 
-<div layout="row" flex layout-wrap ng-controller="GroupsCardController as controller"
+<div layout="row" flex layout-wrap ng-controller="InstituteCardController as controller"
      class='md-padding'>
     <md-content flex-gt-md="33" flex-xs="100" flex-gt-xs="50" flex-xl="25" layout="column"
                 ng-repeat="institute in institutes">
@@ -134,7 +134,7 @@
     app.controller('CustomCardHolder', function ($compile, $scope) {
     });
 
-    app.controller('GroupsCardController', ['$scope', '$window', function ($scope, $window) {
+    app.controller('InstituteCardController', ['$scope', '$window', function ($scope, $window) {
         $scope.institutes = JSON.parse('${jsonData}');
 
         this.redirectToGroupList = function (instituteId) {

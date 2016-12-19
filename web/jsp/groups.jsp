@@ -60,7 +60,7 @@
     </md-content>
 </md-sidenav>
 
-<div layout="row" flex layout-wrap ng-controller="InstituteCardController"
+<div layout="row" flex layout-wrap ng-controller="GroupsCardController  as controller"
      class='md-padding'>
     <md-content flex-gt-md="33" flex-xs="100" flex-gt-xs="50" flex-xl="25" layout="column"
                 ng-repeat="group in groups | orderBy:'name'">
@@ -75,7 +75,7 @@
                 </md-card-title-media>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button>Увійти</md-button>
+                <md-button ng-click="showAdvanced($event, group.id)">Студенти</md-button>
                 <md-button>Детальніше</md-button>
             </md-card-actions>
         </md-card>
@@ -134,8 +134,48 @@
     app.controller('CustomCardHolder', function ($compile, $scope) {
     });
 
-    app.controller('InstituteCardController', function ($scope) {
+    function DialogController($scope, $mdDialog) {
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function (answer) {
+            $mdDialog.hide(answer);
+        };
+    }
+
+    app.controller('GroupsCardController', function ($scope, $mdDialog) {
         $scope.groups = JSON.parse('${jsonData}');
+
+        $scope.getGroupById = function (groups, groupId) {
+            for (var i = 0; i < groups.length; i++) {
+                if (groups[i].id == groupId) {
+                    return groups[i];
+                }
+            }
+        };
+
+        $scope.showAdvanced = function (ev, groupId) {
+            $scope.selectedGroup = $scope.getGroupById($scope.groups, groupId);
+
+            $mdDialog.show({
+                controller: DialogController,
+                scope: $scope.$new(),
+                templateUrl: '/templates/dialog.jsp',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+            })
+                    .then(function (answer) {
+                        $scope.status = 'You said the information was "' + answer + '".';
+                    }, function () {
+                        $scope.status = 'You cancelled the dialog.';
+                    });
+        };
     });
 
     app.config(function ($mdIconProvider) {

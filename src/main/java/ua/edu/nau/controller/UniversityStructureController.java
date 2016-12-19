@@ -11,14 +11,14 @@ import ua.edu.nau.dao.GroupDAO;
 import ua.edu.nau.dao.InstituteDAO;
 import ua.edu.nau.dao.impl.GroupDAOImpl;
 import ua.edu.nau.dao.impl.InstituteDAOImpl;
-import ua.edu.nau.helper.hibernate.GroupSerializer;
-import ua.edu.nau.helper.hibernate.InstituteSerializer;
+import ua.edu.nau.hibernate.serializer.GroupSerializer;
+import ua.edu.nau.hibernate.serializer.InstituteSerializer;
 import ua.edu.nau.model.UniversityStructure.Group;
 import ua.edu.nau.model.UniversityStructure.Institute;
 
 @Controller
 @RequestMapping("/structure")
-public class HelloWorldController {
+public class UniversityStructureController {
     @RequestMapping("/institutes")
     public ModelAndView helloWorld() {
         ModelAndView modelAndView = new ModelAndView();

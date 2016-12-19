@@ -1,4 +1,4 @@
-package ua.edu.nau.helper.hibernate;
+package ua.edu.nau.hibernate.serializer;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
