@@ -5,7 +5,7 @@ import ua.edu.nau.model.TestSession;
 
 import java.util.ArrayList;
 
-public interface TestSessionDAO extends BasicDAO<TestSession> {
+public interface TestSessionDAO extends GenericDAO<TestSession> {
     ArrayList<TestSession> getUserSessions(Integer userId);
 
     ArrayList<TestSession> getTodayResult(Test test);

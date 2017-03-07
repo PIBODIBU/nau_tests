@@ -1,9 +1,10 @@
 package ua.edu.nau.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 import ua.edu.nau.dao.HttpSessionDAO;
 import ua.edu.nau.dao.UserDAO;
-import ua.edu.nau.dao.impl.HttpSessionDAOImpl;
-import ua.edu.nau.dao.impl.UserDAOImpl;
 import ua.edu.nau.helper.SessionHelper;
 import ua.edu.nau.helper.constant.RoleCode;
 import ua.edu.nau.helper.session.SessionUtils;
@@ -15,8 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*")
+@Component(value = "sessionFilter")
 public class SessionFilter implements Filter {
+    private UserDAO userDAO;
+    private HttpSessionDAO httpSessionDAO;
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    @Autowired
+    public void setHttpSessionDAO(HttpSessionDAO httpSessionDAO) {
+        this.httpSessionDAO = httpSessionDAO;
+    }
+
     private static final String TAG = "SessionFilter -> ";
 
     /**
@@ -76,26 +90,36 @@ public class SessionFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        // Инициализация вспомагательного класса
         SessionUtils sessionUtils = new SessionUtils(((HttpServletRequest) request).getSession());
 
+        // Проверка сессии на существование
         if (sessionUtils.getHttpSessionId() != null) {
-            HttpSessionDAO httpSessionDAO = new HttpSessionDAOImpl();
-            UserDAO userDAO = new UserDAOImpl();
+            // Инициализация классов для доступа к БД
+
+            // Получение последней сессии пользвателя
             HttpSession lastHttpSession = userDAO.getLastSession(sessionUtils.getUser().getId());
 
+            // Проверка сессии на существование
             if (lastHttpSession == null) {
+                // Пользователь впервые зашел
                 System.out.println(TAG + "Can't fetch last http session");
                 chain.doFilter(request, response);
                 return;
             }
 
+            // Проверка роли пользователя
             if (sessionUtils.getUser().getUserRole().getRoleCode().equals(RoleCode.STUDENT)) {
+                // Если время сессии вышло - инвалидируем ее
                 if (SessionHelper.isSessionTimedOut(lastHttpSession)) {
                     System.out.println(TAG + "Session timed out");
 
+                    // Инвалидация сессии в БД
                     httpSessionDAO.invalidate(sessionUtils.getHttpSessionId());
+                    // Рандомизация пароля
                     userDAO.randomizePassword(sessionUtils.getUser().getId());
 
+                    // Инвалидация JavaEE сессии
                     ((HttpServletRequest) request).getSession().invalidate();
                     ((HttpServletResponse) response).sendRedirect("/login");
 

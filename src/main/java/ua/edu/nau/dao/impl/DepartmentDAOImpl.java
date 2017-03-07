@@ -1,23 +1,33 @@
 package ua.edu.nau.dao.impl;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.edu.nau.dao.DepartmentDAO;
-import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.UniversityStructure.Department;
 
 import java.util.ArrayList;
 
-public class DepartmentDAOImpl extends BasicDAOImpl<Department> implements DepartmentDAO {
+public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements DepartmentDAO {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public Department getById(Integer id) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
 
         session.beginTransaction();
         Department department = ((Department) session.get(Department.class, id));
         session.refresh(department);
         session.getTransaction().commit();
+
+        session.close();
 
         return department;
     }
@@ -25,7 +35,7 @@ public class DepartmentDAOImpl extends BasicDAOImpl<Department> implements Depar
     @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Department> getAll() {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
         ArrayList<Department> departments;
 
         session.beginTransaction();
@@ -36,6 +46,8 @@ public class DepartmentDAOImpl extends BasicDAOImpl<Department> implements Depar
                 .list());
 
         session.getTransaction().commit();
+
+        session.close();
 
         return departments;
     }

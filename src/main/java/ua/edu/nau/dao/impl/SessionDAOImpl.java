@@ -3,25 +3,35 @@ package ua.edu.nau.dao.impl;
 import com.sun.istack.Nullable;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.type.StringType;
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.edu.nau.dao.SessionDAO;
-import ua.edu.nau.hibernate.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionDAOImpl extends BasicDAOImpl<ua.edu.nau.model.Session> implements SessionDAO {
+public class SessionDAOImpl extends GenericDAOImpl<ua.edu.nau.model.Session> implements SessionDAO {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<ua.edu.nau.model.Session> getAll() {
-        org.hibernate.Session session = HibernateUtil.getSession();
+        org.hibernate.Session session = sessionFactory.openSession();
         ArrayList<ua.edu.nau.model.Session> sessions;
 
         session.beginTransaction();
         sessions = new ArrayList<>(session.createCriteria(ua.edu.nau.model.Session.class)
                 .list());
         session.getTransaction().commit();
+
+        session.close();
 
         return sessions;
     }
@@ -35,7 +45,7 @@ public class SessionDAOImpl extends BasicDAOImpl<ua.edu.nau.model.Session> imple
     @Nullable
     @SuppressWarnings("unckecked")
     public ua.edu.nau.model.Session getByToken(String token) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
         ua.edu.nau.model.Session searchedSession = null;
 
         session.beginTransaction();
@@ -56,6 +66,8 @@ public class SessionDAOImpl extends BasicDAOImpl<ua.edu.nau.model.Session> imple
         }
 
         session.getTransaction().commit();
+
+        session.close();
 
         return searchedSession;
     }

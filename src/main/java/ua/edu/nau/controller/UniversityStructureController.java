@@ -17,7 +17,7 @@ import ua.edu.nau.model.UniversityStructure.Group;
 import ua.edu.nau.model.UniversityStructure.Institute;
 
 @Controller
-@RequestMapping("/structure")
+@RequestMapping("/**/structure")
 public class UniversityStructureController {
     @RequestMapping("/institutes")
     public ModelAndView helloWorld() {

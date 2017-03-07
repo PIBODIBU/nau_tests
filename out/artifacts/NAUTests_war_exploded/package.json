@@ -1,0 +1,31 @@
+{
+  "name": "NAUTests",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PIBODIBU/nau_tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PIBODIBU/nau_tests/issues"
+  },
+  "homepage": "https://github.com/PIBODIBU/nau_tests#readme",
+  "dependencies": {
+    "angular": "^1.5.10",
+    "angular-animate": "^1.5.10",
+    "angular-aria": "^1.5.10",
+    "angular-material": "^1.1.1",
+    "angular-material-expansion-panel": "^0.7.1",
+    "angular2": "^2.0.0-beta.21",
+    "es6-shim": "^0.35.2",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.6",
+    "zone.js": "^0.6.26"
+  }
+}

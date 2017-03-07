@@ -27,7 +27,7 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    public static Session getSession() {
+   /* public static Session getSession() {
         Session session;
 
         try {
@@ -37,7 +37,7 @@ public class HibernateUtil {
         }
 
         return session;
-    }
+    }*/
 
     public static void shutdown() {
         // Close caches and connection pools

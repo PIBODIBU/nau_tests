@@ -11,7 +11,7 @@ public class HttpSession {
     private Date loginTime;
     private Date logoutTime;
     private Boolean isInvalid;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -1,23 +1,33 @@
 package ua.edu.nau.dao.impl;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.edu.nau.dao.GroupDAO;
-import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.UniversityStructure.Group;
 
 import java.util.*;
 
-public class GroupDAOImpl extends BasicDAOImpl<Group> implements GroupDAO {
+public class GroupDAOImpl extends GenericDAOImpl<Group> implements GroupDAO {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    
     @Override
     public Group getById(Integer id) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
 
         session.beginTransaction();
         Group group = ((Group) session.get(Group.class, id));
         session.refresh(group);
         session.getTransaction().commit();
+
+        session.close();
 
         return group;
     }
@@ -25,7 +35,7 @@ public class GroupDAOImpl extends BasicDAOImpl<Group> implements GroupDAO {
     @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Group> getAll() {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
         ArrayList<Group> groups;
 
         session.beginTransaction();
@@ -37,6 +47,8 @@ public class GroupDAOImpl extends BasicDAOImpl<Group> implements GroupDAO {
         groups = new ArrayList<Group>(groupSet);
 
         session.getTransaction().commit();
+
+        session.close();
 
         return groups;
     }

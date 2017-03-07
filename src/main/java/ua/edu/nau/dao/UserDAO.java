@@ -4,7 +4,7 @@ import com.sun.istack.internal.Nullable;
 import ua.edu.nau.model.HttpSession;
 import ua.edu.nau.model.User;
 
-public interface UserDAO extends BasicDAO<User> {
+public interface UserDAO extends GenericDAO<User> {
     @Nullable
     User getByCredentials(String username, String password);
 

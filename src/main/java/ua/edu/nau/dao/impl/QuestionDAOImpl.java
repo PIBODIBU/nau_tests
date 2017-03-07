@@ -1,13 +1,21 @@
 package ua.edu.nau.dao.impl;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.edu.nau.dao.QuestionDAO;
-import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.Question;
 
 import java.util.ArrayList;
 
-public class QuestionDAOImpl extends BasicDAOImpl<Question> implements QuestionDAO {
+public class QuestionDAOImpl extends GenericDAOImpl<Question> implements QuestionDAO {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public ArrayList<Question> getAll() {
         return super.getAll();
@@ -20,12 +28,14 @@ public class QuestionDAOImpl extends BasicDAOImpl<Question> implements QuestionD
 
     @Override
     public Question getById(Integer id) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
 
         session.beginTransaction();
         Question question = ((Question) session.get(Question.class, id));
         session.refresh(question);
         session.getTransaction().commit();
+
+        session.close();
 
         return question;
     }

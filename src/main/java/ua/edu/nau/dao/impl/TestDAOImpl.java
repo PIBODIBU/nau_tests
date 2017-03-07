@@ -2,22 +2,38 @@ package ua.edu.nau.dao.impl;
 
 import com.sun.istack.internal.NotNull;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.edu.nau.dao.TestDAO;
 import ua.edu.nau.dao.UserDAO;
-import ua.edu.nau.hibernate.HibernateUtil;
 import ua.edu.nau.model.Test;
 import ua.edu.nau.model.User;
 
 import java.util.ArrayList;
 
-public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
+@Component
+public class TestDAOImpl extends GenericDAOImpl<Test> implements TestDAO {
+    private SessionFactory sessionFactory;
+    private UserDAO userDAO;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Test> getAll() {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
         ArrayList<Test> tests;
 
         session.beginTransaction();
@@ -30,13 +46,15 @@ public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
 
         session.getTransaction().commit();
 
+        session.close();
+
         return tests;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Test> getUserTests(User owner) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
 
         session.beginTransaction();
 
@@ -49,6 +67,8 @@ public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
 
         session.getTransaction().commit();
 
+        session.close();
+
         return tests;
     }
 
@@ -59,11 +79,13 @@ public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
 
     @Override
     public Test getById(Integer id) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
 
         session.beginTransaction();
         Test test = ((Test) session.get(Test.class, id));
         session.getTransaction().commit();
+
+        session.close();
 
         return test;
     }
@@ -75,17 +97,17 @@ public class TestDAOImpl extends BasicDAOImpl<Test> implements TestDAO {
 
     @Override
     public void delete(Test test) {
-        Session session = HibernateUtil.getSession();
+        Session session = sessionFactory.openSession();
 
         session.beginTransaction();
         session.delete(test);
         session.getTransaction().commit();
+
+        session.close();
     }
 
     @Override
     public Boolean isTestBelongsToUser(@NotNull Integer testId, @NotNull Integer userId) throws IllegalStateException {
-        UserDAO userDAO = new UserDAOImpl();
-
         if (userId == null) {
             throw new IllegalStateException("User id cannot be null");
         }
